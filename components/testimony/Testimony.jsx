@@ -1,9 +1,12 @@
-import { Text, View } from 'react-native';
+import React from 'react';
+import { Text, SafeAreaView } from 'react-native';
+
+
 
 export default function Testimony(){
     return(
-        <View>
+        <SafeAreaView>
             <Text>Ruta de Testimonios</Text>
-        </View>
+        </SafeAreaView>
     )
 }

@@ -1,9 +1,10 @@
-import { Text, View } from 'react-native';
+import React from 'react';
+import { Text, SafeAreaView } from 'react-native';
 
 export default function About(){
     return(
-        <View>
+        <SafeAreaView>
             <Text>Ruta de About</Text>
-        </View>
+        </SafeAreaView>
     )
 }

@@ -1,12 +1,20 @@
+import 'react-native-gesture-handler';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import Nav from "./components/nav/Nav.jsx"
+//scrollview  expo publish  onPress
 
+//expo start -c borra cache
+
+//configurar archivo babel
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <NavigationContainer>
+      <Nav />
       <StatusBar style="auto" />
-    </View>
+    </NavigationContainer>
   );
 }
 

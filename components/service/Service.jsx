@@ -1,9 +1,10 @@
-import { Text, View } from 'react-native';
+import React from 'react';
+import { Text, SafeAreaView } from 'react-native';
 
 export default function Service(){
     return(
-        <View>
+        <SafeAreaView>
             <Text>Ruta de Servicios</Text>
-        </View>
+        </SafeAreaView>
     )
 }

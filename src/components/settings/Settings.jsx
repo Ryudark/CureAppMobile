@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Settings(){
     
+    
     return(
         <ScrollView style={styles.container}>
             <Text>Nombre</Text>
@@ -13,13 +14,13 @@ export default function Settings(){
             <Text>Nombre de Usuario</Text>
             <TextInput placeholder='Nombre de Usuario' style={styles.input}/>
             <Text>Telefono</Text>
-            <TextInput placeholder='Telefono' style={styles.input}/>
+            <TextInput keyboardType='numeric' placeholder='Telefono' style={styles.input}/>
             <Text>Telefono Secundario</Text>
             <TextInput placeholder='Telefono Secundario' style={styles.input}/>
             <Text>Edad</Text>
-            <TextInput placeholder='Edad' style={styles.input}/>
+            <TextInput keyboardType='numeric' placeholder='Edad' style={styles.input}/>
             <Text>Documento de Identificación</Text>
-            <TextInput placeholder='Documento de Identificación' style={styles.input}/>
+            <TextInput keyboardType='numeric' placeholder='Documento de Identificación' style={styles.input}/>
             <Text>Dirección</Text>
             <TextInput placeholder='Dirección' style={styles.input}/>
             <Text>Estado</Text>

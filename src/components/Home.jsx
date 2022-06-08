@@ -9,10 +9,7 @@ import Tab from "./tab/BottonTabs";
 const HomeLogin = () => {
   const userExist = useSelector((state) => state.userData);
   if (userExist.loginSuccess) return (
-    // <NavigationContainer>
       <Nav />
-    //   <Tab />
-    // </NavigationContainer>
     );
   return <Login />;
 };

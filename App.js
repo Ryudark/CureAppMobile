@@ -1,36 +1,22 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, SafeAreaView} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import Nav from "./components/nav/Nav.jsx"
-import { createStackNavigator } from '@react-navigation/stack';
-
+import "react-native-gesture-handler";
+import React from "react";
+import { Provider } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
+import store from "./src/Redux/Store/store";
+import HomeLogin from "./src/components/Home";
 
 //scrollview  expo publish  onPress
 
 //expo start -c borra cache
 
 //configurar archivo babel
-const Stack = createStackNavigator();
+
 export default function App() {
   return (
-   
+    <Provider store={store}>
       <NavigationContainer>
-        <Nav/>
-        
-    
-  </NavigationContainer> 
- 
-    
+        <HomeLogin />
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

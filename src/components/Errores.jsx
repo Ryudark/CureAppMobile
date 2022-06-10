@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 
 const Errores = ({ message }) => {
-  const errorExist = useSelector((state) => state.error);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containerErr}>

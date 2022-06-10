@@ -28,6 +28,7 @@ export default function BottonTabs() {
         component={Settings}
         options={{
           title: "Perfil",
+
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-settings"

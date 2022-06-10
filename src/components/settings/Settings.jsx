@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCountry } from '../../Redux/Actions/actions';
+import { getCity, getCountry, getRegion } from '../../Redux/Actions/actions';
 import RNPickerSelect from 'react-native-picker-select';
 
 export default function Settings(){
@@ -16,7 +16,6 @@ export default function Settings(){
     useEffect(()=>{
         dispatch(getCountry())
     },[dispatch])
-    
     return(
         <ScrollView style={styles.container}>
             <Text>Nombre</Text>
@@ -28,7 +27,7 @@ export default function Settings(){
             <Text>Telefono</Text>
             <TextInput keyboardType='numeric' placeholder='Telefono' style={styles.input}/>
             <Text>Telefono Secundario</Text>
-            <TextInput placeholder='Telefono Secundario' style={styles.input}/>
+            <TextInput keyboardType='numeric' placeholder='Telefono Secundario' style={styles.input}/>
             <Text>Edad</Text>
             <TextInput keyboardType='numeric' placeholder='Edad' style={styles.input}/>
             <Text>Documento de Identificación</Text>
@@ -37,13 +36,23 @@ export default function Settings(){
             <TextInput placeholder='Dirección' style={styles.input}/>
             <Text>País</Text>
             {/* <TextInput placeholder='País' style={styles.input}/> */}
-            {
-                // country?.map()
-            }
+            <RNPickerSelect onValueChange={(value) => dispatch(getRegion(country, value))}
+                items={
+                    country?.map((data, index)=>({key: index, label:data.name,value:data.name}))
+                }
+            />
             <Text>Estado</Text>
-            <TextInput placeholder='Estado' style={styles.input}/>
+            <RNPickerSelect onValueChange={(value) => dispatch(getCity(region, value))}
+                items={
+                    region?.map((data, index)=>({key: index, label:data.region,value:data.region}))
+                }
+            />
             <Text>ciudad</Text>
-            <TextInput placeholder='ciudad' style={styles.input}/>
+            <RNPickerSelect onValueChange={(value) => console.log(value)}
+                items={
+                    city?.map((data, index)=>({key: index, label:data.city,value:data.city}))
+                }
+            />
             <Text>Email</Text>
             <TextInput keyboardType='email-address' placeholder='Email' style={styles.input}/>
             <Text>Password</Text>

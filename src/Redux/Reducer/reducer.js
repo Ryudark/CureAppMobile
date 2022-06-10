@@ -1,4 +1,5 @@
 import { Err, USER_LOGIN, NO_ERR } from "../Actions/actions";
+import { CITY, COUNTRY, REGION } from "../constantes";
 
 const initialState = {
   error: {
@@ -7,6 +8,9 @@ const initialState = {
   },
   Users: [],
   userData: {},
+  country: [],
+  region: [],
+  city: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -32,6 +36,21 @@ const rootReducer = (state = initialState, action) => {
           message: "",
           isError: false,
         },
+      };
+    case COUNTRY:
+      return {
+        ...state,
+        country: action.payload,
+      };
+    case REGION:
+      return {
+        ...state,
+        region: action.payload,
+      };
+    case CITY:
+      return {
+        ...state,
+        city: action.payload,
       };
     default:
       return {

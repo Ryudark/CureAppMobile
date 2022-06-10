@@ -1,7 +1,11 @@
 import { USER_LOGIN } from "../Actions/actions";
+import { CITY, COUNTRY, REGION } from "../constantes";
 
 const initialState = {
   userData: {},
+  country:[],
+  region:[],
+  city:[]
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -12,6 +16,21 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userData: action.payload,
       };
+    case COUNTRY:
+      return{
+        ...state,
+        country:action.payload
+      }
+    case REGION:
+      return{
+        ...state,
+        region:action.payload
+      }
+    case CITY:
+      return{
+        ...state,
+        city:action.payload
+      }
     default:
       return {
         ...state,

@@ -52,6 +52,21 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         city: action.payload,
       };
+    case COUNTRY:
+      return{
+        ...state,
+        country:action.payload
+      }
+    case REGION:
+      return{
+        ...state,
+        region:action.payload
+      }
+    case CITY:
+      return{
+        ...state,
+        city:action.payload
+      }
     default:
       return {
         ...state,

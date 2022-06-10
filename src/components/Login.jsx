@@ -1,14 +1,22 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, Button } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogin } from "../Redux/Actions/actions";
+import { userLogin, noError } from "../Redux/Actions/actions";
+import Errores from "./Errores";
 
 const Login = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState("");
-  const user = useSelector((state) => state.userData);
+  const errorExist = useSelector((state) => state.error);
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -16,37 +24,37 @@ const Login = () => {
     validateOnChange: false,
     onSubmit: (formValue) => {
       setError("");
-      const { username, password } = formValue;
 
-      if (user.username) {
-        if (username !== user.username || password !== user.password) {
-          setError("User or password is invalid");
-        }
-      } else {
-        let userObj = {
-          ...formValue,
-          loginSuccess: true,
-        };
-        dispatch(userLogin(userObj));
-      }
+      dispatch(userLogin(formValue));
     },
   });
 
-  const Logout = () => {
-    dispatch(userLogin({}));
-  };
-
+  useEffect(() => {
+    setTimeout(() => {
+      if (errorExist.isError) dispatch(noError());
+    }, 5000);
+  }, [errorExist]);
   return (
-    <View>
-      <Text style={styles.title}> Welcome </Text>
+    <View style={styles.formContainer}>
+      <View style={styles.contentLogo}>
+        <Image
+          style={styles.logo}
+          source={require("../../src/assets/logoClickCareicono.png")}
+        />
+        <Image
+          style={styles.logotxt}
+          source={require("../../src/assets/logotxt.png")}
+        />
+      </View>
+
       <TextInput
         placeholder="User or Email"
         style={styles.input}
         autoCapitalize="none"
-        value={formik.values.username}
-        onChangeText={(text) => formik.setFieldValue("username", text)}
+        value={formik.values.email}
+        onChangeText={(text) => formik.setFieldValue("email", text)}
       />
-      <Text style={styles.error}>{formik.errors.username}</Text>
+      <Text style={styles.error}>{formik.errors.email}</Text>
 
       <TextInput
         placeholder="Enter your password"
@@ -57,46 +65,112 @@ const Login = () => {
         onChangeText={(text) => formik.setFieldValue("password", text)}
       />
       <Text style={styles.error}>{formik.errors.password}</Text>
+      <View style={styles.butonContainer}>
+        <TouchableOpacity style={styles.btnL} onPress={formik.handleSubmit}>
+          <Text style={styles.log}>Login</Text>
+        </TouchableOpacity>
 
-      <Button title="Login" onPress={formik.handleSubmit} />
+        <TouchableOpacity style={styles.btnSU}>
+          <Text style={styles.log}>Sing Up</Text>
+        </TouchableOpacity>
+      </View>
 
-      <Text style={styles.error}>{error}</Text>
+      <TouchableOpacity style={styles.forgot}>
+        <Text style={styles.fpas}>Forgot your password ?</Text>
+      </TouchableOpacity>
+
+      {errorExist.isError ? <Errores message={errorExist.message} /> : <View />}
     </View>
   );
 };
 
 const initialValues = () => {
   return {
-    username: "",
+    email: "",
     password: "",
   };
 };
 const validationSchema = () => {
   return {
-    username: Yup.string().required("Please enter your Username or Email"),
+    email: Yup.string().required("Please enter your Username or Email"),
     password: Yup.string().required("Please enter your Password"),
   };
 };
 
 const styles = StyleSheet.create({
-  title: {
-    textAlign: "center",
-    fontSize: 28,
-    fontWeight: "bold",
-    marginTop: 50,
-    marginBottom: 15,
+  contentLogo: {
+    flexDirection: "column",
+    marginTop: 110,
+    marginBottom: 60,
+    alignItems: "center",
+  },
+  logo: {
+    marginLeft: 25,
+    width: 155,
+    height: 111,
+    marginBottom: 30,
+  },
+  logotxt: {
+    width: 180,
+    height: 30,
   },
   input: {
-    height: 40,
-    margin: 12,
+    marginHorizontal: 20,
     borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
+    padding: 15,
+    borderRadius: 25,
+    borderColor: "#24b8b8",
   },
   error: {
     textAlign: "center",
-    color: "#f00",
+    color: "#1d3454",
+    marginBottom: 10,
+    textShadowRadius: 1,
+    textShadowColor: "#7a7979",
+  },
+  butonContainer: {
+    marginTop: 5,
+    alignItems: "center",
+    flexDirection: "column",
+    paddingHorizontal: 60,
+  },
+
+  btnL: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 50,
+    borderRadius: 25,
+    elevation: 3,
+    backgroundColor: "#24b8b8",
+    alignSelf: "stretch",
+  },
+  btnSU: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 50,
+    borderRadius: 25,
+    elevation: 3,
+    backgroundColor: "#24b8b8",
     marginTop: 20,
+    alignSelf: "stretch",
+  },
+  log: {
+    color: "#1d3454",
+    fontSize: 20,
+    textShadowRadius: 20,
+    textShadowColor: "#7a7979",
+  },
+  forgot: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  fpas: {
+    fontSize: 12,
+    color: "#1d3454",
+    textShadowRadius: 1,
+    textShadowColor: "#7a7979",
   },
 });
 

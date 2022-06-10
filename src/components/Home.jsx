@@ -5,8 +5,8 @@ import Login from "../components/Login";
 import Nav from "../components/nav/Nav";
 
 const HomeLogin = () => {
-  const userExist = useSelector((state) => state.userData);
-  if (userExist.loginSuccess) return <Nav />;
+  const userExist = useSelector((state) => state.Users);
+  if (userExist.length) return <Nav />;
   return <Login />;
 };
 

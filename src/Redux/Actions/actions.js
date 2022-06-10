@@ -1,6 +1,6 @@
-import { COUNTRY } from "../constantes";
 import axios from "axios";
-// const {API_KEY}= process.env
+import { CITY, COUNTRY, REGION } from "../constantes";
+import axios from "axios";
 
 const API_KEY = "5d30980015a22534531b055fb90a33f2";
 
@@ -78,16 +78,15 @@ export const getRegion = (codigo) => {
     }
   };
 };
-
-export const getCity = (region) => {
+export const getCity = (region, value) => {
+  const zona = region.find((data) => data.region === value);
   return async function (dispatch) {
     try {
       const city = await axios.get(
-        `http://battuta.medunes.net/api/city/${codigo}/search/?region=${region}&key=${API_KEY}`
+        `http://battuta.medunes.net/api/city/${zona.country}/search/?region=${zona.region}&key=${API_KEY}`
       );
-      console.log(city.data.length);
       return dispatch({
-        type: COUNTRY,
+        type: CITY,
         payload: city.data,
       });
     } catch (e) {

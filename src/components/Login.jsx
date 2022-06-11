@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,8 +15,8 @@ import { userLogin, noError } from "../Redux/Actions/actions";
 import Errores from "./Errores";
 
 const Login = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [error, setError] = useState("");
   const errorExist = useSelector((state) => state.error);
 
   const formik = useFormik({
@@ -23,11 +24,13 @@ const Login = () => {
     validationSchema: Yup.object(validationSchema()),
     validateOnChange: false,
     onSubmit: (formValue) => {
-      setError("");
-
       dispatch(userLogin(formValue));
     },
   });
+
+  const goToSingUp = () => {
+    navigation.navigate("Sing UP");
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -70,7 +73,10 @@ const Login = () => {
           <Text style={styles.log}>Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnSU}>
+        <TouchableOpacity
+          style={{ ...styles.btnL, marginTop: 20 }}
+          onPress={goToSingUp}
+        >
           <Text style={styles.log}>Sing Up</Text>
         </TouchableOpacity>
       </View>
@@ -145,17 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#24b8b8",
     alignSelf: "stretch",
   },
-  btnSU: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 50,
-    borderRadius: 25,
-    elevation: 3,
-    backgroundColor: "#24b8b8",
-    marginTop: 20,
-    alignSelf: "stretch",
-  },
+
   log: {
     color: "#1d3454",
     fontSize: 20,

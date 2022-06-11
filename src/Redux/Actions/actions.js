@@ -21,7 +21,7 @@ export const userLogin = (user) => {
   try {
     return async function (dispatch) {
       let response = await axios.post(
-        "http://192.168.3.12:3001/api/userdblogin",
+        "https://cureappmobile2022.herokuapp.com/api/userdblogin",
         user
       );
       if (response.data.error) {

@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin, noError } from "../Redux/Actions/actions";
 import Errores from "./Errores";
+import Settings from "./settings/Settings.jsx"
 
 const Login = () => {
   const navigation = useNavigation();
@@ -76,7 +77,7 @@ const Login = () => {
         <TouchableOpacity
           style={{ ...styles.btnL, marginTop: 20 }}
           onPress={goToSingUp}
-        >
+      
           <Text style={styles.log}>Sing Up</Text>
         </TouchableOpacity>
       </View>
@@ -98,7 +99,7 @@ const initialValues = () => {
 };
 const validationSchema = () => {
   return {
-    email: Yup.string().required("Please enter your Username or Email"),
+    email: Yup.string().required("Please enter your Email"),
     password: Yup.string().required("Please enter your Password"),
   };
 };

@@ -18,6 +18,21 @@ export default function Settings() {
   const city = useSelector((state) => state.city);
   const dispatch = useDispatch();
 
+  const [user, setUser] = useState({
+        email:"",
+        password:"",
+        name:"",
+        surname:"",
+        phone:"",
+        address:"",
+        age:"",
+        document:"",
+        phone2:"",
+        state:"",
+        city:"",
+        country:"",
+    })
+    console.log(user)
   useEffect(() => {
     dispatch(getCountry());
   }, [dispatch]);
@@ -41,10 +56,6 @@ export default function Settings() {
         </View>
         <View style={styles.containerInput}>
           <Text style={styles.text}>Apellido</Text>
-          <TextInput style={styles.input} />
-        </View>
-        <View style={styles.containerInput}>
-          <Text style={styles.text}>Nombre de Usuario</Text>
           <TextInput style={styles.input} />
         </View>
 
@@ -79,7 +90,6 @@ export default function Settings() {
       <View style={styles.containerInfoSelect}>
         <View style={styles.containerInput}>
           <Text style={styles.text}>País</Text>
-          {/* <TextInput placeholder='País' style={styles.input}/> */}
           <RNPickerSelect
             onValueChange={(value) => dispatch(getRegion(country, value))}
             items={country?.map((data, index) => ({
@@ -118,7 +128,7 @@ export default function Settings() {
       </TouchableHighlight>
     </ScrollView>
   );
-}
+    
 
 const styles = StyleSheet.create({
   container: {

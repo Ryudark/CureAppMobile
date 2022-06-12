@@ -12,6 +12,7 @@ const HomeNavigation = () => {
       screenOptions={{
         headerStyle: styles.head,
         headerTitleStyle: styles.title,
+        headerShown: false,
       }}
     >
       <Stack.Screen

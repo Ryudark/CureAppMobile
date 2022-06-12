@@ -13,7 +13,6 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin, noError } from "../Redux/Actions/actions";
 import Errores from "./Errores";
-import Settings from "./settings/Settings.jsx"
 
 const Login = () => {
   const navigation = useNavigation();

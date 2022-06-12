@@ -52,7 +52,7 @@ const Login = () => {
       </View>
 
       <TextInput
-        placeholder="User or Email"
+        placeholder="Email"
         style={styles.input}
         autoCapitalize="none"
         value={formik.values.email}
@@ -76,7 +76,7 @@ const Login = () => {
 
         <TouchableOpacity
           style={{ ...styles.btnL, marginTop: 20 }}
-          onPress={goToSingUp}
+          onPress={goToSingUp}>
       
           <Text style={styles.log}>Sing Up</Text>
         </TouchableOpacity>

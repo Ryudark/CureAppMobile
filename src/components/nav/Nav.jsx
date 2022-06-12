@@ -12,17 +12,17 @@ export default function Nav() {
       <Drawer.Screen
         name="Inicio"
         component={Principal}
-        options={{ title: "Inicio", headerTransparent: true }}
+        options={{ title: "Inicio", headerTransparent: false }}
       />
       <Drawer.Screen
         name="Nosotros"
         component={About}
-        options={{ title: "Nosotros", headerTransparent: true }}
+        options={{ title: "Nosotros", headerTransparent: false }}
       />
       <Drawer.Screen
         name="Testimonio"
         component={Testimony}
-        options={{ title: "Testimonio", headerTransparent: true }}
+        options={{ title: "Testimonio", headerTransparent: false }}
       />
     </Drawer.Navigator>
   );

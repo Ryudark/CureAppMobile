@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,11 +8,9 @@ import Nav from "../nav/Nav.jsx";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-
 const Tab = createBottomTabNavigator();
 
 export default function BottonTabs() {
-
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
@@ -44,4 +41,3 @@ export default function BottonTabs() {
     </Tab.Navigator>
   );
 }
-

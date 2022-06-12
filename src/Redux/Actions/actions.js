@@ -36,7 +36,7 @@ export const userLogin = (user) => {
       });
     };
   } catch (err) {
-    return error(err);
+    console.log(err);
   }
 };
 

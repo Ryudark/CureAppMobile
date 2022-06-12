@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import store from "./src/Redux/Store/store";
 import HomeLogin from "./src/components/Home";
+import HomeNavigation from "./src/Navigation/loginNavigation";
 
 //scrollview  expo publish  onPress
 
@@ -15,7 +16,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <HomeLogin />
+        <HomeNavigation />
       </NavigationContainer>
     </Provider>
   );

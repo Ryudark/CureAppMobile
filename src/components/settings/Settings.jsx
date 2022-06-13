@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import { getCity, getCountry, getRegion } from "../../Redux/Actions/actions";
+import { createUsers, getCity, getCountry, getRegion } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
 
 export default function Settings() {
@@ -34,43 +34,81 @@ export default function Settings() {
     })
 
     function changeEmail(email){
-        setUser({email})
+        setUser({...user, email})
     }
     function changePassword(password){
-        setUser({password})
+        setUser({...user, password})
     }
     function changeName(name){
-        setUser({name})
+        setUser({...user, name})
     }
     function changeSurname(surname){
-        setUser({surname})
+        setUser({...user, surname})
     }
     function changePhone(phone){
-        setUser({phone})
+        setUser({...user, phone})
     }
     function changeAddress(address){
-        setUser({address})
+        setUser({...user, address})
     }
     function changeAge(age){
-        setUser({age})
+        setUser({...user, age})
     }
     function changeDocument(document){
-        setUser({document})
+        setUser({...user, document})
     }
     function changePhone2(phone2){
-        setUser({phone2})
+        setUser({...user, phone2})
     }
     function changeState(state){
-        setUser({state})
+        setUser({...user, state})
     }
     function changeCity(city){
-        setUser({city})
+        setUser({...user, city})
     }
     function changeCountry(country){
-        setUser({country})
+        setUser({...user, country})
     }
 
-    console.log(user)
+    function onSubmit(){
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email)) {
+            return alert("Necesita poner un email");
+        }
+        else if (!/(?=.*[0-9])/.test(user.password)) {
+            return alert("Necesita poner una password");
+        }
+        else if (!user.name.trim()) {
+            return alert("Necesita poner un nombre");
+        }
+        else if (!user.surname.trim()) {
+            return alert("Necesita poner un apellido");
+        }
+        else if (!user.age>18) {
+            return alert("Necesita poner una edad");
+        }
+        else if (!user.phone) {
+            return alert("Necesita poner un telefono");
+        }
+        else if (!user.document) {
+            return alert("Necesita poner un documento");
+        }
+        else if (!user.address) {
+            return alert("Necesita poner una dirección");
+        }
+        else if (!user.country) {
+            return alert("Necesita poner un país");
+        }
+        else if (!user.state) {
+            return alert("Necesita poner una region");
+        }
+        else if (!user.city) {
+            return alert("Necesita poner una ciudad");
+        }
+        else{
+            dispatch(createUsers(user))
+            alert("Se ha enviado una confirmación a su correo electronico");
+        }
+    }
     useEffect(() => {
         dispatch(getCountry());
     }, [dispatch]);
@@ -153,8 +191,7 @@ export default function Settings() {
         <View style={styles.containerInput}>
             <Text style={styles.text}>ciudad</Text>
             <RNPickerSelect
-            onValueChange={(value) => {console.log(value)
-                                        changeCity(value)}}
+            onValueChange={(value) => {changeCity(value)}}
             items={city?.map((data, index) => ({
                 key: index,
                 label: data.city,
@@ -164,7 +201,7 @@ export default function Settings() {
         </View>
         </View>
 
-        <TouchableHighlight style={styles.butonContainer}>
+        <TouchableHighlight onPress={onSubmit} style={styles.butonContainer}>
         <Text style={styles.textB}>Guardar</Text>
         </TouchableHighlight>
     </ScrollView>

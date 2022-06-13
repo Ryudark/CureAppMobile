@@ -63,6 +63,15 @@ export const getCountry = () => {
   };
 };
 
+export function createUsers(users){
+  console.log(users)
+    return async function(dispatch){
+        const verificar =  await axios.post('https://cureappmobile2022.herokuapp.com/api/userdbRegistration', users)
+        console.log(verificar)
+    }
+
+}
+
 export const getRegion = (country, value) => {
   const code = country.find((data) => data.name === value);
   return async function (dispatch) {

@@ -30,8 +30,46 @@ export default function Settings() {
         phone2:"",
         state:"",
         city:"",
-        country:"",
+        country:""
     })
+
+    function changeEmail(email){
+        setUser({email})
+    }
+    function changePassword(password){
+        setUser({password})
+    }
+    function changeName(name){
+        setUser({name})
+    }
+    function changeSurname(surname){
+        setUser({surname})
+    }
+    function changePhone(phone){
+        setUser({phone})
+    }
+    function changeAddress(address){
+        setUser({address})
+    }
+    function changeAge(age){
+        setUser({age})
+    }
+    function changeDocument(document){
+        setUser({document})
+    }
+    function changePhone2(phone2){
+        setUser({phone2})
+    }
+    function changeState(state){
+        setUser({state})
+    }
+    function changeCity(city){
+        setUser({city})
+    }
+    function changeCountry(country){
+        setUser({country})
+    }
+
     console.log(user)
     useEffect(() => {
         dispatch(getCountry());
@@ -41,49 +79,49 @@ export default function Settings() {
         <View style={styles.containerInfo}>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Email</Text>
-            <TextInput keyboardType="email-address" style={styles.input} />
+            <TextInput value={user.email} onChangeText={email=>changeEmail(email)} keyboardType="email-address" style={styles.input} />
         </View>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Password</Text>
-            <TextInput secureTextEntry={true} style={styles.input} />
+            <TextInput value={user.password} onChangeText={password=>changePassword(password)} secureTextEntry={true} style={styles.input} />
         </View>
         </View>
 
         <View style={styles.containerInfo}>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Nombre</Text>
-            <TextInput style={styles.input} />
+            <TextInput value={user.name} onChangeText={name=>changeName(name)} style={styles.input} />
         </View>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Apellido</Text>
-            <TextInput style={styles.input} />
+            <TextInput value={user.surname} onChangeText={surname=>changeSurname(surname)} style={styles.input} />
         </View>
 
         <View style={styles.containerInput}>
             <Text style={styles.text}>Edad</Text>
-            <TextInput keyboardType="numeric" style={styles.input} />
+            <TextInput value={user.age} onChangeText={age=>changeAge(age)} keyboardType="numeric" style={styles.input} />
         </View>
         </View>
 
         <View style={styles.containerInfo}>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Telefono</Text>
-            <TextInput keyboardType="numeric" style={styles.input} />
+            <TextInput value={user.phone} onChangeText={phone=>changePhone(phone)} keyboardType="numeric" style={styles.input} />
         </View>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Telefono Secundario</Text>
-            <TextInput keyboardType="numeric" style={styles.input} />
+            <TextInput value={user.phone2} onChangeText={phone2=>changePhone2(phone2)} keyboardType="numeric" style={styles.input} />
         </View>
         </View>
 
         <View style={styles.containerInfo}>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Documento de Identificación</Text>
-            <TextInput keyboardType="numeric" style={styles.input} />
+            <TextInput value={user.document} onChangeText={document=>changeDocument(document)} keyboardType="numeric" style={styles.input} />
         </View>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Dirección</Text>
-            <TextInput style={styles.input} />
+            <TextInput value={user.address} onChangeText={address=>changeAddress(address)} style={styles.input} />
         </View>
         </View>
 
@@ -91,7 +129,8 @@ export default function Settings() {
         <View style={styles.containerInput}>
             <Text style={styles.text}>País</Text>
             <RNPickerSelect
-                onValueChange={(value) => dispatch(getRegion(country, value))}
+                onValueChange={(value) => {dispatch(getRegion(country, value))
+                                            changeCountry(value)}}
                 items={country?.map((data, index) => ({
                 key: index,
                 label: data.name,
@@ -102,7 +141,8 @@ export default function Settings() {
         <View style={styles.containerInput}>
             <Text style={styles.text}>Estado</Text>
             <RNPickerSelect
-            onValueChange={(value) => dispatch(getCity(region, value))}
+            onValueChange={(value) => {dispatch(getCity(region, value))
+                                                changeState(value)}}
             items={region?.map((data, index) => ({
                 key: index,
                 label: data.region,
@@ -113,7 +153,8 @@ export default function Settings() {
         <View style={styles.containerInput}>
             <Text style={styles.text}>ciudad</Text>
             <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => {console.log(value)
+                                        changeCity(value)}}
             items={city?.map((data, index) => ({
                 key: index,
                 label: data.city,

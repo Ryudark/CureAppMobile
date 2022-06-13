@@ -11,6 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { createUsers, getCity, getCountry, getRegion } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
+import axios from 'axios'
 
 export default function Settings() {
     const country = useSelector((state) => state.country);
@@ -74,8 +75,8 @@ export default function Settings() {
         if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email)) {
             return alert("Necesita poner un email");
         }
-        else if (!/(?=.*[0-9])/.test(user.password)) {
-            return alert("Necesita poner una password");
+        else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(user.password)) {
+            return alert("Necesita poner una password con minimo una mayuscula, minuscula y numero");
         }
         else if (!user.name.trim()) {
             return alert("Necesita poner un nombre");
@@ -106,7 +107,8 @@ export default function Settings() {
         }
         else{
             dispatch(createUsers(user))
-            alert("Se ha enviado una confirmación a su correo electronico");
+            // axios.post(('https://cureappmobile2022.herokuapp.com/api/userdbRegistration', user)
+            // alert("Se ha enviado una confirmación a su correo electronico");
         }
     }
     useEffect(() => {

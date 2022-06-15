@@ -1,4 +1,4 @@
-import { CITY, COUNTRY, REGION } from "../constantes";
+import { CITY, COUNTRY, ERROR, REGION } from "../constantes";
 import axios from "axios";
 
 // const {API_KEY}= process.env
@@ -18,7 +18,7 @@ const error = (info) => {
 
 export const userLogin = (user) => {
   console.log(user);
-  try {
+  // try {
     return async function (dispatch) {
       let response = await axios.post(
         "https://cureappmobile2022.herokuapp.com/api/userdblogin",
@@ -34,10 +34,10 @@ export const userLogin = (user) => {
         type: USER_LOGIN,
         payload: user,
       });
-    };
-  } catch (err) {
-    console.log(err);
-  }
+  };
+  // } catch (err) {
+  //   console.log(err);
+  // }
 };
 
 export const noError = () => {
@@ -47,10 +47,8 @@ export const noError = () => {
 };
 
 export function createUsers(users){
-  console.log(users)
-  return async function(){
-      const verificar =  await axios.post('https://cureappmobile2022.herokuapp.com/api/userdbRegistration', users)
-      console.log(verificar.data)
+  return async function(dispatch){
+    await axios.post('https://cureappmobile2022.herokuapp.com/api/userdbRegistration', users)
   }
 }
 
@@ -81,7 +79,6 @@ export const getRegion = (country, value) => {
       );
       return dispatch({
         type: REGION,
-
         payload: region.data,
       });
     } catch (e) {

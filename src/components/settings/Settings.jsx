@@ -71,51 +71,24 @@ export default function Settings() {
         setUser({...user, country})
     }
 
+    // console.log(error)
     function onSubmit(){
-        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email)) {
-            return alert("Necesita poner un email");
-        }
-        else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(user.password)) {
-            return alert("Necesita poner una password con minimo una mayuscula, minuscula y numero");
-        }
-        else if (!user.name.trim()) {
-            return alert("Necesita poner un nombre");
-        }
-        else if (!user.surname.trim()) {
-            return alert("Necesita poner un apellido");
-        }
-        else if (!user.age>18) {
-            return alert("Necesita poner una edad");
-        }
-        else if (!user.phone) {
-            return alert("Necesita poner un telefono");
-        }
-        else if (!user.document) {
-            return alert("Necesita poner un documento");
-        }
-        else if (!user.address) {
-            return alert("Necesita poner una dirección");
-        }
-        else if (!user.country) {
-            return alert("Necesita poner un país");
-        }
-        else if (!user.state) {
-            return alert("Necesita poner una region");
-        }
-        else if (!user.city) {
-            return alert("Necesita poner una ciudad");
-        }
+        if(!user.email) alert('ingrese datos')
         else{
-            dispatch(createUsers(user))
-            // axios.post(('https://cureappmobile2022.herokuapp.com/api/userdbRegistration', user)
-            // alert("Se ha enviado una confirmación a su correo electronico");
+            try{
+                dispatch(createUsers(user))
+                alert('usuario creado')
+            }
+            catch(e){
+                alert(Object.keys(e.response.data.errors[0])[0]+": "+Object.values(e.response.data.errors[0])[0])
+            }
         }
     }
     useEffect(() => {
         dispatch(getCountry());
     }, [dispatch]);
     return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
         <View style={styles.containerInfo}>
         <View style={styles.containerInput}>
             <Text style={styles.text}>Email</Text>
@@ -212,9 +185,10 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
     container: {
-    paddingHorizontal: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
+        paddingTop:5,
+        paddingHorizontal: 5,
+        paddingLeft: 15,
+        paddingRight: 15,
     },
     input: {
     marginHorizontal: 20,

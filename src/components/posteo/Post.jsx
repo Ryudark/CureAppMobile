@@ -13,7 +13,7 @@ import { createUsers, getCity, getCountry, getRegion } from "../../Redux/Actions
 import RNPickerSelect from "react-native-picker-select";
 import axios from 'axios'
 
-export default function Settings() {
+export default function Post() {
     const country = useSelector((state) => state.country);
     const region = useSelector((state) => state.region);
     const city = useSelector((state) => state.city);
@@ -72,15 +72,14 @@ export default function Settings() {
     }
 
     // console.log(error)
-    async function onSubmit(){
+    function onSubmit(){
         if(!user.email) alert('ingrese datos')
         else{
             try{
-                await dispatch(createUsers(user))
+                dispatch(createUsers(user))
                 alert('usuario creado')
             }
             catch(e){
-                console.log(e.response.data)
                 alert(Object.keys(e.response.data.errors[0])[0]+": "+Object.values(e.response.data.errors[0])[0])
             }
         }

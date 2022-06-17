@@ -6,137 +6,199 @@ import {
     TouchableHighlight,
     StyleSheet,
     View,
+    Platform,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import { createUsers, getCity, getCountry, getRegion } from "../../Redux/Actions/actions";
+import { getCity, getCountry, getRegion } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
 import axios from 'axios'
+import DatePicker from "react-native-date-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+// import { Button } from "react-native-web";
 
 export default function Post() {
+
+    const [fecha, setFecha] = useState(new Date())
+    // const [fecha2, setFecha2] = useState(new Date())
+    // const [fecha3, setFecha3] = useState(new Date())
+    // const [fecha4, setFecha4] = useState(new Date())
+    const [mode, setMode]= useState('date')
+    const [show, setShow]= useState(false)
+    // const [text, setText]= useState({
+    //     fechaIni:"",
+    //     fechaFin:"",
+    //     horaIni:"",
+    //     horaFin:""
+    // })
+    const [text, setText]= useState()
+    const [text2, setText2]= useState()
+    const [text3, setText3]= useState()
+    const [text4, setText4]= useState()
+
     const country = useSelector((state) => state.country);
     const region = useSelector((state) => state.region);
     const city = useSelector((state) => state.city);
     const dispatch = useDispatch();
 
     const [user, setUser] = useState({
-        email:"",
-        password:"",
-        name:"",
-        surname:"",
-        phone:"",
-        address:"",
-        age:"",
-        document:"",
-        phone2:"",
+        date_post:"",
+        hour_post:"",
+        date_ini:"",
+        date_fin:"",
+        needs:"",
+        locationReference:"",
+        contact_phone:"",
+        id_users:"",
+        specialtyPatient:"",
         state:"",
         city:"",
-        country:""
+        country:"",
+        agePatient:"",
+        namePatient:"",
+        availableTime_0:"",
+        availableTime_1:""
     })
 
-    function changeEmail(email){
-        setUser({...user, email})
+    function changeDate(){
+        const date= new Date()
+        const actualDate = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+        const actualHour = date.toLocaleTimeString()
+        setUser({...user, date_post: actualDate, hour_post:actualHour })
     }
-    function changePassword(password){
-        setUser({...user, password})
+
+    function changeDateIni(event, selectDate){
+        const currentDate = selectDate || fecha
+        console.log(currentDate)
+        setFecha(currentDate)
+        const date= new Date(currentDate)
+        const actualDate = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+        setText(actualDate)
+        setUser({...user, date_ini: text})
+        setShow(false)
     }
-    function changeName(name){
-        setUser({...user, name})
+
+    function changeDateFin(event, selectDate){
+        const currentDate = selectDate || fecha
+        console.log(currentDate)
+        setFecha(currentDate)
+        const date= new Date(currentDate)
+        const actualDate = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+        console.log(actualDate)
+        setText2(actualDate)
+        setShow(false)
     }
-    function changeSurname(surname){
-        setUser({...user, surname})
+
+    function changeHourIni(event, selectDate){
+        const currentDate = selectDate || fecha
+        console.log(currentDate)
+        setFecha(currentDate)
+        const date= new Date(currentDate)
+        const actualHour = date.getHours()+":"+date.getMinutes()
+        console.log(actualHour)
+        setText({...text, horaIni:actualHour})
+        setShow(false)
     }
-    function changePhone(phone){
-        setUser({...user, phone})
+
+    function changeHourFin(event, selectDate){
+        const currentDate = selectDate || fecha
+        console.log(currentDate)
+        setFecha(currentDate)
+        const date= new Date(currentDate)
+        const actualHour = date.getHours()+":"+date.getMinutes()
+        console.log(actualHour)
+        setText({...text, horaIni:actualHour})
+        setShow(false)
     }
-    function changeAddress(address){
-        setUser({...user, address})
+    console.log(text)
+    
+    function showMode(currentMode){
+        setShow(true)
+        setMode(currentMode)
     }
-    function changeAge(age){
-        setUser({...user, age})
-    }
-    function changeDocument(document){
-        setUser({...user, document})
-    }
-    function changePhone2(phone2){
-        setUser({...user, phone2})
-    }
+
     function changeState(state){
         setUser({...user, state})
     }
+
     function changeCity(city){
         setUser({...user, city})
     }
+
     function changeCountry(country){
         setUser({...user, country})
     }
 
-    // console.log(error)
     function onSubmit(){
-        if(!user.email) alert('ingrese datos')
-        else{
-            try{
-                dispatch(createUsers(user))
-                alert('usuario creado')
-            }
-            catch(e){
-                alert(Object.keys(e.response.data.errors[0])[0]+": "+Object.values(e.response.data.errors[0])[0])
-            }
-        }
+        changeDate()
+        console.log(user)
     }
     useEffect(() => {
         dispatch(getCountry());
     }, [dispatch]);
     return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
-        <View style={styles.containerInfo}>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Email</Text>
-            <TextInput value={user.email} onChangeText={email=>changeEmail(email)} keyboardType="email-address" style={styles.input} />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Password</Text>
-            <TextInput value={user.password} onChangeText={password=>changePassword(password)} secureTextEntry={true} style={styles.input} />
-        </View>
-        </View>
 
-        <View style={styles.containerInfo}>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Nombre</Text>
-            <TextInput value={user.name} onChangeText={name=>changeName(name)} style={styles.input} />
+        <View>
+            <Text>Fecha inicio: {text}</Text>
+            <View>
+                <TouchableHighlight onPress={()=>showMode('date')}>
+                    <Text style={styles.textB}>Escoja Fecha Inicio</Text>
+                </TouchableHighlight>
+            </View>
+            {show &&(<DateTimePicker 
+                testID='dateTimePicker'    
+                value={fecha}
+                mode={mode}
+                is24Hour={true}
+                display='default'
+                onChange={changeDateIni}
+            />)}
+            <Text>Fecha Fin: {text2}</Text>
+            <View>
+                <TouchableHighlight onPress={()=>showMode('date')}>
+                    <Text style={styles.textB}>Escoja Fecha Fin</Text>
+                </TouchableHighlight>
+            </View>
+            {show &&(<DateTimePicker 
+                testID='dateTimePicker'    
+                value={fecha}
+                mode={mode}
+                is24Hour={true}
+                display='default'
+                onChange={changeDateFin}
+            />)}
         </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Apellido</Text>
-            <TextInput value={user.surname} onChangeText={surname=>changeSurname(surname)} style={styles.input} />
-        </View>
-
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Edad</Text>
-            <TextInput value={user.age} onChangeText={age=>changeAge(age)} keyboardType="numeric" style={styles.input} />
-        </View>
-        </View>
-
-        <View style={styles.containerInfo}>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Telefono</Text>
-            <TextInput value={user.phone} onChangeText={phone=>changePhone(phone)} keyboardType="numeric" style={styles.input} />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Telefono Secundario</Text>
-            <TextInput value={user.phone2} onChangeText={phone2=>changePhone2(phone2)} keyboardType="numeric" style={styles.input} />
-        </View>
-        </View>
-
-        <View style={styles.containerInfo}>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Documento de Identificación</Text>
-            <TextInput value={user.document} onChangeText={document=>changeDocument(document)} keyboardType="numeric" style={styles.input} />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Dirección</Text>
-            <TextInput value={user.address} onChangeText={address=>changeAddress(address)} style={styles.input} />
-        </View>
-        </View>
+        {/* <View>
+            <View>
+                <Text>Hora inicio: {text.horaIni}</Text>
+                <TouchableHighlight onPress={()=>showMode('time')}>
+                    <Text style={styles.textB}>Escoja Hora inicio</Text>
+                </TouchableHighlight>
+            </View>
+            {show &&(<DateTimePicker 
+                testID='dateTimePicker'    
+                value={fecha3}
+                mode={mode}
+                is24Hour={true}
+                display='default'
+                onChange={changeHourIni}
+            />)}
+            <View>
+                <Text>Hora Fin: {text.horaFin}</Text>
+                <TouchableHighlight onPress={()=>showMode('time')}>
+                    <Text style={styles.textB}>Escoja Hora Fin</Text>
+                </TouchableHighlight>
+            </View>
+            {show &&(<DateTimePicker 
+                testID='dateTimePicker'    
+                value={fecha4}
+                mode={mode}
+                is24Hour={true}
+                display='default'
+                onChange={changeHourFin}
+            />)}
+        </View> */}
 
         <View style={styles.containerInfoSelect}>
         <View style={styles.containerInput}>
@@ -177,7 +239,7 @@ export default function Post() {
         </View>
 
         <TouchableHighlight onPress={onSubmit} style={styles.butonContainer}>
-        <Text style={styles.textB}>Crear</Text>
+            <Text style={styles.textB}>Crear</Text>
         </TouchableHighlight>
     </ScrollView>
     );
@@ -185,7 +247,7 @@ export default function Post() {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop:5,
+        paddingTop:20,
         paddingHorizontal: 5,
         paddingLeft: 15,
         paddingRight: 15,

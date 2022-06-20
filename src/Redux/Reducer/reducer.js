@@ -1,4 +1,4 @@
-import { Err, USER_LOGIN, NO_ERR } from "../Actions/actions";
+import { ERR, USER_LOGIN, NO_ERR, LOADING } from "../Actions/actions";
 import { CITY, COUNTRY, REGION } from "../constantes";
 
 const initialState = {
@@ -6,11 +6,12 @@ const initialState = {
     message: "",
     isError: false,
   },
-  Users: [],
+  islogged: false,
   userData: {},
   country: [],
   region: [],
   city: [],
+  isLoggin: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -18,16 +19,22 @@ const rootReducer = (state = initialState, action) => {
     case USER_LOGIN:
       return {
         ...state,
-        Users: [...state.Users, action.payload],
+
+        islogged: true,
       };
-    case Err:
-      console.log("hola", action.payload);
+    case LOADING:
+      return {
+        ...state,
+        isLoggin: !state.isLoggin,
+      };
+    case ERR:
       return {
         ...state,
         error: {
           message: action.payload,
           isError: true,
         },
+        isLoggin: false,
       };
     case NO_ERR:
       return {
@@ -53,20 +60,20 @@ const rootReducer = (state = initialState, action) => {
         city: action.payload,
       };
     case COUNTRY:
-      return{
+      return {
         ...state,
-        country:action.payload
-      }
+        country: action.payload,
+      };
     case REGION:
-      return{
+      return {
         ...state,
-        region:action.payload
-      }
+        region: action.payload,
+      };
     case CITY:
-      return{
+      return {
         ...state,
-        city:action.payload
-      }
+        city: action.payload,
+      };
     default:
       return {
         ...state,

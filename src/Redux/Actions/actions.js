@@ -4,45 +4,43 @@ import axios from "axios";
 // const {API_KEY}= process.env
 
 const API_KEY = "5d30980015a22534531b055fb90a33f2";
-
-export const Err = "Err";
-export const USER_LOGIN = "USER_LOGIN";
 export const NO_ERR = "NO_ERR";
-
-const error = (info) => {
-  return {
-    type: Err,
-    payload: info,
-  };
-};
+export const ERR = "ERR";
+export const USER_LOGIN = "USER_LOGIN";
+export const LOADING = "LOADING";
 
 export const userLogin = (user) => {
-  console.log(user);
-  try {
-    return async function (dispatch) {
+  return async function (dispatch) {
+    try {
       let response = await axios.post(
-        "https://cureappmobile2022.herokuapp.com/api/userdblogin",
+        "http://192.168.3.12:3001/api/userdblogin",
         user
       );
-      if (response.data.error) {
-        return dispatch({
-          type: Err,
-          payload: response.data.error,
-        });
-      }
-      return dispatch({
-        type: USER_LOGIN,
-        payload: user,
-      });
-    };
-  } catch (err) {
-    console.log(err);
-  }
-};
+      return dispatch({ type: USER_LOGIN });
 
+      console.log("respuesta axios", response.data);
+    } catch (error) {
+      let mensaje = error.response.data.errors
+        ? "verifique su usuario y contraseña"
+        : error.response.data.error;
+
+      return dispatch({
+        type: ERR,
+        payload: mensaje,
+      });
+    }
+  };
+};
+export const isLogged = () => {};
 export const noError = () => {
   return {
     type: NO_ERR,
+  };
+};
+
+export const loading = () => {
+  return {
+    type: LOADING,
   };
 };
 

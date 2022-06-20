@@ -6,12 +6,14 @@ import {
     TouchableHighlight,
     StyleSheet,
     View,
+    Alert
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { createUsers, getCity, getCountry, getRegion } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
 import axios from 'axios'
+import SweetAlert from 'react-native-sweet-alert';
 
 export default function Settings() {
     const country = useSelector((state) => state.country);
@@ -81,7 +83,7 @@ export default function Settings() {
             }
             catch(e){
                 console.log(e.response.data)
-                alert(Object.keys(e.response.data.errors[0])[0]+": "+Object.values(e.response.data.errors[0])[0])
+                Alert.alert(Object.keys(e.response.data.errors[0])[0], Object.values(e.response.data.errors[0])[0])
             }
         }
     }

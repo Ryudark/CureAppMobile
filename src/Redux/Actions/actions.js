@@ -52,6 +52,13 @@ export function createUsers(users){
   }
 }
 
+export function postUser(post){
+  console.log(post)
+  return async function(dispatch){
+    await axios.post('https://cureappmobile2022.herokuapp.com/api/postgenerator', post)
+  }
+}
+
 export const getCountry = () => {
   return async function (dispatch) {
     try {

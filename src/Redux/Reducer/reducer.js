@@ -1,5 +1,5 @@
 import { Err, USER_LOGIN, NO_ERR } from "../Actions/actions";
-import { CITY, COUNTRY, ERROR, REGION } from "../constantes";
+import { CITY, COUNTRY, ERROR, REGION, SPECIALITY } from "../constantes";
 
 const initialState = {
   error: {
@@ -11,6 +11,7 @@ const initialState = {
   country: [],
   region: [],
   city: [],
+  speciality:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -71,6 +72,11 @@ const rootReducer = (state = initialState, action) => {
       return{
         ...state,
         errors:action.payload
+      }
+    case SPECIALITY:
+      return{
+        ...state,
+        speciality:action.payload
       }
     default:
       return {

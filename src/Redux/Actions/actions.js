@@ -1,4 +1,4 @@
-import { CITY, COUNTRY, ERROR, REGION } from "../constantes";
+import { CITY, COUNTRY, REGION } from "../constantes";
 import axios from "axios";
 
 // const {API_KEY}= process.env
@@ -34,7 +34,7 @@ export const userLogin = (user) => {
         type: USER_LOGIN,
         payload: user,
       });
-  };
+    };
   } catch (err) {
     console.log(err);
   }

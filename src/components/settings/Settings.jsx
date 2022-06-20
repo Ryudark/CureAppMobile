@@ -14,6 +14,8 @@ import { createUsers, getCity, getCountry, getRegion } from "../../Redux/Actions
 import RNPickerSelect from "react-native-picker-select";
 import axios from 'axios'
 import SweetAlert from 'react-native-sweet-alert';
+import Login from "../Login";
+import HomeNavigation from "../../Navigation/loginNavigation.js";
 
 export default function Settings() {
     const country = useSelector((state) => state.country);
@@ -79,7 +81,8 @@ export default function Settings() {
         else{
             try{
                 await dispatch(createUsers(user))
-                alert('usuario creado')
+                alert('usuario creado, POR FAVOR REVISE SU CORREO PARA VALIDAR')
+                // return <HomeNavigation />
             }
             catch(e){
                 console.log(e.response.data)

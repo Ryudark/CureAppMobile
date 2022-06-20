@@ -3,7 +3,7 @@ import axios from "axios";
 
 // const {API_KEY}= process.env
 
-const API_KEY = "e5e838e3cc09163a7d6ffb057c689919";
+const API_KEY = "ec2ab08965699856947080b2bbe0766b";
 
 export const Err = "Err";
 export const USER_LOGIN = "USER_LOGIN";

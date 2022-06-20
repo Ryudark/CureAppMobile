@@ -43,15 +43,17 @@ export default function Post() {
         needs: "",
         locationReference: "",
         contact_phone: "",
-        id_users: "1",
-        state: "Bogotá",
-        city: "Bogotá",
-        country: "Colombia",
+        id_users: 1,
+        state: "",
+        city: "",
+        country: "",
         specialtyPatient: "",
         agePatient: "",
         namePatient: "",
         availableTime_0: "",
-        availableTime_1: ""
+        availableTime_1: "",
+        addressPatient:"",
+        active:true
     })
 
     function changeDate() {
@@ -83,7 +85,8 @@ export default function Post() {
         const currentDate = selectDate || fecha
         setFecha(currentDate)
         const date = new Date(currentDate)
-        const actualHour = date.getHours() + ":" + date.getMinutes()
+        // const actualHour = date.getHours() + ":" + date.getMinutes()
+        const actualHour = date.getHours()
         setUser(prev => ({ ...prev, availableTime_0: actualHour }))
         setShowHI(false)
     }
@@ -92,7 +95,8 @@ export default function Post() {
         const currentDate = selectDate || fecha
         setFecha(currentDate)
         const date = new Date(currentDate)
-        const actualHour = date.getHours() + ":" + date.getMinutes()
+        // const actualHour = date.getHours() + ":" + date.getMinutes()
+        const actualHour = date.getHours()
         setUser(prev => ({ ...prev, availableTime_1: actualHour }))
         setShowHF(false)
     }
@@ -127,27 +131,31 @@ export default function Post() {
         setMode(currentMode)
     }
 
-    // function changeState(state) {
-    //     setUser(prev => ({ ...prev, state: "Castellón" }))
-    //     // setUser({ ...user, state })
-    // }
+    function changeState(state) {
+        // setUser(prev => ({ ...prev, state }))
+        setUser({ ...user, state })
+    }
 
     function changeSpeciality(specialtyPatient) {
         setUser({ ...user, specialtyPatient })
     }
 
-    // function changeCity(city) {
-    //     setUser(prev => ({ ...prev, city: "Adzaneta" }))
-    //     // setUser({ ...user, city })
-    // }
+    function changeCity(city) {
+        // setUser(prev => ({ ...prev, city: "Adzaneta" }))
+        setUser({ ...user, city })
+    }
 
-    // function changeCountry(country) {
-    //     setUser(prev => ({ ...prev, country: "España" }))
-    //     // setUser({ ...user, country })
-    // }
+    function changeCountry(country) {
+        // setUser(prev => ({ ...prev, country: "España" }))
+        setUser({ ...user, country })
+    }
 
     function changeAddress(locationReference){
         setUser({...user, locationReference})
+    }
+
+    function changeAddressP(addressPatient){
+        setUser({...user, addressPatient})
     }
 
     function changePhone(contact_phone){
@@ -200,7 +208,6 @@ export default function Post() {
                 </View>
                 {showI && (<DateTimePicker
                     testID='dateTimePicker'
-                    // value={fecha}
                     value={fecha}
                     mode={mode}
                     is24Hour={true}
@@ -308,7 +315,11 @@ export default function Post() {
                 </View>
             </View>
             <View style={styles.containerInput}>
-                <Text style={styles.text}>Dirección</Text>
+                <Text style={styles.text}>Dirección del paciente</Text>
+                <TextInput value={user.addressPatient} onChangeText={addressPatient=>changeAddressP(addressPatient)} style={styles.input} />
+            </View>
+            <View style={styles.containerInput}>
+                <Text style={styles.text}>Referencia de Localización</Text>
                 <TextInput value={user.locationReference} onChangeText={locationReference=>changeAddress(locationReference)} style={styles.input} />
             </View>
 

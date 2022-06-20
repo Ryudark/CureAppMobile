@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Principal from "../principal/Principal.jsx";
 import Settings from "../settings/Settings";
-import Nav from "../nav/Nav.jsx";
+
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -15,7 +15,7 @@ export default function BottonTabs() {
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="Home"
-        component={Nav}
+        component={Principal}
         options={{
           title: "Home",
           tabBarIcon: ({ color, size }) => (
@@ -23,7 +23,7 @@ export default function BottonTabs() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Perfil"
         component={Settings}
         options={{
@@ -37,7 +37,7 @@ export default function BottonTabs() {
             />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

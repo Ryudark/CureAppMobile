@@ -55,6 +55,7 @@ export function createUsers(users){
 export function postUser(post){
   console.log(post)
   return async function(dispatch){
+    // await axios.post('https://pf-api-rest.herokuapp.com/api/postgenerator', post)
     await axios.post('https://cureappmobile2022.herokuapp.com/api/postgenerator', post)
   }
 }

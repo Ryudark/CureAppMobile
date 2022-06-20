@@ -18,7 +18,7 @@ const error = (info) => {
 
 export const userLogin = (user) => {
   console.log(user);
-  // try {
+  try {
     return async function (dispatch) {
       let response = await axios.post(
         "https://cureappmobile2022.herokuapp.com/api/userdblogin",
@@ -35,9 +35,9 @@ export const userLogin = (user) => {
         payload: user,
       });
   };
-  // } catch (err) {
-  //   console.log(err);
-  // }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const noError = () => {

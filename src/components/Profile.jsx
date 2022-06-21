@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUserDetail } from "../Redux/Actions/actions";
 import { Entypo } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   Avatar,
   Title,
@@ -29,14 +31,38 @@ export default function Profile() {
           />
           <View style={styles.nameEmail}>
             <Title style={styles.title}>Name User</Title>
-            <Caption style={styles.caption}>user@email.com</Caption>
+            <Caption style={styles.caption}>@username</Caption>
           </View>
         </View>
         <View style={styles.userInfoSection}>
-          <View style={styles.paisContainer}>
-            <Entypo name="location" size={25} color="#24b8b8" />
-            <Text style={styles.pais}>Pais de usuario</Text>
+          <View style={styles.contactContainer}>
+            <Entypo name="location" size={25} color="#1d3454" />
+            <Text style={styles.dato}>Pais de usuario</Text>
           </View>
+          <View style={styles.contactContainer}>
+            <MaterialIcons name="local-phone" size={24} color="#1d3454" />
+            <Text style={styles.dato}>+00-00000000</Text>
+          </View>
+          <View style={styles.contactContainer}>
+            <MaterialCommunityIcons
+              name="email-check-outline"
+              size={24}
+              color="#1d3454"
+            />
+            <Text style={styles.dato}>user@email.com</Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.infoPremium}>
+        <View style={styles.infoBox}>
+          <Title>Premium</Title>
+          <Caption>Suscrpcion</Caption>
+        </View>
+        <View style={styles.divisor}></View>
+        <View style={styles.infoBox}>
+          <Title>10</Title>
+          <Caption>Mis contratos</Caption>
         </View>
       </View>
     </SafeAreaView>
@@ -45,13 +71,32 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   container: {},
-  userInfo: {},
-  avatar: { flexDirection: "row" },
-  nameEmail: { marginLeft: 20 },
+  userInfo: { marginLeft: 15 },
+  avatar: { marginTop: 15, flexDirection: "row" },
+  nameEmail: { marginTop: 15, marginLeft: 20 },
   title: {},
-  userInfoSection: {},
-  paisContainer: {
+  userInfoSection: { marginTop: 20 },
+  contactContainer: {
     flexDirection: "row",
+    marginTop: 10,
   },
-  pais: { color: "#1d3454" },
+  dato: { marginLeft: 20, color: "#1d3454" },
+  infoPremium: {
+    marginTop: 40,
+    flexDirection: "row",
+    borderWidth: 1,
+    width: 360,
+  },
+  infoBox: {
+    alignItems: "center",
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 30,
+    marginRight: 25,
+  },
+  divisor: {
+    marginRight: 15,
+    marginLeft: 30,
+    borderRightWidth: 1,
+  },
 });

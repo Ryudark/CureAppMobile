@@ -3,7 +3,8 @@ import axios from "axios";
 
 // const {API_KEY}= process.env
 
-const API_KEY = "5d30980015a22534531b055fb90a33f2";
+const API_KEY = "ec2ab08965699856947080b2bbe0766b";
+
 export const NO_ERR = "NO_ERR";
 export const ERR = "ERR";
 export const USER_LOGIN = "USER_LOGIN";
@@ -38,6 +39,20 @@ export const noError = () => {
   };
 };
 
+export function createUsers(users){
+  return async function(dispatch){
+    await axios.post('https://cureappmobile2022.herokuapp.com/api/userdbRegistration', users)
+  }
+}
+
+export function postUser(post){
+  console.log(post)
+  return async function(dispatch){
+    // await axios.post('https://pf-api-rest.herokuapp.com/api/postgenerator', post)
+    await axios.post('https://cureappmobile2022.herokuapp.com/api/postgenerator', post)
+  }
+}
+
 export const loading = () => {
   return {
     type: LOADING,
@@ -53,7 +68,7 @@ export const getCountry = () => {
 
       return dispatch({
         type: COUNTRY,
-        payload: country.data,
+        payload: country?.data,
       });
     } catch (e) {
       console.log(e);
@@ -61,16 +76,16 @@ export const getCountry = () => {
   };
 };
 
+
 export const getRegion = (country, value) => {
   const code = country.find((data) => data.name === value);
   return async function (dispatch) {
     try {
       const region = await axios.get(
-        `http://battuta.medunes.net/api/region/${code.code}/all/?key=${API_KEY}`
+        `http://battuta.medunes.net/api/region/${code?.code}/all/?key=${API_KEY}`
       );
       return dispatch({
         type: REGION,
-
         payload: region.data,
       });
     } catch (e) {
@@ -84,7 +99,7 @@ export const getCity = (region, value) => {
   return async function (dispatch) {
     try {
       const city = await axios.get(
-        `http://battuta.medunes.net/api/city/${zona.country}/search/?region=${zona.region}&key=${API_KEY}`
+        `http://battuta.medunes.net/api/city/${zona?.country}/search/?region=${zona.region}&key=${API_KEY}`
       );
       return dispatch({
         type: CITY,

@@ -6,18 +6,14 @@ import {
     TouchableHighlight,
     StyleSheet,
     View,
-    Alert
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { createUsers, getCity, getCountry, getRegion } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
 import axios from 'axios'
-import SweetAlert from 'react-native-sweet-alert';
-import Login from "../Login";
-import HomeNavigation from "../../Navigation/loginNavigation.js";
 
-export default function Settings() {
+export default function Actualization() {
     const country = useSelector((state) => state.country);
     const region = useSelector((state) => state.region);
     const city = useSelector((state) => state.city);
@@ -76,17 +72,15 @@ export default function Settings() {
     }
 
     // console.log(error)
-    async function onSubmit(){
+    function onSubmit(){
         if(!user.email) alert('ingrese datos')
         else{
             try{
-                await dispatch(createUsers(user))
-                alert('usuario creado, POR FAVOR REVISE SU CORREO PARA VALIDAR')
-                // return <HomeNavigation />
+                dispatch(createUsers(user))
+                alert('usuario creado')
             }
             catch(e){
-                console.log(e.response.data)
-                Alert.alert(Object.keys(e.response.data.errors[0])[0], Object.values(e.response.data.errors[0])[0])
+                alert(Object.keys(e.response.data.errors[0])[0]+": "+Object.values(e.response.data.errors[0])[0])
             }
         }
     }
@@ -183,7 +177,7 @@ export default function Settings() {
         </View>
 
         <TouchableHighlight onPress={onSubmit} style={styles.butonContainer}>
-        <Text style={styles.textB}>Crear</Text>
+        <Text style={styles.textB}>Guardar</Text>
         </TouchableHighlight>
     </ScrollView>
     );

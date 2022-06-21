@@ -5,41 +5,34 @@ import axios from "axios";
 
 const API_KEY = "ec2ab08965699856947080b2bbe0766b";
 
-export const Err = "Err";
-export const USER_LOGIN = "USER_LOGIN";
 export const NO_ERR = "NO_ERR";
-
-const error = (info) => {
-  return {
-    type: Err,
-    payload: info,
-  };
-};
+export const ERR = "ERR";
+export const USER_LOGIN = "USER_LOGIN";
+export const LOADING = "LOADING";
 
 export const userLogin = (user) => {
-  console.log(user);
-  try {
-    return async function (dispatch) {
+  return async function (dispatch) {
+    try {
       let response = await axios.post(
-        "https://cureappmobile2022.herokuapp.com/api/userdblogin",
+        "http://192.168.3.12:3001/api/userdblogin",
         user
       );
-      if (response.data.error) {
-        return dispatch({
-          type: Err,
-          payload: response.data.error,
-        });
-      }
-      return dispatch({
-        type: USER_LOGIN,
-        payload: user,
-      });
-    };
-  } catch (err) {
-    console.log(err);
-  }
-};
+      return dispatch({ type: USER_LOGIN });
 
+      console.log("respuesta axios", response.data);
+    } catch (error) {
+      let mensaje = error.response.data.errors
+        ? "verifique su usuario y contraseña"
+        : error.response.data.error;
+
+      return dispatch({
+        type: ERR,
+        payload: mensaje,
+      });
+    }
+  };
+};
+export const isLogged = () => {};
 export const noError = () => {
   return {
     type: NO_ERR,
@@ -59,6 +52,12 @@ export function postUser(post){
     await axios.post('https://cureappmobile2022.herokuapp.com/api/postgenerator', post)
   }
 }
+
+export const loading = () => {
+  return {
+    type: LOADING,
+  };
+};
 
 export const getCountry = () => {
   return async function (dispatch) {

@@ -59,6 +59,8 @@ export const loading = () => {
   };
 };
 
+export const getUserDetail = () => {};
+
 export const getCountry = () => {
   return async function (dispatch) {
     try {

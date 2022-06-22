@@ -191,30 +191,30 @@ export default function Actualization() {
 
       <View style={styles.containerInfoSelect}>
         <View style={styles.containerInput}>
-          <Text style={styles.text}>País</Text>
-          <RNPickerSelect
-            onValueChange={(value) => {
-              dispatch(getRegion(country, value));
-              changeCountry(value);
-            }}
-            items={country?.map((data, index) => ({
-              key: index,
-              label: data.name,
-              value: data.name,
+
+            <Text style={styles.text}>País</Text>
+            <RNPickerSelect
+                onValueChange={(value) => {dispatch(getRegion(value))
+                                            changeCountry(value)}}
+                items={country?.map((data, index) => ({
+                key: index,
+                label: data.name,
+                value: data.name,
+
             }))}
           />
         </View>
         <View style={styles.containerInput}>
-          <Text style={styles.text}>Estado</Text>
-          <RNPickerSelect
-            onValueChange={(value) => {
-              dispatch(getCity(region, value));
-              changeState(value);
-            }}
+
+            <Text style={styles.text}>Estado</Text>
+            <RNPickerSelect
+            onValueChange={(value) => {dispatch(getCity(value))
+                                                changeState(value)}}
             items={region?.map((data, index) => ({
-              key: index,
-              label: data.region,
-              value: data.region,
+                key: index,
+                label: data.name,
+                value: data.name,
+
             }))}
           />
         </View>
@@ -225,9 +225,11 @@ export default function Actualization() {
               changeCity(value);
             }}
             items={city?.map((data, index) => ({
-              key: index,
-              label: data.city,
-              value: data.city,
+
+                key: index,
+                label: data.name,
+                value: data.name,
+
             }))}
           />
         </View>

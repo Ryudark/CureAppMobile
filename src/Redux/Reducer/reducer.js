@@ -17,6 +17,11 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
+  function SortArray(x, y){
+    if (x.name < y.name) {return -1;}
+    if (x.name > y.name) {return 1;}
+    return 0;
+  }
   switch (action.type) {
     case USER_LOGIN:
       return {
@@ -47,35 +52,24 @@ const rootReducer = (state = initialState, action) => {
         },
       };
     case COUNTRY:
+      const pais=action.payload
+      const countryOrden= pais.sort(SortArray)
       return {
         ...state,
-        country: action.payload,
+        country: countryOrden
       };
     case REGION:
+      const region=action.payload
+      const regionOrden= region.sort(SortArray)
       return {
         ...state,
-        region: action.payload,
+        region: regionOrden,
       };
     case CITY:
       return {
         ...state,
         city: action.payload,
       };
-    case COUNTRY:
-      return {
-        ...state,
-        country: action.payload,
-      };
-    case REGION:
-      return {
-        ...state,
-        region: action.payload,
-      };
-    case CITY:
-      return {
-        ...state,
-        city:action.payload
-      }
     case ERROR:
       return{
         ...state,

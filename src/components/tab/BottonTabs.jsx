@@ -38,21 +38,6 @@ export default function BottonTabs() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Perfil"
-        component={Actualization}
-        options={{
-          title: "Perfil",
-
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="account-settings"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 }

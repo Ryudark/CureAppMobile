@@ -3,8 +3,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StyleSheet, Image, Text, Pressable, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import BottonTabs from "../tab/BottonTabs.jsx";
-import Profile from "../Profile.jsx";
+import Profilenavigation from "../../Navigation/Profilenavigation.js";
 import Settings from "../settings/Settings.jsx";
 import Testimony from "../testimony/Testimony.jsx";
 
@@ -44,6 +45,7 @@ export default function Nav() {
           headerTitleStyle: styles.title,
           title: "Home",
           headerStyle: styles.header,
+
           drawerIcon: ({ focused }) => {
             return (
               <FontAwesome5
@@ -57,7 +59,7 @@ export default function Nav() {
       />
       <Drawer.Screen
         name="perfil"
-        component={Profile}
+        component={Profilenavigation}
         options={{
           title: "Perfil",
           headerStyle: styles.header,
@@ -111,5 +113,9 @@ const styles = StyleSheet.create({
   },
   item: {
     borderBottomWidth: 1,
+  },
+
+  iconPerfilEdit: {
+    marginRight: 30,
   },
 });

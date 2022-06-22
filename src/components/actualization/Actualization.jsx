@@ -142,7 +142,7 @@ export default function Actualization() {
         <View style={styles.containerInput}>
             <Text style={styles.text}>País</Text>
             <RNPickerSelect
-                onValueChange={(value) => {dispatch(getRegion(country, value))
+                onValueChange={(value) => {dispatch(getRegion(value))
                                             changeCountry(value)}}
                 items={country?.map((data, index) => ({
                 key: index,
@@ -154,12 +154,12 @@ export default function Actualization() {
         <View style={styles.containerInput}>
             <Text style={styles.text}>Estado</Text>
             <RNPickerSelect
-            onValueChange={(value) => {dispatch(getCity(region, value))
+            onValueChange={(value) => {dispatch(getCity(value))
                                                 changeState(value)}}
             items={region?.map((data, index) => ({
                 key: index,
-                label: data.region,
-                value: data.region,
+                label: data.name,
+                value: data.name,
             }))}
             />
         </View>
@@ -169,8 +169,8 @@ export default function Actualization() {
             onValueChange={(value) => {changeCity(value)}}
             items={city?.map((data, index) => ({
                 key: index,
-                label: data.city,
-                value: data.city,
+                label: data.name,
+                value: data.name,
             }))}
             />
         </View>

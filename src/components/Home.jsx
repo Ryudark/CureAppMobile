@@ -1,16 +1,13 @@
-import React from "react";
-import { View } from "react-native-web";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Login from "../components/Login";
-import { NavigationContainer } from "@react-navigation/native";
-import BottonTabs from "./tab/BottonTabs";
+import Nav from "./nav/Nav";
 
 const HomeLogin = () => {
-  const userExist = useSelector((state) => state.Users);
-  if (userExist.length) return <BottonTabs />;
+  const isLogged = useSelector((state) => state.islogged);
+  if (isLogged) return <Nav />;
 
   return <Login />;
 };
 
 export default HomeLogin;
-

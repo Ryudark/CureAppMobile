@@ -11,19 +11,21 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogin, noError } from "../Redux/Actions/actions";
+import { userLogin, noError, loading } from "../Redux/Actions/actions";
 import Errores from "./Errores";
+import Loader from "./Loader";
 
 const Login = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const errorExist = useSelector((state) => state.error);
+  const { error, isLoggin } = useSelector((state) => state);
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
     validateOnChange: false,
     onSubmit: (formValue) => {
+      dispatch(loading());
       dispatch(userLogin(formValue));
     },
   });
@@ -34,9 +36,9 @@ const Login = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (errorExist.isError) dispatch(noError());
+      if (error.isError) dispatch(noError());
     }, 5000);
-  }, [errorExist]);
+  }, [error]);
   return (
     <View style={styles.formContainer}>
       <View style={styles.contentLogo}>
@@ -51,7 +53,7 @@ const Login = () => {
       </View>
 
       <TextInput
-        placeholder="Email"
+        placeholder="Email (ClickCare@example.com)"
         style={styles.input}
         autoCapitalize="none"
         value={formik.values.email}
@@ -60,7 +62,7 @@ const Login = () => {
       <Text style={styles.error}>{formik.errors.email}</Text>
 
       <TextInput
-        placeholder="Enter your password"
+        placeholder="Password"
         style={styles.input}
         autoCapitalize="none"
         secureTextEntry={true}
@@ -75,8 +77,8 @@ const Login = () => {
 
         <TouchableOpacity
           style={{ ...styles.btnL, marginTop: 20 }}
-          onPress={goToSingUp}>
-      
+          onPress={goToSingUp}
+        >
           <Text style={styles.log}>Sing Up</Text>
         </TouchableOpacity>
       </View>
@@ -84,8 +86,9 @@ const Login = () => {
       <TouchableOpacity style={styles.forgot}>
         <Text style={styles.fpas}>Forgot your password ?</Text>
       </TouchableOpacity>
+      {isLoggin && <Loader />}
 
-      {errorExist.isError ? <Errores message={errorExist.message} /> : <View />}
+      {error.isError ? <Errores message={error.message} /> : <View />}
     </View>
   );
 };
@@ -98,8 +101,16 @@ const initialValues = () => {
 };
 const validationSchema = () => {
   return {
-    email: Yup.string().required("Please enter your Email"),
-    password: Yup.string().required("Please enter your Password"),
+    email: Yup.string()
+      .email("Ingrese un email valido")
+      .required("Por favor ingrese su email"),
+    password: Yup.string()
+      .min(4, "ingrese una contraseña de al menos 4 digitos")
+      .matches(
+        /^(?=.*[a-záéíóúüñ])(?=.*\d)(?=.*[A-ZÁÉÍÓÚÜÑ])/,
+        "Ingrese al menos una letra mayuscula y al menos un numero"
+      )
+      .required("Por favor ingrese su contraseña"),
   };
 };
 

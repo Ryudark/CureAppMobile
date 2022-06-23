@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-export default function Card(props){
+export default function CardSimple(props){
     const dateIni= props.date_ini
     const dateByirde = dateIni
     const dayB =  new Date(dateByirde).getDate()
@@ -9,16 +9,14 @@ export default function Card(props){
     const yearB =  new Date(dateByirde).getFullYear();
 
     const date= yearB+"-"+monthb+"-"+dayB
+    
 
     return(
         <View key={props.id} style={styles.container}>
           <Text>Nombre del paciente: {props.namePatient} </Text>
           <Text>Edad del paciente: {props.agePatient} </Text>
-          <Text>Necesidad: {props.needs}</Text>
+          {/* <Text>Necesidad: {props.needs}</Text> */}
           <Text>Especialidad Necesitada: {props.specialty.specialty}</Text>
-          <Text>Inicio: {date}</Text>
-          <Text>Hora Inicio: {props.availableTime_0}</Text>
-          <Text>Hora Fin: {props.availableTime_1}</Text>
         </View>
     )
 }

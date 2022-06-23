@@ -6,15 +6,11 @@ import {
     TouchableHighlight,
     StyleSheet,
     View,
-    Platform,
-    Alert
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { getCity, getCountry, getRegion, postUser } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
-import axios from 'axios'
-import DatePicker from "react-native-date-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 // import { Button } from "react-native-web";
 
@@ -132,7 +128,6 @@ export default function Post() {
     }
 
     function changeState(state) {
-        // setUser(prev => ({ ...prev, state }))
         setUser({ ...user, state })
     }
 
@@ -141,12 +136,10 @@ export default function Post() {
     }
 
     function changeCity(city) {
-        // setUser(prev => ({ ...prev, city: "Adzaneta" }))
         setUser({ ...user, city })
     }
 
     function changeCountry(country) {
-        // setUser(prev => ({ ...prev, country: "España" }))
         setUser({ ...user, country })
     }
 

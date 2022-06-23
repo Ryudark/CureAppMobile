@@ -8,20 +8,22 @@ import {
     View,
     Alert
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { createUsers, getCity, getCountry, getRegion } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
-import axios from 'axios'
-import SweetAlert from 'react-native-sweet-alert';
-import Login from "../Login";
-import HomeNavigation from "../../Navigation/loginNavigation.js";
 
 export default function Settings() {
     const country = useSelector((state) => state.country);
     const region = useSelector((state) => state.region);
     const city = useSelector((state) => state.city);
     const dispatch = useDispatch();
+
+    const [fecha, setFecha] = useState(new Date())
+
+    const [mode, setMode] = useState('date')
+    const [show, setShow] = useState(false)
 
     const [user, setUser] = useState({
         email:"",
@@ -37,6 +39,15 @@ export default function Settings() {
         city:"",
         country:""
     })
+
+    function changeDateIni(event, selectedDate) {
+        const currentDate = selectedDate || fecha
+        setFecha(currentDate)
+        const date = new Date(currentDate)
+        const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+        setUser(prev => ({ ...prev, age: actualDate }))
+        setShow(false)
+    }
 
     function changeEmail(email){
         setUser({...user, email})
@@ -56,9 +67,7 @@ export default function Settings() {
     function changeAddress(address){
         setUser({...user, address})
     }
-    function changeAge(age){
-        setUser({...user, age})
-    }
+    
     function changeDocument(document){
         setUser({...user, document})
     }
@@ -73,6 +82,11 @@ export default function Settings() {
     }
     function changeCountry(country){
         setUser({...user, country})
+    }
+
+    function showMode(currentMode) {
+        setShow(true)
+        setMode(currentMode)
     }
 
     // console.log(error)
@@ -108,17 +122,28 @@ export default function Settings() {
 
         <View style={styles.containerInfo}>
         <View style={styles.containerInput}>
-            <Text style={styles.text}>Nombre</Text>
+            <Text style={styles.text}>Nombres</Text>
             <TextInput value={user.name} onChangeText={name=>changeName(name)} style={styles.input} />
         </View>
         <View style={styles.containerInput}>
-            <Text style={styles.text}>Apellido</Text>
+            <Text style={styles.text}>Apellidos</Text>
             <TextInput value={user.surname} onChangeText={surname=>changeSurname(surname)} style={styles.input} />
         </View>
 
         <View style={styles.containerInput}>
-            <Text style={styles.text}>Edad</Text>
-            <TextInput value={user.age} onChangeText={age=>changeAge(age)} keyboardType="numeric" style={styles.input} />
+            <Text style={styles.text}>Fecha de nacimiento : {user.age}</Text>
+            <TouchableHighlight onPress={() => showMode('date')}>
+                        <Text style={styles.textB}>Escoja Fecha</Text>
+            </TouchableHighlight>
+            {show && (<DateTimePicker
+                    testID='dateTimePicker'
+                    value={fecha}
+                    mode={mode}
+                    is24Hour={true}
+                    display='default'
+                    onChange={changeDateIni}
+            />)}
+            {/* <TextInput value={user.age} onChangeText={age=>changeAge(age)} keyboardType="numeric" style={styles.input} /> */}
         </View>
         </View>
 

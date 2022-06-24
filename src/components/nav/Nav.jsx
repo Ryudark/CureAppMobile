@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { StyleSheet, Image, Text, Pressable, View } from "react-native";
+import { StyleSheet, Pressable, View } from "react-native";
 import BottonTabs from "../tab/BottonTabs.jsx";
 import About from "../about/About.jsx";
 import Settings from "../settings/Settings.jsx";

@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCity, getCountry, getRegion, postUser } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
 import DateTimePicker from "@react-native-community/datetimepicker";
-// import { Button } from "react-native-web";
 
 export default function Post() {
 
@@ -49,7 +48,6 @@ export default function Post() {
         availableTime_0: "",
         availableTime_1: "",
         addressPatient:"",
-        // active:true
     })
 
     function changeDate() {
@@ -73,7 +71,6 @@ export default function Post() {
         setFecha(currentDate)
         const date = new Date(currentDate)
         const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-        console.log(actualDate)
         setUser(prev => ({ ...prev, date_fin: actualDate }))
         setShowF(false)
     }
@@ -82,7 +79,6 @@ export default function Post() {
         const currentDate = selectDate || fecha
         setFecha(currentDate)
         const date = new Date(currentDate)
-        // const actualHour = date.getHours() + ":" + date.getMinutes()
         const actualHour = date.getHours()
         setUser(prev => ({ ...prev, availableTime_0: Number(actualHour) }))
         setShowHI(false)
@@ -92,7 +88,6 @@ export default function Post() {
         const currentDate = selectDate || fecha
         setFecha(currentDate)
         const date = new Date(currentDate)
-        // const actualHour = date.getHours() + ":" + date.getMinutes()
         const actualHour = date.getHours()
         setUser(prev => ({ ...prev, availableTime_1: Number(actualHour) }))
         setShowHF(false)

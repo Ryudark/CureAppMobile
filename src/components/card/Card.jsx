@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
-import { ScrollView } from "react-native-gesture-handler";
 
 export default function Card(props){
     const dateIni= props.date_ini
@@ -20,7 +19,7 @@ export default function Card(props){
             <Text>Inicio: {date}</Text>
             <Text>Hora Inicio: {props.availableTime_0}</Text>
             <Text>Hora Fin: {props.availableTime_1}</Text>
-            <TouchableHighlight onPress={console.log('funciona')}>
+            <TouchableHighlight style={styles.butonContainer}>
                 <Text style={styles.textB}>Aplicar</Text>
             </TouchableHighlight>
         </View>
@@ -32,5 +31,18 @@ const styles =StyleSheet.create({
         padding:20,
         paddingBottom:5,
         paddingTop:5, 
-    }
+    },
+
+    butonContainer: {
+        marginTop: 30,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 10,
+        paddingHorizontal: 50,
+        borderRadius: 25,
+        elevation: 3,
+        backgroundColor: "#24b8b8",
+        alignSelf: "stretch",
+        marginBottom: 30,
+    },
 })

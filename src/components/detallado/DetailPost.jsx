@@ -14,8 +14,6 @@ export default function DetailPost({route}) {
     const compararId=route.params.id
     const post= useSelector(state=>state.post)
     const filtro = post.filter(filter=> filter.id===compararId)
-    console.log(filtro)
-    console.log(post.length)
     const newPost= filtro.concat(post)
 
     const dispatch = useDispatch();
@@ -40,11 +38,11 @@ export default function DetailPost({route}) {
 }
 
 const styles = StyleSheet.create({
-  containerHome: {
-    height: "100%",
-  },
+    containerHome: {
+        height: "100%",
+    },
 
-  bodyHome: {
-    marginTop: 90,
-  },
+    bodyHome: {
+        marginTop: 90,
+    },
 });

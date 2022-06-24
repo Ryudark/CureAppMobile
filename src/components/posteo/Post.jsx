@@ -39,7 +39,7 @@ export default function Post() {
         needs: "",
         locationReference: "",
         contact_phone: "",
-        id_users: 1,
+        id_users: 3,
         state: "",
         city: "",
         country: "",
@@ -49,7 +49,7 @@ export default function Post() {
         availableTime_0: "",
         availableTime_1: "",
         addressPatient:"",
-        active:true
+        // active:true
     })
 
     function changeDate() {
@@ -73,6 +73,7 @@ export default function Post() {
         setFecha(currentDate)
         const date = new Date(currentDate)
         const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+        console.log(actualDate)
         setUser(prev => ({ ...prev, date_fin: actualDate }))
         setShowF(false)
     }
@@ -83,7 +84,7 @@ export default function Post() {
         const date = new Date(currentDate)
         // const actualHour = date.getHours() + ":" + date.getMinutes()
         const actualHour = date.getHours()
-        setUser(prev => ({ ...prev, availableTime_0: actualHour }))
+        setUser(prev => ({ ...prev, availableTime_0: Number(actualHour) }))
         setShowHI(false)
     }
 
@@ -93,12 +94,11 @@ export default function Post() {
         const date = new Date(currentDate)
         // const actualHour = date.getHours() + ":" + date.getMinutes()
         const actualHour = date.getHours()
-        setUser(prev => ({ ...prev, availableTime_1: actualHour }))
+        setUser(prev => ({ ...prev, availableTime_1: Number(actualHour) }))
         setShowHF(false)
     }
 
     function changeName(namePatient){
-        setUser({...user, id_users:1})
         setUser({...user, namePatient})
     }
 

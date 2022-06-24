@@ -12,14 +12,16 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const widthScreen = Dimensions.get("window").width
 
-export default function Home() {
+export default function Home({navigation}) {
+
+
   const post= useSelector(state=>state.post)
   const actualizar=0
   
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(getPost())
-  },[])
+  },[getPost])
 
 
   function idUpdate(id){
@@ -34,7 +36,7 @@ export default function Home() {
       data={post}
       ItemSeparatorComponent={()=> <Text> </Text>}
       renderItem={({item:repo})=>(
-        <TouchableHighlight onPress={()=>idUpdate(repo.id)}>
+        <TouchableHighlight onPress={()=>navigation.navigate('Detail',repo)}>
           <CardSimple {...repo}/>
         </TouchableHighlight>
       )}

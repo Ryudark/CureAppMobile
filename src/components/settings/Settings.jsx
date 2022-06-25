@@ -8,6 +8,7 @@ import {
   View,
   Alert,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,8 +18,7 @@ import {
   getRegion,
 } from "../../Redux/Actions/actions";
 import RNPickerSelect from "react-native-picker-select";
-import axios from "axios";
-import SweetAlert from "react-native-sweet-alert";
+
 import { useNavigation } from "@react-navigation/native";
 
 export default function Settings() {
@@ -42,66 +42,78 @@ export default function Settings() {
     country: "",
   });
 
-  function changeEmail(email) {
-    setUser({ ...user, email });
-  }
-  function changePassword(password) {
-    setUser({ ...user, password });
-  }
-  function changeName(name) {
-    setUser({ ...user, name });
-  }
-  function changeSurname(surname) {
-    setUser({ ...user, surname });
-  }
-  function changePhone(phone) {
-    setUser({ ...user, phone });
-  }
-  function changeAddress(address) {
-    setUser({ ...user, address });
-  }
-  function changeAge(age) {
-    setUser({ ...user, age });
-  }
-  function changeDocument(document) {
-    setUser({ ...user, document });
-  }
-  function changePhone2(phone2) {
-    setUser({ ...user, phone2 });
-  }
-  function changeState(state) {
-    setUser({ ...user, state });
-  }
-  function changeCity(city) {
-    setUser({ ...user, city });
-  }
-  function changeCountry(country) {
-    setUser({ ...user, country });
-  }
+    const [fecha, setFecha] = useState(new Date())
 
-  // console.log(error)
-  async function onSubmit() {
-    if (!user.email) alert("ingrese datos");
-    else {
-      try {
-        await dispatch(createUsers(user));
-        alert("usuario creado, POR FAVOR REVISE SU CORREO PARA VALIDAR");
-        navigation.navigate("Login");
-      } catch (e) {
-        console.log(e.response.data);
-        Alert.alert(
-          Object.keys(e.response.data.errors[0])[0],
-          Object.values(e.response.data.errors[0])[0]
-        );
-      }
+    const [mode, setMode] = useState('date')
+    const [show, setShow] = useState(false)
+
+    function changeDateIni(event, selectedDate) {
+        const currentDate = selectedDate || fecha
+        setFecha(currentDate)
+        const date = new Date(currentDate)
+        const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+        setUser(prev => ({ ...prev, age: actualDate }))
+        setShow(false)
     }
-  }
-  useEffect(() => {
-    dispatch(getCountry());
-  }, [dispatch]);
-  return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.containerInfo}>
+
+    function changeEmail(email){
+        setUser({...user, email})
+    }
+    function changePassword(password){
+        setUser({...user, password})
+    }
+    function changeName(name){
+        setUser({...user, name})
+    }
+    function changeSurname(surname){
+        setUser({...user, surname})
+    }
+    function changePhone(phone){
+        setUser({...user, phone})
+    }
+    function changeAddress(address){
+        setUser({...user, address})
+    }
+    
+    function changeDocument(document){
+        setUser({...user, document})
+    }
+    function changePhone2(phone2){
+        setUser({...user, phone2})
+    }
+    function changeState(state){
+        setUser({...user, state})
+    }
+    function changeCity(city){
+        setUser({...user, city})
+    }
+    function changeCountry(country){
+        setUser({...user, country})
+    }
+
+    function showMode(currentMode) {
+        setShow(true)
+        setMode(currentMode)
+    }
+
+    async function onSubmit(){
+        if(!user.email) alert('ingrese datos')
+        else{
+            try{
+                await dispatch(createUsers(user))
+                alert('usuario creado, POR FAVOR REVISE SU CORREO PARA VALIDAR')
+                navigation.navigate("Login")
+            }
+            catch(e){
+                Alert.alert(Object.keys(e.response.data.errors[0])[0], Object.values(e.response.data.errors[0])[0])
+            }
+        }
+    }
+    useEffect(() => {
+        dispatch(getCountry());
+    }, [dispatch]);
+    return (
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
         <View style={styles.containerInput}>
           <Text style={styles.text}>Email</Text>
           <TextInput
@@ -112,46 +124,34 @@ export default function Settings() {
           />
         </View>
         <View style={styles.containerInput}>
-          <Text style={styles.text}>Password</Text>
-          <TextInput
-            value={user.password}
-            onChangeText={(password) => changePassword(password)}
-            secureTextEntry={true}
-            style={styles.input}
-          />
+            <Text style={styles.text}>Password</Text>
+            <TextInput value={user.password} onChangeText={password=>changePassword(password)} secureTextEntry={true} style={styles.input} />
+        </View>
+
+        <View style={styles.containerInput}>
+            <Text style={styles.text}>Nombres</Text>
+            <TextInput value={user.name} onChangeText={name=>changeName(name)} style={styles.input} />
+        </View>
+        <View style={styles.containerInput}>
+            <Text style={styles.text}>Apellidos</Text>
+            <TextInput value={user.surname} onChangeText={surname=>changeSurname(surname)} style={styles.input} />
+        </View>
+
+        <View style={styles.containerInput}>
+            <Text style={styles.text}>Fecha de nacimiento : {user.age}</Text>
+            <TouchableHighlight onPress={() => showMode('date')}>
+                        <Text style={styles.textB}>Escoja Fecha</Text>
+            </TouchableHighlight>
+            {show && (<DateTimePicker
+                    testID='dateTimePicker'
+                    value={fecha}
+                    mode={mode}
+                    is24Hour={true}
+                    display='default'
+                    onChange={changeDateIni}
+            />)}
         </View>
       </View>
-
-      <View style={styles.containerInfo}>
-        <View style={styles.containerInput}>
-          <Text style={styles.text}>Nombre</Text>
-          <TextInput
-            value={user.name}
-            onChangeText={(name) => changeName(name)}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.containerInput}>
-          <Text style={styles.text}>Apellido</Text>
-          <TextInput
-            value={user.surname}
-            onChangeText={(surname) => changeSurname(surname)}
-            style={styles.input}
-          />
-        </View>
-
-        <View style={styles.containerInput}>
-          <Text style={styles.text}>Edad</Text>
-          <TextInput
-            value={user.age}
-            onChangeText={(age) => changeAge(age)}
-            keyboardType="numeric"
-            style={styles.input}
-          />
-        </View>
-      </View>
-
-      <View style={styles.containerInfo}>
         <View style={styles.containerInput}>
           <Text style={styles.text}>Telefono</Text>
           <TextInput
@@ -162,17 +162,11 @@ export default function Settings() {
           />
         </View>
         <View style={styles.containerInput}>
-          <Text style={styles.text}>Telefono Secundario</Text>
-          <TextInput
-            value={user.phone2}
-            onChangeText={(phone2) => changePhone2(phone2)}
-            keyboardType="numeric"
-            style={styles.input}
-          />
+            <Text style={styles.text}>Telefono Secundario</Text>
+            <TextInput value={user.phone2} onChangeText={phone2=>changePhone2(phone2)} keyboardType="numeric" style={styles.input} />
         </View>
-      </View>
 
-      <View style={styles.containerInfo}>
+
         <View style={styles.containerInput}>
           <Text style={styles.text}>Documento de Identificación</Text>
           <TextInput
@@ -183,6 +177,7 @@ export default function Settings() {
           />
         </View>
         <View style={styles.containerInput}>
+
           <Text style={styles.text}>Dirección</Text>
           <TextInput
             value={user.address}

@@ -1,11 +1,32 @@
 import React from "react";
-import { Text, SafeAreaView, StyleSheet } from "react-native";
+import { useEffect } from "react";
+import { Text, StyleSheet, FlatList, Dimensions, TouchableHighlight } from "react-native";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getPost } from "../../Redux/Actions/actions";
+import CardSimple from "../card/CardSimple.jsx";
 
-export default function Home() {
+export default function Home({navigation}) {
+
+
+  const post= useSelector(state=>state.post)
+  const actualizar=0
+  
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getPost())
+  },[getPost])
+
   return (
-    <SafeAreaView style={styles.containerHome}>
-      <Text style={styles.bodyHome}>Ruta Principal</Text>
-    </SafeAreaView>
+    <FlatList 
+      data={post}
+      ItemSeparatorComponent={()=> <Text> </Text>}
+      renderItem={({item:repo})=>(
+        <TouchableHighlight onPress={()=>navigation.navigate('Detail',repo)}>
+          <CardSimple {...repo}/>
+        </TouchableHighlight>
+      )}
+    />
   );
 }
 

@@ -1,4 +1,4 @@
-import { CITY, COUNTRY, ERROR, REGION, SPECIALITY } from "../constantes";
+import { CITY, COUNTRY, ERROR, POST, REGION, SPECIALITY } from "../constantes";
 import {
   ERR,
   USER_LOGIN,
@@ -7,6 +7,7 @@ import {
   USER_DETAIL,
   LOGOUT,
 } from "../Actions/actions";
+
 
 const initialState = {
   error: {
@@ -21,6 +22,7 @@ const initialState = {
   city: [],
   speciality: [],
   isLoggin: false,
+  post:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -98,8 +100,13 @@ const rootReducer = (state = initialState, action) => {
     case SPECIALITY:
       return {
         ...state,
-        speciality: action.payload,
-      };
+        speciality:action.payload
+      }
+    case POST:
+      return{
+        ...state,
+        post:action.payload
+      }
     default:
       return {
         ...state,

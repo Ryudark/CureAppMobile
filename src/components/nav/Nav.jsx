@@ -3,6 +3,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StyleSheet, Pressable, View } from "react-native";
+
 import { getUserDetail } from "../../Redux/Actions/actions";
 import BottonTabs from "../tab/BottonTabs.jsx";
 import Profilenavigation from "../../Navigation/Profilenavigation.js";

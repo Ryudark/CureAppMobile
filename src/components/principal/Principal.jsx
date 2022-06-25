@@ -6,24 +6,23 @@ import { useDispatch } from "react-redux";
 import { getPost } from "../../Redux/Actions/actions";
 import CardSimple from "../card/CardSimple.jsx";
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
 
 
-  const post= useSelector(state=>state.post)
-  const actualizar=0
-  
+  const post = useSelector(state => state.post)
+
   const dispatch = useDispatch();
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getPost())
-  },[getPost])
+  }, [post])
 
   return (
-    <FlatList 
+    <FlatList
       data={post}
-      ItemSeparatorComponent={()=> <Text> </Text>}
-      renderItem={({item:repo})=>(
-        <TouchableHighlight onPress={()=>navigation.navigate('Detail',repo)}>
-          <CardSimple {...repo}/>
+      ItemSeparatorComponent={() => <Text> </Text>}
+      renderItem={({ item: repo }) => (
+        <TouchableHighlight onPress={() => navigation.navigate('Detail', repo)}>
+          <CardSimple {...repo} />
         </TouchableHighlight>
       )}
     />

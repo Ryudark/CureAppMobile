@@ -19,14 +19,14 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 import axios from "axios";
 import SweetAlert from "react-native-sweet-alert";
-import Login from "../Login";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Settings() {
   const country = useSelector((state) => state.country);
   const region = useSelector((state) => state.region);
   const city = useSelector((state) => state.city);
   const dispatch = useDispatch();
-
+  const navigation = useNavigation();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -86,7 +86,7 @@ export default function Settings() {
       try {
         await dispatch(createUsers(user));
         alert("usuario creado, POR FAVOR REVISE SU CORREO PARA VALIDAR");
-        // return <HomeNavigation />
+        navigation.navigate("Login");
       } catch (e) {
         console.log(e.response.data);
         Alert.alert(
@@ -194,30 +194,30 @@ export default function Settings() {
 
       <View style={styles.containerInfoSelect}>
         <View style={styles.containerInput}>
-
-            <Text style={styles.text}>País</Text>
-            <RNPickerSelect
-                onValueChange={(value) => {dispatch(getRegion(value))
-                                            changeCountry(value)}}
-                items={country?.map((data, index) => ({
-                key: index,
-                label: data.name,
-                value: data.name,
-
+          <Text style={styles.text}>País</Text>
+          <RNPickerSelect
+            onValueChange={(value) => {
+              dispatch(getRegion(value));
+              changeCountry(value);
+            }}
+            items={country?.map((data, index) => ({
+              key: index,
+              label: data.name,
+              value: data.name,
             }))}
           />
         </View>
         <View style={styles.containerInput}>
-
-            <Text style={styles.text}>Estado</Text>
-            <RNPickerSelect
-            onValueChange={(value) => {dispatch(getCity(value))
-                                                changeState(value)}}
+          <Text style={styles.text}>Estado</Text>
+          <RNPickerSelect
+            onValueChange={(value) => {
+              dispatch(getCity(value));
+              changeState(value);
+            }}
             items={region?.map((data, index) => ({
-                key: index,
-                label: data.name,
-                value: data.name,
-
+              key: index,
+              label: data.name,
+              value: data.name,
             }))}
           />
         </View>
@@ -228,11 +228,9 @@ export default function Settings() {
               changeCity(value);
             }}
             items={city?.map((data, index) => ({
-
-                key: index,
-                label: data.name,
-                value: data.name,
-
+              key: index,
+              label: data.name,
+              value: data.name,
             }))}
           />
         </View>

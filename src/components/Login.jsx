@@ -25,7 +25,6 @@ const Login = () => {
     validationSchema: Yup.object(validationSchema()),
     validateOnChange: false,
     onSubmit: (formValue) => {
-      dispatch(loading());
       dispatch(userLogin(formValue));
     },
   });
@@ -86,7 +85,6 @@ const Login = () => {
       <TouchableOpacity style={styles.forgot}>
         <Text style={styles.fpas}>Forgot your password ?</Text>
       </TouchableOpacity>
-      {isLoggin && <Loader />}
 
       {error.isError ? <Errores message={error.message} /> : <View />}
     </View>

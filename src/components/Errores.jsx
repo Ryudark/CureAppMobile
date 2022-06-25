@@ -18,14 +18,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 15,
     alignItems: "center",
+    marginBottom: 20,
   },
   containerErr: {
     backgroundColor: "#7a7979",
   },
   err: {
     textAlign: "center",
+    justifyContent: "center",
     color: "white",
-    width: "50%",
+    width: "60%",
     paddingHorizontal: 10,
     paddingVertical: 10,
   },

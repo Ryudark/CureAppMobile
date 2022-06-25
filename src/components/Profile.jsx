@@ -1,26 +1,22 @@
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getUserDetail } from "../Redux/Actions/actions";
+import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar, Title, Caption, Text } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 export default function Profile() {
-  const dispatch = useDispatch;
+  const { userDetail } = useSelector((state) => state);
+  const navigation = useNavigation();
+  const goToAjustes = () => {
+    navigation.navigate("ajustes");
+  };
+  const info = userDetail[0];
 
-  //   useEffect(() => {
-  //     dispatch(getUserDetail());
-  //   }, []);
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.userInfo}>
@@ -32,18 +28,28 @@ export default function Profile() {
             size={90}
           />
           <View style={styles.nameEmail}>
-            <Title style={styles.title}>Name User</Title>
-            <Caption style={styles.caption}>@username</Caption>
+            <Title style={styles.title}>
+              {!info ? "Name User" : `${info.name} ${info.surname}`}
+            </Title>
+            <Caption style={styles.caption}>
+              Gracias por usar ClickCare.
+            </Caption>
           </View>
         </View>
         <View style={styles.userInfoSection}>
           <View style={styles.contactContainer}>
             <Entypo name="location" size={25} color="#ff4e4e" />
-            <Text style={styles.dato}>Pais de usuario</Text>
+            <Text style={styles.dato}>
+              {!info
+                ? "Ubicacion de usuario"
+                : `${info.address} ${info.city.name} ${info.country.name}`}
+            </Text>
           </View>
           <View style={styles.contactContainer}>
             <MaterialIcons name="local-phone" size={24} color="#ff4e4e" />
-            <Text style={styles.dato}>+00-00000000</Text>
+            <Text style={styles.dato}>
+              {!info ? "+00 - 00000000" : `${info.phone} / ${info.phone2}`}
+            </Text>
           </View>
           <View style={styles.contactContainer}>
             <MaterialCommunityIcons
@@ -51,7 +57,9 @@ export default function Profile() {
               size={24}
               color="#ff4e4e"
             />
-            <Text style={styles.dato}>user@email.com</Text>
+            <Text style={styles.dato}>
+              {!info ? "user@email.com" : info.email}
+            </Text>
           </View>
         </View>
       </View>
@@ -87,7 +95,7 @@ export default function Profile() {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={goToAjustes}>
           <View style={styles.itemMenu}>
             <Ionicons name="md-settings" size={24} color="#ff4e4e" />
             <Text style={styles.contratos}>Configuracion</Text>
@@ -108,7 +116,7 @@ const styles = StyleSheet.create({
   avatar: { marginTop: 15, flexDirection: "row" },
   nameEmail: { marginTop: 15, marginLeft: 20 },
   title: {},
-  userInfoSection: { marginTop: 20 },
+  userInfoSection: { marginTop: 20, marginBottom: 20 },
   contactContainer: {
     flexDirection: "row",
     marginTop: 10,

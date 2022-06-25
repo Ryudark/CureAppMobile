@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { StyleSheet, Image, Text, Pressable, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, Pressable, View } from "react-native";
+import { getUserDetail } from "../../Redux/Actions/actions";
 import BottonTabs from "../tab/BottonTabs.jsx";
 import Profilenavigation from "../../Navigation/Profilenavigation.js";
 import Settings from "../settings/Settings.jsx";
 import Testimony from "../testimony/Testimony.jsx";
+import { useDispatch, useSelector } from "react-redux";
 
 const Drawer = createDrawerNavigator();
 
@@ -22,6 +23,11 @@ const IconComponent = (props) => {
 };
 
 export default function Nav() {
+  const id = useSelector((state) => state.id);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserDetail(id));
+  }, []);
   return (
     <Drawer.Navigator
       initialRouteName="Inicio"

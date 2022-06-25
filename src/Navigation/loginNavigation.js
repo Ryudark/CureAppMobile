@@ -25,7 +25,8 @@ const HomeNavigation = () => {
         component={Settings}
         options={{
           title: "Ingresa tus datos",
-          headerTransparent: false,
+          headerTransparent: true,
+          headerShown: false,
           headerRight: () => (
             <Image
               style={styles.logo}

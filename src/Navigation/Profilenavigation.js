@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Profile from "../components/Profile";
 import Actualization from "../components/actualization/Actualization";
+import Ajustes from "../components/configuration";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Pressable, StyleSheet } from "react-native";
 
@@ -28,7 +29,7 @@ export default function Profilenavigation() {
               style={styles.edit}
               onPress={() => navigation.navigate("EditUser")}
             >
-              <FontAwesome5 name="user-edit" size={24} color="black" />
+              <FontAwesome5 name="user-edit" size={24} color="#24b8b8" />
             </Pressable>
           ),
         })}
@@ -38,6 +39,14 @@ export default function Profilenavigation() {
         component={Actualization}
         options={{
           title: "Actualiza tus datos",
+          headerTransparent: false,
+        }}
+      />
+      <Stack.Screen
+        name="ajustes"
+        component={Ajustes}
+        options={{
+          title: "salir",
           headerTransparent: false,
         }}
       />

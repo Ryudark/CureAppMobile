@@ -42,151 +42,148 @@ export default function Settings() {
     country: "",
   });
 
-    const [fecha, setFecha] = useState(new Date())
+  const [fecha, setFecha] = useState(new Date())
 
-    const [mode, setMode] = useState('date')
-    const [show, setShow] = useState(false)
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
 
-    function changeDateIni(event, selectedDate) {
-        const currentDate = selectedDate || fecha
-        setFecha(currentDate)
-        const date = new Date(currentDate)
-        const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-        setUser(prev => ({ ...prev, age: actualDate }))
-        setShow(false)
-    }
+  function changeDateIni(event, selectedDate) {
+    const currentDate = selectedDate || fecha
+    setFecha(currentDate)
+    const date = new Date(currentDate)
+    const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+    setUser(prev => ({ ...prev, age: actualDate }))
+    setShow(false)
+  }
 
-    function changeEmail(email){
-        setUser({...user, email})
-    }
-    function changePassword(password){
-        setUser({...user, password})
-    }
-    function changeName(name){
-        setUser({...user, name})
-    }
-    function changeSurname(surname){
-        setUser({...user, surname})
-    }
-    function changePhone(phone){
-        setUser({...user, phone})
-    }
-    function changeAddress(address){
-        setUser({...user, address})
-    }
-    
-    function changeDocument(document){
-        setUser({...user, document})
-    }
-    function changePhone2(phone2){
-        setUser({...user, phone2})
-    }
-    function changeState(state){
-        setUser({...user, state})
-    }
-    function changeCity(city){
-        setUser({...user, city})
-    }
-    function changeCountry(country){
-        setUser({...user, country})
-    }
+  function changeEmail(email) {
+    setUser({ ...user, email })
+  }
+  function changePassword(password) {
+    setUser({ ...user, password })
+  }
+  function changeName(name) {
+    setUser({ ...user, name })
+  }
+  function changeSurname(surname) {
+    setUser({ ...user, surname })
+  }
+  function changePhone(phone) {
+    setUser({ ...user, phone })
+  }
+  function changeAddress(address) {
+    setUser({ ...user, address })
+  }
 
-    function showMode(currentMode) {
-        setShow(true)
-        setMode(currentMode)
-    }
+  function changeDocument(document) {
+    setUser({ ...user, document })
+  }
+  function changePhone2(phone2) {
+    setUser({ ...user, phone2 })
+  }
+  function changeState(state) {
+    setUser({ ...user, state })
+  }
+  function changeCity(city) {
+    setUser({ ...user, city })
+  }
+  function changeCountry(country) {
+    setUser({ ...user, country })
+  }
 
-    async function onSubmit(){
-        if(!user.email) alert('ingrese datos')
-        else{
-            try{
-                await dispatch(createUsers(user))
-                alert('usuario creado, POR FAVOR REVISE SU CORREO PARA VALIDAR')
-                navigation.navigate("Login")
-            }
-            catch(e){
-                Alert.alert(Object.keys(e.response.data.errors[0])[0], Object.values(e.response.data.errors[0])[0])
-            }
-        }
+  function showMode(currentMode) {
+    setShow(true)
+    setMode(currentMode)
+  }
+
+  async function onSubmit() {
+    if (!user.email) alert('ingrese datos')
+    else {
+      try {
+        await dispatch(createUsers(user))
+        alert('usuario creado, POR FAVOR REVISE SU CORREO PARA VALIDAR')
+        navigation.navigate("Login")
+      }
+      catch (e) {
+        Alert.alert(Object.keys(e.response.data.errors[0])[0], Object.values(e.response.data.errors[0])[0])
+      }
     }
-    useEffect(() => {
-        dispatch(getCountry());
-    }, [dispatch]);
-    return (
+  }
+  useEffect(() => {
+    dispatch(getCountry());
+  }, [dispatch]);
+  return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
-        <View style={styles.containerInput}>
-          <Text style={styles.text}>Email</Text>
-          <TextInput
-            value={user.email}
-            onChangeText={(email) => changeEmail(email)}
-            keyboardType="email-address"
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Password</Text>
-            <TextInput value={user.password} onChangeText={password=>changePassword(password)} secureTextEntry={true} style={styles.input} />
-        </View>
-
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Nombres</Text>
-            <TextInput value={user.name} onChangeText={name=>changeName(name)} style={styles.input} />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Apellidos</Text>
-            <TextInput value={user.surname} onChangeText={surname=>changeSurname(surname)} style={styles.input} />
-        </View>
-
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Fecha de nacimiento : {user.age}</Text>
-            <TouchableHighlight onPress={() => showMode('date')}>
-                        <Text style={styles.textB}>Escoja Fecha</Text>
-            </TouchableHighlight>
-            {show && (<DateTimePicker
-                    testID='dateTimePicker'
-                    value={fecha}
-                    mode={mode}
-                    is24Hour={true}
-                    display='default'
-                    onChange={changeDateIni}
-            />)}
-        </View>
+      <View style={styles.containerInput}>
+        <Text style={styles.text}>Email</Text>
+        <TextInput
+          value={user.email}
+          onChangeText={(email) => changeEmail(email)}
+          keyboardType="email-address"
+          style={styles.input}
+        />
       </View>
-        <View style={styles.containerInput}>
-          <Text style={styles.text}>Telefono</Text>
-          <TextInput
-            value={user.phone}
-            onChangeText={(phone) => changePhone(phone)}
-            keyboardType="numeric"
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Telefono Secundario</Text>
-            <TextInput value={user.phone2} onChangeText={phone2=>changePhone2(phone2)} keyboardType="numeric" style={styles.input} />
-        </View>
-
-
-        <View style={styles.containerInput}>
-          <Text style={styles.text}>Documento de Identificación</Text>
-          <TextInput
-            value={user.document}
-            onChangeText={(document) => changeDocument(document)}
-            keyboardType="numeric"
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.containerInput}>
-
-          <Text style={styles.text}>Dirección</Text>
-          <TextInput
-            value={user.address}
-            onChangeText={(address) => changeAddress(address)}
-            style={styles.input}
-          />
-        </View>
+      <View style={styles.containerInput}>
+        <Text style={styles.text}>Password</Text>
+        <TextInput value={user.password} onChangeText={password => changePassword(password)} secureTextEntry={true} style={styles.input} />
       </View>
 
+      <View style={styles.containerInput}>
+        <Text style={styles.text}>Nombres</Text>
+        <TextInput value={user.name} onChangeText={name => changeName(name)} style={styles.input} />
+      </View>
+      <View style={styles.containerInput}>
+        <Text style={styles.text}>Apellidos</Text>
+        <TextInput value={user.surname} onChangeText={surname => changeSurname(surname)} style={styles.input} />
+      </View>
+
+      <View style={styles.containerInput}>
+        <Text style={styles.text}>Fecha de nacimiento : {user.age}</Text>
+        <TouchableHighlight onPress={() => showMode('date')}>
+          <Text style={styles.textB}>Escoja Fecha</Text>
+        </TouchableHighlight>
+        {show && (<DateTimePicker
+          testID='dateTimePicker'
+          value={fecha}
+          mode={mode}
+          is24Hour={true}
+          display='default'
+          onChange={changeDateIni}
+        />)}
+      </View>
+      <View style={styles.containerInput}>
+        <Text style={styles.text}>Telefono</Text>
+        <TextInput
+          value={user.phone}
+          onChangeText={(phone) => changePhone(phone)}
+          keyboardType="numeric"
+          style={styles.input}
+        />
+      </View>
+      <View style={styles.containerInput}>
+        <Text style={styles.text}>Telefono Secundario</Text>
+        <TextInput value={user.phone2} onChangeText={phone2 => changePhone2(phone2)} keyboardType="numeric" style={styles.input} />
+      </View>
+
+
+      <View style={styles.containerInput}>
+        <Text style={styles.text}>Documento de Identificación</Text>
+        <TextInput
+          value={user.document}
+          onChangeText={(document) => changeDocument(document)}
+          keyboardType="numeric"
+          style={styles.input}
+        />
+      </View>
+      <View style={styles.containerInput}>
+
+        <Text style={styles.text}>Dirección</Text>
+        <TextInput
+          value={user.address}
+          onChangeText={(address) => changeAddress(address)}
+          style={styles.input}
+        />
+      </View>
       <View style={styles.containerInfoSelect}>
         <View style={styles.containerInput}>
           <Text style={styles.text}>País</Text>

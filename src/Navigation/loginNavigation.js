@@ -1,8 +1,10 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Settings from "../components/settings/Settings";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet} from "react-native";
+
 import HomeLogin from "../components/Home";
+import DetailPost from "../components/detallado/DetailPost";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +27,21 @@ const HomeNavigation = () => {
         component={Settings}
         options={{
           title: "Ingresa tus datos",
+          headerTransparent: true,
+          headerShown: false,
+          headerRight: () => (
+            <Image
+              style={styles.logo}
+              source={require("../assets/logoClickCareicono.png")}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={DetailPost}
+        options={{
+          title: "Detalle del Post",
           headerTransparent: false,
           headerRight: () => (
             <Image

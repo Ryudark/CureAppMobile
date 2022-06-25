@@ -1,13 +1,27 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import Loader from "./Loader";
 import Login from "../components/Login";
 import Nav from "./nav/Nav";
+import { View } from "react-native";
 
 const HomeLogin = () => {
-  const isLogged = useSelector((state) => state.islogged);
-  if (isLogged) return <Nav />;
+  const { islogged, isLoggin } = useSelector((state) => state);
+  if (islogged) {
+    return (
+      <>
+        <Nav />
+        {isLoggin && <Loader />}
+      </>
+    );
+  }
 
-  return <Login />;
+  return (
+    <View>
+      <Login />
+      {isLoggin && <Loader />}
+    </View>
+  );
 };
 
 export default HomeLogin;

@@ -9,17 +9,19 @@ export const NO_ERR = "NO_ERR";
 export const ERR = "ERR";
 export const USER_LOGIN = "USER_LOGIN";
 export const LOADING = "LOADING";
+export const USER_DETAIL = "USER_DETAIL";
+export const LOGOUT = "LOGOUT";
 
 export const userLogin = (user) => {
   return async function (dispatch) {
     try {
+      dispatch({ type: LOADING, payload: true });
       let response = await axios.post(
         "https://api-rest-pf-production.up.railway.app/api/userdblogin",
         user
       );
-      return dispatch({ type: USER_LOGIN });
 
-      console.log("respuesta axios", response.data);
+      return dispatch({ type: USER_LOGIN, payload: response.data.userId });
     } catch (error) {
       let mensaje = error.response.data.errors
         ? "verifique su usuario y contraseña"
@@ -32,29 +34,57 @@ export const userLogin = (user) => {
     }
   };
 };
-export const isLogged = () => {};
+
 export const noError = () => {
   return {
     type: NO_ERR,
   };
 };
 
-export function createUsers(users){
-  return async function(dispatch){
-    await axios.post('https://api-rest-pf-production.up.railway.app/api/userdbRegistration', users)
-  }
+export const logout = () => {
+  return function (dispatch) {
+    dispatch({ type: LOADING, payload: true });
+    setTimeout(() => {
+      return dispatch({
+        type: LOGOUT,
+      });
+    }, 2000);
+  };
+};
+
+export function createUsers(users) {
+  return async function (dispatch) {
+    await axios.post(
+      "https://api-rest-pf-production.up.railway.app/api/userdbRegistration",
+      users
+    );
+  };
 }
 
-export function postUser(post){
-  return async function(dispatch){
+export function postUser(post) {
+  return async function (dispatch) {
     // await axios.post('https://pf-api-rest.herokuapp.com/api/postgenerator', post)
-    await axios.post('https://api-rest-pf-production.up.railway.app/api/postgenerator', post)
-  }
+    await axios.post(
+      "https://api-rest-pf-production.up.railway.app/api/postgenerator",
+      post
+    );
+  };
 }
 
-export const loading = () => {
-  return {
-    type: LOADING,
+export const getUserDetail = (id) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(
+        `https://api-rest-pf-production.up.railway.app/api/userDetalleById/${id}`
+      );
+
+      return dispatch({
+        type: USER_DETAIL,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("userdetail", error);
+    }
   };
 };
 
@@ -63,7 +93,7 @@ export const getCountry = () => {
     try {
       const country = await axios.get(
         // `https://battuta.medunes.net/api/country/all/?key=${API_KEY}`
-        'https://api-rest-pf-production.up.railway.app/api/GetCountries'
+        "https://api-rest-pf-production.up.railway.app/api/GetCountries"
       );
 
       return dispatch({
@@ -75,7 +105,6 @@ export const getCountry = () => {
     }
   };
 };
-
 
 export const getRegion = (value) => {
   return async function (dispatch) {

@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Settings from "../components/settings/Settings";
 import { Image, StyleSheet} from "react-native";
+
 import HomeLogin from "../components/Home";
 import DetailPost from "../components/detallado/DetailPost";
 
@@ -26,7 +27,8 @@ const HomeNavigation = () => {
         component={Settings}
         options={{
           title: "Ingresa tus datos",
-          headerTransparent: false,
+          headerTransparent: true,
+          headerShown: false,
           headerRight: () => (
             <Image
               style={styles.logo}

@@ -15,6 +15,10 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function Post() {
 
+    const usuario = useSelector(state => state.userDetail)
+
+    const userID = usuario[0].id
+
     const speciality = ["Acompañante Terapéutico", "Enfermería", "Doctor", "Kinesiología", "Acompañante de Adulto Mayor", "Aplicaciones"]
 
     const [fecha, setFecha] = useState(new Date())
@@ -38,7 +42,7 @@ export default function Post() {
         needs: "",
         locationReference: "",
         contact_phone: "",
-        id_users: 3,
+        id_users: userID,
         state: "",
         city: "",
         country: "",
@@ -47,7 +51,7 @@ export default function Post() {
         namePatient: "",
         availableTime_0: "",
         availableTime_1: "",
-        addressPatient:"",
+        addressPatient: "",
     })
 
     function changeDate() {
@@ -93,16 +97,16 @@ export default function Post() {
         setShowHF(false)
     }
 
-    function changeName(namePatient){
-        setUser({...user, namePatient})
+    function changeName(namePatient) {
+        setUser({ ...user, namePatient })
     }
 
-    function changeAge(agePatient){
-        setUser({...user, agePatient})
+    function changeAge(agePatient) {
+        setUser({ ...user, agePatient })
     }
 
-    function changeNeed(needs){
-        setUser({...user, needs})
+    function changeNeed(needs) {
+        setUser({ ...user, needs })
     }
 
     function showModeI(currentMode) {
@@ -138,27 +142,27 @@ export default function Post() {
         setUser({ ...user, country })
     }
 
-    function changeAddress(locationReference){
-        setUser({...user, locationReference})
+    function changeAddress(locationReference) {
+        setUser({ ...user, locationReference })
     }
 
-    function changeAddressP(addressPatient){
-        setUser({...user, addressPatient})
+    function changeAddressP(addressPatient) {
+        setUser({ ...user, addressPatient })
     }
 
-    function changePhone(contact_phone){
-        setUser({...user, contact_phone})
+    function changePhone(contact_phone) {
+        setUser({ ...user, contact_phone })
     }
 
     async function onSubmit() {
         changeDate()
-        if(!user.namePatient) alert('ingrese datos')
-        else{
-            try{
+        if (!user.namePatient) alert('ingrese datos')
+        else {
+            try {
                 await dispatch(postUser(user))
                 alert('post creado')
             }
-            catch(e){
+            catch (e) {
                 console.log(e.response.data)
                 // Alert.alert(Object.keys(e.response.data.errors[0])[0], Object.values(e.response.data.errors[0])[0])
             }
@@ -167,25 +171,25 @@ export default function Post() {
     useEffect(() => {
         dispatch(getCountry());
         changeDate()
-    }, [dispatch]);
+    }, [dispatch, usuario]);
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
 
-            <View style={styles.containerInput}>    
+            <View style={styles.containerInput}>
                 <Text style={styles.text}>Nombre del paciente</Text>
-                <TextInput value={user.namePatient} onChangeText={name=>changeName(name)} style={styles.input} />
+                <TextInput value={user.namePatient} onChangeText={name => changeName(name)} style={styles.input} />
             </View>
             <View style={styles.containerInput}>
                 <Text style={styles.text}>Edad del paciente</Text>
-                <TextInput value={user.age} onChangeText={age=>changeAge(age)} keyboardType="numeric" style={styles.input} />
+                <TextInput value={user.age} onChangeText={age => changeAge(age)} keyboardType="numeric" style={styles.input} />
             </View>
             <View style={styles.containerInput}>
                 <Text style={styles.text}>Telefono de Contacto</Text>
-                <TextInput value={user.contact_phone} onChangeText={contact_phone=>changePhone(contact_phone    )} keyboardType="numeric" style={styles.input} />
+                <TextInput value={user.contact_phone} onChangeText={contact_phone => changePhone(contact_phone)} keyboardType="numeric" style={styles.input} />
             </View>
             <View>
                 <Text style={styles.text}>Explique la necesidad</Text>
-                <TextInput multiline={true} numberOfLines={3} onChangeText={need=>changeNeed(need)}/>
+                <TextInput multiline={true} numberOfLines={3} onChangeText={need => changeNeed(need)} />
             </View>
             <View>
                 <Text>Fecha inicio: {user.date_ini}</Text>
@@ -304,11 +308,11 @@ export default function Post() {
             </View>
             <View style={styles.containerInput}>
                 <Text style={styles.text}>Dirección del paciente</Text>
-                <TextInput value={user.addressPatient} onChangeText={addressPatient=>changeAddressP(addressPatient)} style={styles.input} />
+                <TextInput value={user.addressPatient} onChangeText={addressPatient => changeAddressP(addressPatient)} style={styles.input} />
             </View>
             <View style={styles.containerInput}>
                 <Text style={styles.text}>Referencia de Localización</Text>
-                <TextInput value={user.locationReference} onChangeText={locationReference=>changeAddress(locationReference)} style={styles.input} />
+                <TextInput value={user.locationReference} onChangeText={locationReference => changeAddress(locationReference)} style={styles.input} />
             </View>
 
             <TouchableHighlight onPress={onSubmit} style={styles.butonContainer}>

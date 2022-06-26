@@ -1,4 +1,4 @@
-import { CITY, COUNTRY, POST, REGION } from "../constantes";
+import { CITY, COUNTRY, FECHA, POST, REGION, SPECIALITY } from "../constantes";
 import axios from "axios";
 
 // const {API_KEY}= process.env
@@ -140,17 +140,30 @@ export const getCity = (value) => {
   };
 };
 
-export const getPost = ()=>{
-  return async function(dispatch){
-    try{
-      const post= await axios.get('https://api-rest-pf-production.up.railway.app/api/infoCardPost')
+export const getPost = () => {
+  return async function (dispatch) {
+    try {
+      const post = await axios.get('https://api-rest-pf-production.up.railway.app/api/infoCardPost')
       return dispatch({
-        type:POST,
-        payload:post.data
+        type: POST,
+        payload: post.data
       })
     }
-    catch (e){
+    catch (e) {
       console.log(e)
     }
+  }
+}
+
+export const specialityFilter = (value) => {
+  return {
+    type: SPECIALITY,
+    payload: value
+  }
+}
+export const dateFilter = (value) => {
+  return {
+    type: FECHA,
+    payload: value
   }
 }

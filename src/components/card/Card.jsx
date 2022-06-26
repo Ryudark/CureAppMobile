@@ -1,16 +1,17 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
-export default function Card(props){
-    const dateIni= props.date_ini
+export default function Card(props) {
+    console.log(props)
+    const dateIni = props.date_ini
     const dateByirde = dateIni
-    const dayB =  new Date(dateByirde).getDate()
-    const monthb = new Date(dateByirde).getMonth()+1
-    const yearB =  new Date(dateByirde).getFullYear();
+    const dayB = new Date(dateByirde).getDate()
+    const monthb = new Date(dateByirde).getMonth() + 1
+    const yearB = new Date(dateByirde).getFullYear();
 
-    const date= yearB+"-"+monthb+"-"+dayB
+    const date = yearB + "-" + monthb + "-" + dayB
 
-    return(
+    return (
         <View key={props.id} style={styles.container}>
             <Text>Nombre del paciente: {props.namePatient} </Text>
             <Text>Edad del paciente: {props.agePatient} </Text>
@@ -26,11 +27,11 @@ export default function Card(props){
 
     )
 }
-const styles =StyleSheet.create({
-    container:{
-        padding:20,
-        paddingBottom:5,
-        paddingTop:5, 
+const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+        paddingBottom: 5,
+        paddingTop: 5,
     },
 
     butonContainer: {

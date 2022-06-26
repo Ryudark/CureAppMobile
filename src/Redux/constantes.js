@@ -8,5 +8,6 @@ export const POST = "POST"
 export const ALL = "ALL"
 
 export const FECHA = "FECHA"
+export const LOCATION = "LOCATION"
 
 export const ERROR = "ERROR"

@@ -1,4 +1,4 @@
-import { ALL, CITY, COUNTRY, ERROR, FECHA, POST, REGION, SPECIALITY } from "../constantes";
+import { ALL, CITY, COUNTRY, ERROR, FECHA, LOCATION, POST, REGION, SPECIALITY } from "../constantes";
 import {
   ERR,
   USER_LOGIN,
@@ -114,8 +114,6 @@ const rootReducer = (state = initialState, action) => {
       const todayMinimo = today.getFullYear() + "-0" + (today.getMonth() + 1) + "-" + today.getDate() + "T00:00:00.000Z"
       const diasMinimo = today.getFullYear() + "-0" + (today.getMonth() + 1) + "-" + (today.getDate() - 7) + "T00:00:00.000Z"
       const mesMinimo = today.getFullYear() + "-0" + today.getMonth() + "-" + today.getDate() + "T00:00:00.000Z"
-      // console.log(typeof todayMinimo)
-      console.log(todayMinimo)
       let filterDate = []
       if ("Hoy" === action.payload) {
         filterDate = copiaDate.filter(d => d.date_post == todayMinimo)
@@ -143,6 +141,32 @@ const rootReducer = (state = initialState, action) => {
         return {
           ...state,
           post: filterDate
+        }
+      }
+    case LOCATION:
+      let copyLocation= state.copyPost
+      // console.log(copyLocation)
+      let filterLocation= []
+      if("Tu País"===action.payload.location){
+        filterLocation= copyLocation.filter(l=>l.country.name===action.payload.country)
+        return {
+          ...state,
+          post: filterLocation
+        }
+      }
+      if("Cerca de ti"===action.payload.location){
+        filterLocation= copyLocation.filter(l=>l.city.name===action.payload.city) ///===action.payload.city
+        // console.log(filterLocation)
+        return {
+          ...state,
+          post: filterLocation
+        }
+      }
+      else{
+        filterLocation=copyLocation
+        return {
+          ...state,
+          post: filterLocation
         }
       }
     case POST:

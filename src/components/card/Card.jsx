@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 export default function Card(props) {
-    console.log(props)
     const dateIni = props.date_ini
     const dateByirde = dateIni
     const dayB = new Date(dateByirde).getDate()

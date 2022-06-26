@@ -1,4 +1,4 @@
-import { CITY, COUNTRY, FECHA, POST, REGION, SPECIALITY } from "../constantes";
+import { CITY, COUNTRY, FECHA, LOCATION, POST, REGION, SPECIALITY } from "../constantes";
 import axios from "axios";
 
 // const {API_KEY}= process.env
@@ -164,6 +164,14 @@ export const specialityFilter = (value) => {
 export const dateFilter = (value) => {
   return {
     type: FECHA,
+    payload: value
+  }
+}
+
+export const locationFilter = (value) => {
+  console.log(value)
+  return {
+    type: LOCATION,
     payload: value
   }
 }

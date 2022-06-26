@@ -7,6 +7,7 @@ export default function CardSimple(props){
     const dayB =  new Date(dateByirde).getDate()
     const monthb = new Date(dateByirde).getMonth()+1
     const yearB =  new Date(dateByirde).getFullYear();
+    console.log(props)
 
     const date= yearB+"-"+monthb+"-"+dayB
     

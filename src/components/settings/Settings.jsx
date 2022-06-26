@@ -40,7 +40,10 @@ export default function Settings() {
     state: "",
     city: "",
     country: "",
+    photo:""
   });
+
+  const [viewPassword, setViewPassword]= useState()
 
   const [fecha, setFecha] = useState(new Date())
 
@@ -60,6 +63,7 @@ export default function Settings() {
     setUser({ ...user, email })
   }
   function changePassword(password) {
+    setViewPassword(password)
     setUser({ ...user, password })
   }
   function changeName(name) {
@@ -126,6 +130,7 @@ export default function Settings() {
       <View style={styles.containerInput}>
         <Text style={styles.text}>Password</Text>
         <TextInput value={user.password} onChangeText={password => changePassword(password)} secureTextEntry={true} style={styles.input} />
+        <Text style={styles.text}>Tu Password: {viewPassword}</Text>
       </View>
 
       <View style={styles.containerInput}>

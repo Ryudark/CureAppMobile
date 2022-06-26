@@ -5,6 +5,8 @@ export const SPECIALITY = "ESPECIALITY"
 
 
 export const POST = "POST"
+export const POSTPROPIOS = "POSTPROPIOS"
+
 export const ALL = "ALL"
 
 export const FECHA = "FECHA"

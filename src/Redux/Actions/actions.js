@@ -1,4 +1,4 @@
-import { CITY, COUNTRY, FECHA, LOCATION, POST, REGION, SPECIALITY } from "../constantes";
+import { CITY, COUNTRY, FECHA, LOCATION, POST, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
 import axios from "axios";
 
 // const {API_KEY}= process.env
@@ -169,9 +169,25 @@ export const dateFilter = (value) => {
 }
 
 export const locationFilter = (value) => {
-  console.log(value)
   return {
     type: LOCATION,
     payload: value
   }
+}
+
+export function getPostPropios(id){
+  return async function (dispatch) {
+    try {
+      const post = await axios.get(
+        // `http://battuta.medunes.net/api/city/${zona?.country}/search/?region=${zona.region}&key=${API_KEY}`
+        `https://api-rest-pf-production.up.railway.app/api/posteosUsersByUserID/${id}`
+      );
+      return dispatch({
+        type: POSTPROPIOS,
+        payload: post.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 }

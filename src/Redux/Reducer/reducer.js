@@ -1,4 +1,4 @@
-import { ALL, CITY, COUNTRY, ERROR, FECHA, LOCATION, POST, REGION, SPECIALITY } from "../constantes";
+import { ALL, CITY, COUNTRY, ERROR, FECHA, LOCATION, POST, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
 import {
   ERR,
   USER_LOGIN,
@@ -24,6 +24,7 @@ const initialState = {
   isLoggin: false,
   post: [],
   copyPost: [],
+  postPropios:[],
 };
 
 // const lastMounth = today.getFullYear() + "-" + (today.getMonth()) + "-" + today.getDate()
@@ -145,7 +146,6 @@ const rootReducer = (state = initialState, action) => {
       }
     case LOCATION:
       let copyLocation= state.copyPost
-      // console.log(copyLocation)
       let filterLocation= []
       if("Tu País"===action.payload.location){
         filterLocation= copyLocation.filter(l=>l.country.name===action.payload.country)
@@ -156,7 +156,6 @@ const rootReducer = (state = initialState, action) => {
       }
       if("Cerca de ti"===action.payload.location){
         filterLocation= copyLocation.filter(l=>l.city.name===action.payload.city) ///===action.payload.city
-        // console.log(filterLocation)
         return {
           ...state,
           post: filterLocation
@@ -174,6 +173,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         post: action.payload,
         copyPost: action.payload
+      }
+    case POSTPROPIOS:
+      return {
+        ...state,
+        postPropios: action.payload,
       }
     default:
       return {

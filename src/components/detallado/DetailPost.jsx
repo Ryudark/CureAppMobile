@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getPost } from "../../Redux/Actions/actions";
 import Carousel from 'react-native-snap-carousel'
-
 import Card from "../card/Card";
 
 const widthScreen = Dimensions.get("window").width

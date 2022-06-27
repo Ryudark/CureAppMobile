@@ -8,13 +8,13 @@ import {
   LOGOUT,
 } from "../Actions/actions";
 
-
 const initialState = {
   error: {
     message: "",
     isError: false,
   },
   id: 0,
+  dataLog: {},
   islogged: false,
   userDetail: {},
   country: [],
@@ -43,12 +43,13 @@ const rootReducer = (state = initialState, action) => {
     case USER_LOGIN:
       return {
         ...state,
-        id: action.payload,
+        id: action.payload.id,
+        dataLog: action.payload.user,
         isLoggin: false,
         islogged: true,
       };
     case LOGOUT:
-      return { ...state, islogged: false, isLoggin: false };
+      return { ...state, islogged: false, isLoggin: false, dataLog: {}, id: 0 };
 
     case LOADING:
       return {

@@ -8,13 +8,13 @@ import {
   LOGOUT,
 } from "../Actions/actions";
 
-
 const initialState = {
   error: {
     message: "",
     isError: false,
   },
   id: 0,
+  dataLog: {},
   islogged: false,
   userDetail: {},
   country: [],
@@ -22,7 +22,7 @@ const initialState = {
   city: [],
   speciality: [],
   isLoggin: false,
-  post:[],
+  post: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -39,12 +39,13 @@ const rootReducer = (state = initialState, action) => {
     case USER_LOGIN:
       return {
         ...state,
-        id: action.payload,
+        id: action.payload.id,
+        dataLog: action.payload.user,
         isLoggin: false,
         islogged: true,
       };
     case LOGOUT:
-      return { ...state, islogged: false, isLoggin: false };
+      return { ...state, islogged: false, isLoggin: false, dataLog: {}, id: 0 };
 
     case LOADING:
       return {
@@ -100,13 +101,13 @@ const rootReducer = (state = initialState, action) => {
     case SPECIALITY:
       return {
         ...state,
-        speciality:action.payload
-      }
+        speciality: action.payload,
+      };
     case POST:
-      return{
+      return {
         ...state,
-        post:action.payload
-      }
+        post: action.payload,
+      };
     default:
       return {
         ...state,

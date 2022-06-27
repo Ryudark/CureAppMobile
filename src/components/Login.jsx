@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -11,14 +11,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogin, noError, loading } from "../Redux/Actions/actions";
+import { userLogin, noError } from "../Redux/Actions/actions";
 import Errores from "./Errores";
-import Loader from "./Loader";
 
 const Login = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { error, isLoggin } = useSelector((state) => state);
+  const { error } = useSelector((state) => state);
 
   const formik = useFormik({
     initialValues: initialValues(),

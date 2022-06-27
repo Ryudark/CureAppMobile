@@ -3,9 +3,8 @@ import { useEffect } from "react";
 import { Text, StyleSheet, FlatList, TouchableHighlight, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { dateFilter, getPost, getPostPropios, locationFilter, specialityFilter } from "../../Redux/Actions/actions";
+import {getPostPropios} from "../../Redux/Actions/actions";
 import CardSimple from "../card/CardSimple.jsx";
-import RNPickerSelect from "react-native-picker-select";
 
 export default function PostPropios({ navigation }) {
 
@@ -17,7 +16,7 @@ export default function PostPropios({ navigation }) {
 
     const dispatch = useDispatch();
     useEffect(() => {
-    dispatch(getPostPropios(userID))
+        dispatch(getPostPropios(userID))
     }, [getPostPropios])
 
     return (
@@ -26,7 +25,7 @@ export default function PostPropios({ navigation }) {
                 data={post}
                 ItemSeparatorComponent={() => <Text> </Text>}
                 renderItem={({ item: repo }) => (
-                <TouchableHighlight onPress={() => navigation.navigate('Detail', repo)}>
+                <TouchableHighlight onPress={() => navigation.navigate('DetailPost', repo)}>
                     <CardSimple {...repo} />
                 </TouchableHighlight>
                 )}

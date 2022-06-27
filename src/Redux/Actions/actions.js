@@ -20,9 +20,13 @@ export const userLogin = (user) => {
         "https://api-rest-pf-production.up.railway.app/api/userdblogin",
         user
       );
-
-      return dispatch({ type: USER_LOGIN, payload: response.data.userId });
+      console.log("try", response.data);
+      return dispatch({
+        type: USER_LOGIN,
+        payload: { id: response.data.userId, user: user },
+      });
     } catch (error) {
+      console.log("catch", error.response.data);
       let mensaje = error.response.data.errors
         ? "verifique su usuario y contraseña"
         : error.response.data.error;
@@ -38,6 +42,12 @@ export const userLogin = (user) => {
 export const noError = () => {
   return {
     type: NO_ERR,
+  };
+};
+
+export const loader = (active) => {
+  return function (dispatch) {
+    dispatch({ type: LOADING, payload: active });
   };
 };
 
@@ -140,17 +150,32 @@ export const getCity = (value) => {
   };
 };
 
-export const getPost = ()=>{
-  return async function(dispatch){
-    try{
-      const post= await axios.get('https://api-rest-pf-production.up.railway.app/api/infoCardPost')
+export const getPost = () => {
+  return async function (dispatch) {
+    try {
+      const post = await axios.get(
+        "https://api-rest-pf-production.up.railway.app/api/infoCardPost"
+      );
       return dispatch({
-        type:POST,
-        payload:post.data
-      })
+        type: POST,
+        payload: post.data,
+      });
+    } catch (e) {
+      console.log(e);
     }
-    catch (e){
-      console.log(e)
+  };
+};
+
+export const editUser = (userchanges) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(
+        "https://api-rest-pf-production.up.railway.app/api/edituser",
+        userchanges
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response.data);
     }
-  }
-}
+  };
+};

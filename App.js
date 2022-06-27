@@ -7,6 +7,7 @@ import HomeNavigation from "./src/Navigation/loginNavigation";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PersistGate } from "redux-persist/integration/react";
 import { StatusBar } from "expo-status-bar";
+import { LogBox } from "react-native";
 //scrollview  expo publish  onPress
 
 //expo start -c borra cache
@@ -14,6 +15,7 @@ import { StatusBar } from "expo-status-bar";
 //configurar archivo babel
 
 export default function App() {
+  LogBox.ignoreLogs(["ViewPropTypes will be removed from"]);
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

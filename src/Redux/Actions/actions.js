@@ -1,4 +1,4 @@
-import { CITY, COUNTRY, POST, REGION } from "../constantes";
+import { CITY, COUNTRY, FECHA, LOCATION, POST, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
 import axios from "axios";
 
 // const {API_KEY}= process.env
@@ -153,18 +153,54 @@ export const getCity = (value) => {
 export const getPost = () => {
   return async function (dispatch) {
     try {
-      const post = await axios.get(
-        "https://api-rest-pf-production.up.railway.app/api/infoCardPost"
-      );
+      const post = await axios.get('https://api-rest-pf-production.up.railway.app/api/infoCardPost')
       return dispatch({
         type: POST,
-        payload: post.data,
+        payload: post.data
+      })
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+}
+
+export const specialityFilter = (value) => {
+  return {
+    type: SPECIALITY,
+    payload: value
+  }
+}
+export const dateFilter = (value) => {
+  return {
+    type: FECHA,
+    payload: value
+  }
+}
+
+export const locationFilter = (value) => {
+  return {
+    type: LOCATION,
+    payload: value
+  }
+}
+
+export function getPostPropios(id){
+  return async function (dispatch) {
+    try {
+      const post = await axios.get(
+        // `http://battuta.medunes.net/api/city/${zona?.country}/search/?region=${zona.region}&key=${API_KEY}`
+        `https://api-rest-pf-production.up.railway.app/api/posteosUsersByUserID/${id}`
+      );
+      return dispatch({
+        type: POSTPROPIOS,
+        payload: post.data
       });
     } catch (e) {
       console.log(e);
     }
   };
-};
+}
 
 export const editUser = (userchanges) => {
   return async function (dispatch) {

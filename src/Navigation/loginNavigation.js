@@ -5,6 +5,7 @@ import { Image, StyleSheet} from "react-native";
 
 import HomeLogin from "../components/Home";
 import DetailPost from "../components/detallado/DetailPost";
+import CardPropios from "../components/detallado/CardPropios.jsx"
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,20 @@ const HomeNavigation = () => {
         component={DetailPost}
         options={{
           title: "Detalle del Post",
+          headerTransparent: false,
+          headerRight: () => (
+            <Image
+              style={styles.logo}
+              source={require("../assets/logoClickCareicono.png")}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="DetailPost"
+        component={CardPropios}
+        options={{
+          title: "Detalle del Post propio",
           headerTransparent: false,
           headerRight: () => (
             <Image

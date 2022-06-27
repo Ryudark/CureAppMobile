@@ -4,7 +4,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StyleSheet, Pressable, View } from "react-native";
 
-import { getUserDetail } from "../../Redux/Actions/actions";
+import { getUserDetail, loader } from "../../Redux/Actions/actions";
 import BottonTabs from "../tab/BottonTabs.jsx";
 import Profilenavigation from "../../Navigation/Profilenavigation.js";
 import Settings from "../settings/Settings.jsx";
@@ -24,10 +24,10 @@ const IconComponent = (props) => {
 };
 
 export default function Nav() {
-  const id = useSelector((state) => state.id);
+  const { id, userDetail } = useSelector((state) => state);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUserDetail(id));
+    dispatch(loader(false));
   }, []);
   return (
     <Drawer.Navigator

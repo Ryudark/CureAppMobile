@@ -9,22 +9,22 @@ import Card from "../card/Card";
 
 const widthScreen = Dimensions.get("window").width
 
-export default function DetailPost({ route }) {
+export default function CardPropios({ route }) {
     const compararId = route.params.id
-    const post = useSelector(state => state.post)
+    const post = useSelector(state => state.postPropios)
     const filtro = post.filter(filter => filter.id === compararId)
     const newPost = filtro.concat(post)
 
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getPost())
-    }, [getPost])
+    // useEffect(() => {
+    //     dispatch(getPostPropios())
+    // }, [getPostPropios])
 
 
     return (
         <Carousel
             layout={"default"}
-            data={newPost}
+            data={post}
             sliderWidth={widthScreen}
             itemWidth={widthScreen}
             itemHeight={250}

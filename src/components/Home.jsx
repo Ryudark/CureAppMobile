@@ -1,12 +1,21 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserDetail } from "../Redux/Actions/actions";
 import Loader from "./Loader";
 import Login from "../components/Login";
 import Nav from "./nav/Nav";
 import { View } from "react-native";
 
 const HomeLogin = () => {
-  const { islogged, isLoggin } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { islogged, isLoggin, userDetail, id, dataLog } = useSelector(
+    (state) => state
+  );
+  const info = userDetail[0];
+  useEffect(() => {
+    dispatch(getUserDetail(id));
+  }, [info]);
+
   if (islogged) {
     return (
       <>

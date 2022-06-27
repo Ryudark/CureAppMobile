@@ -21,12 +21,25 @@ export default function Profile() {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.userInfo}>
         <View style={styles.avatar}>
-          <Avatar.Image
-            source={{
-              uri: "https://img2.freepng.es/20190702/tl/kisspng-computer-icons-portable-network-graphics-avatar-tr-clip-directory-professional-transparent-amp-png-5d1bfa95e508d4.2980489715621147099381.jpg",
-            }}
-            size={90}
-          />
+          {!info ? (
+            <Avatar.Image
+              source={{
+                uri: "https://img2.freepng.es/20190702/tl/kisspng-computer-icons-portable-network-graphics-avatar-tr-clip-directory-professional-transparent-amp-png-5d1bfa95e508d4.2980489715621147099381.jpg",
+              }}
+              size={90}
+            />
+          ) : (
+            <Avatar.Image
+              source={{
+                uri:
+                  info.photo !== ""
+                    ? info.photo
+                    : "https://img2.freepng.es/20190702/tl/kisspng-computer-icons-portable-network-graphics-avatar-tr-clip-directory-professional-transparent-amp-png-5d1bfa95e508d4.2980489715621147099381.jpg",
+              }}
+              size={90}
+            />
+          )}
+
           <View style={styles.nameEmail}>
             <Title style={styles.title}>
               {!info ? "Name User" : `${info.name} ${info.surname}`}
@@ -39,11 +52,14 @@ export default function Profile() {
         <View style={styles.userInfoSection}>
           <View style={styles.contactContainer}>
             <Entypo name="location" size={25} color="#ff4e4e" />
-            <Text style={styles.dato}>
-              {!info
-                ? "Ubicacion de usuario"
-                : `${info.address} ${info.city.name} ${info.country.name}`}
-            </Text>
+            <View style={{ flexDirection: "column" }}>
+              <Text style={styles.dato}>
+                {!info ? "Ubicacion de usuario" : `${info.address} `}
+              </Text>
+              <Text
+                style={styles.dato}
+              >{`${info.city.name} ${info.country.name}`}</Text>
+            </View>
           </View>
           <View style={styles.contactContainer}>
             <MaterialIcons name="local-phone" size={24} color="#ff4e4e" />

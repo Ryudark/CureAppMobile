@@ -7,6 +7,7 @@ import Actualization from "../actualization/Actualization.jsx";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Post from "../posteo/Post.jsx";
+import PostPropios  from "../postPropios/PostPropios.jsx"
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +30,20 @@ export default function BottonTabs() {
         options={{
           title: "Posteo",
 
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="post-outline"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="PosteoPropios"
+        component={PostPropios}
+        options={{
+          title: "Mirar mis posteos",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="post-outline"

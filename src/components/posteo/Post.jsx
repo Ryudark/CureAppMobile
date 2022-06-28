@@ -15,9 +15,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function Post() {
 
-    const usuario = useSelector(state => state.userDetail)
+    const id = useSelector(state => state.id)
 
-    const userID = usuario[0].id
+    const userID = id
 
     const speciality = ["Acompañante Terapéutico", "Enfermería", "Doctor", "Kinesiología", "Acompañante de Adulto Mayor", "Aplicaciones"]
 

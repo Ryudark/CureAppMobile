@@ -10,7 +10,6 @@ import RNPickerSelect from "react-native-picker-select";
 export default function Home({ navigation }) {
 
   const usuario = useSelector(state => state.userDetail)
-  console.log(usuario)
   
   const city= usuario[0].city.name
   
@@ -22,8 +21,6 @@ export default function Home({ navigation }) {
   const lugar = ["Cerca de ti", "Tu País", "Todos"]
   const post = useSelector(state => state.post)
 
-
-  // console.log(post)
 
   const dispatch = useDispatch();
   

@@ -17,8 +17,6 @@ export default function Profile() {
   };
   const info = userDetail[0];
 
-  console.log(info)
-
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.userInfo}>

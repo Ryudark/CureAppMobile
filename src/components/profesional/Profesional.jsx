@@ -1,32 +1,26 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import {
-  Text,
-  TextInput,
-  TouchableHighlight,
-  StyleSheet,
-  View,
-  Alert,
+    Text,
+    TextInput,
+    TouchableHighlight,
+    StyleSheet,
+    View,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createUsers,
-  getCity,
-  getCountry,
-  getRegion,
-  userToProfessional,
+    userToProfessional,
 } from "../../Redux/Actions/actions";
-import RNPickerSelect from "react-native-picker-select";
 
 import { useNavigation } from "@react-navigation/native";
 
 export default function Profesional() {
 
-    const usuario = useSelector(state => state.userDetail)
+    const id = useSelector(state => state.id)
 
-    const userID = usuario[0].id
+    const userID = id
 
     const [fecha, setFecha] = useState(new Date())
 
@@ -53,7 +47,18 @@ export default function Profesional() {
         const currentDate = selectedDate || fecha
         setFecha(currentDate)
         const date = new Date(currentDate)
-        const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+        let dia = date.getDate()
+        let mes = (date.getMonth() + 1)
+        const año = date.getFullYear()
+
+        if(dia<10){
+            dia='0'+dia
+        }
+        if(mes<10){
+            mes='0'+mes
+        }
+        
+        const actualDate = año + "-" + mes + "-" + dia
         setUser(prev => ({ ...prev, date_inicioEstudio: actualDate }))
         setShowI(false)
     }
@@ -62,7 +67,18 @@ export default function Profesional() {
         const currentDate = selectedDate || fecha
         setFecha(currentDate)
         const date = new Date(currentDate)
-        const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+        let dia = date.getDate()
+        let mes = (date.getMonth() + 1)
+        const año = date.getFullYear()
+
+        if(dia<10){
+            dia='0'+dia
+        }
+        if(mes<10){
+            mes='0'+mes
+        }
+        
+        const actualDate = año + "-" + mes + "-" + dia
         setUser(prev => ({ ...prev, date_finicioEstudio: actualDate }))
         setShowF(false)
     }
@@ -78,6 +94,7 @@ export default function Profesional() {
 
     function changeTuition(tuition) {
         setUser({ ...user, tuition })
+        setUser(prev => ({ ...prev, titulo: tuition }))
     }
     function changeTrainings(trainings) {
         setUser({ ...user, trainings })
@@ -90,9 +107,6 @@ export default function Profesional() {
     }
     function changeInstitucion(institucion) {
         setUser({ ...user, institucion })
-    }
-    function changeTitulo(address) {
-        setUser({ ...user, address })
     }
 
     async function onSubmit() {
@@ -147,9 +161,9 @@ export default function Profesional() {
             onChange={changeDateIni}
             />)}
             <View>
-                <Text style={styles.text}>Fecha de Inicio: {user.date_finicioEstudio}</Text>
+                <Text style={styles.text}>Fecha de Finalización: {user.date_finicioEstudio}</Text>
                 <TouchableHighlight onPress={() => showModeF('date')}>
-                    <Text style={styles.textB}>Fecha de Finalización</Text>
+                    <Text style={styles.textB}>Escoja Fecha</Text>
                 </TouchableHighlight>
             </View>
             {showF && (<DateTimePicker
@@ -167,30 +181,6 @@ export default function Profesional() {
             value={user.cvu}
             onChangeText={(cvu) => changeCvu(cvu)}
             keyboardType="numeric"
-            style={styles.input}
-            />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Telefono Secundario</Text>
-            <TextInput value={user.phone2} onChangeText={phone2 => changePhone2(phone2)} keyboardType="numeric" style={styles.input} />
-        </View>
-
-
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Documento de Identificación</Text>
-            <TextInput
-            value={user.document}
-            onChangeText={(document) => changeDocument(document)}
-            keyboardType="numeric"
-            style={styles.input}
-            />
-        </View>
-        <View style={styles.containerInput}>
-
-            <Text style={styles.text}>Dirección</Text>
-            <TextInput
-            value={user.address}
-            onChangeText={(address) => changeAddress(address)}
             style={styles.input}
             />
         </View>

@@ -87,7 +87,16 @@ export function userToProfessional(users) {
       "https://api-rest-pf-production.up.railway.app/api/profdbregistration",
       users
     );
-  };695312
+  };
+}
+export function postulate(users) {
+  console.log(users)
+  // return async function (dispatch) {
+  //   await axios.post(
+  //     "https://api-rest-pf-production.up.railway.app/api/Addpostulates",
+  //     users
+  //   );
+  // };
 }
 
 export const getUserDetail = (id) => {

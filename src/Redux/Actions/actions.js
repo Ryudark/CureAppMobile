@@ -81,11 +81,21 @@ export function postUser(post) {
   };
 }
 
+export function userToProfessional(users) {
+  return async function (dispatch) {
+    await axios.post(
+      "https://api-rest-pf-production.up.railway.app/api/userdbRegistration",
+      users
+    );
+  };
+}
+
 export const getUserDetail = (id) => {
+  console.log(id)
   return async function (dispatch) {
     try {
       const response = await axios.get(
-        `https://api-rest-pf-production.up.railway.app/api/userDetalleById/${id}`
+        `https://api-rest-pf-production.up.railway.app/api/userProfessionalByID/${id}`
       );
 
       return dispatch({
@@ -151,6 +161,7 @@ export const getCity = (value) => {
 };
 
 export const getPost = () => {
+  console.log('ingreso')
   return async function (dispatch) {
     try {
       const post = await axios.get('https://api-rest-pf-production.up.railway.app/api/infoCardPost')

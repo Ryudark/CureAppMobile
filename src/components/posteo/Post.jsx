@@ -171,7 +171,7 @@ export default function Post() {
     useEffect(() => {
         dispatch(getCountry());
         changeDate()
-    }, [dispatch, usuario]);
+    }, [dispatch]);
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
 

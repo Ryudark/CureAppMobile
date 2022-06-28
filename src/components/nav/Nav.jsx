@@ -28,6 +28,7 @@ export default function Nav() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loader(false));
+    dispatch(getUserDetail(id));
   }, []);
   return (
     <Drawer.Navigator

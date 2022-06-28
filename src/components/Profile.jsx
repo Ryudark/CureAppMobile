@@ -17,6 +17,8 @@ export default function Profile() {
   };
   const info = userDetail[0];
 
+  console.log(info)
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.userInfo}>
@@ -85,11 +87,13 @@ export default function Profile() {
           <Title style={styles.titlep}>Premium</Title>
           <Caption style={styles.titlep}>Suscripcion</Caption>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.soyMedico}>
+        {info.professionals.length<1?
+        <TouchableOpacity style={styles.soyMedico} onPress={() => navigation.navigate('profesional')}>
           <Title style={styles.soyMedicoT}>Soy Medico?</Title>
           <Caption style={styles.soyMedicoT}>Actualiza tus datos</Caption>
         </TouchableOpacity>
+        : null
+        }
       </View>
 
       <View style={styles.menu}>

@@ -8,6 +8,7 @@ import { loader } from "../Redux/Actions/actions";
 
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
+import Profesional from "../components/profesional/Profesional";
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,14 @@ export default function Profilenavigation() {
       <Stack.Screen
         name="ajustes"
         component={Ajustes}
+        options={{
+          title: "salir",
+          headerTransparent: false,
+        }}
+      />
+      <Stack.Screen
+        name="profesional"
+        component={Profesional}
         options={{
           title: "salir",
           headerTransparent: false,

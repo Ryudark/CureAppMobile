@@ -10,21 +10,26 @@ import RNPickerSelect from "react-native-picker-select";
 export default function Home({ navigation }) {
 
   const usuario = useSelector(state => state.userDetail)
-
+  console.log(usuario)
+  
   const city= usuario[0].city.name
-
+  
   const country =usuario[0].country.name
-
-
+  
+  
   const speciality = ["ALL", "Acompañante Terapéutico", "Enfermería", "Doctor", "Kinesiología", "Acompañante de Adulto Mayor", "Aplicaciones"]
   const fecha = ["All", "Hoy", "Esta Semana", "Este mes"]
   const lugar = ["Cerca de ti", "Tu País", "Todos"]
   const post = useSelector(state => state.post)
 
+
+  // console.log(post)
+
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(getPost())
-  }, [getPost])
+  }, [dispatch])
 
   function changeSpeciality(specialtyPatient) {
     dispatch(specialityFilter(specialtyPatient))
@@ -79,15 +84,24 @@ export default function Home({ navigation }) {
           }))}
         />
       </View>
-      <FlatList
-        data={post}
-        ItemSeparatorComponent={() => <Text> </Text>}
-        renderItem={({ item: repo }) => (
-          <TouchableHighlight onPress={() => navigation.navigate('Detail', repo)}>
-            <CardSimple {...repo} />
-          </TouchableHighlight>
-        )}
-      />
+      {
+      usuario[0].professionals.length<1?
+        <FlatList
+          data={post}
+          ItemSeparatorComponent={() => <Text> </Text>}
+          renderItem={({ item: repo }) => <CardSimple {...repo} />
+          }
+        />:
+        <FlatList
+          data={post}
+          ItemSeparatorComponent={() => <Text> </Text>}
+          renderItem={({ item: repo }) => 
+              <TouchableHighlight onPress={() => navigation.navigate('Detail', repo)}>
+                <CardSimple {...repo} />
+              </TouchableHighlight>
+          }
+        />
+      }
     </View>
   );
 }

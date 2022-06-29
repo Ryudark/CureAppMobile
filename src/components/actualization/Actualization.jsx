@@ -80,6 +80,10 @@ export default function Actualization() {
   }, [dispatch]);
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <Image
+        style={styles.backImage}
+        source={require("../../assets/hos.webp")}
+      />
       <View style={styles.containerInfo}>
         <View style={styles.photo}>
           <View style={styles.imagen}>
@@ -501,7 +505,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   containerInfo: {
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(29,52,84,0.6)",
+    borderRadius: 20,
     marginTop: 10,
     paddingHorizontal: 20,
     paddingBottom: 20,
@@ -527,12 +532,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 20,
     fontWeight: "bold",
+    color: "#fff",
   },
   input: {
     borderBottomWidth: 1,
     padding: 5,
-    borderBottomColor: "#1d3454",
+    borderBottomColor: "#fff",
     width: 220,
+    color: "#fff",
   },
   textArea: {
     height: 60,
@@ -557,12 +564,12 @@ const styles = StyleSheet.create({
   textFecha: {
     fontSize: 20,
     marginBottom: 10,
-    backgroundColor: "rgba(29,52,84,0.30)",
+    backgroundColor: "rgba(255,255,255,0.9)",
     borderRadius: 15,
     paddingHorizontal: 5,
   },
   userAge: {
-    backgroundColor: "rgba(36,184,184,0.20)",
+    backgroundColor: "rgba(36,184,184,0.9)",
     borderRadius: 15,
     paddingHorizontal: 50,
   },
@@ -586,7 +593,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   text: {
-    color: "#1d3454",
+    color: "#fff",
     fontSize: 18,
     marginLeft: 15,
     textShadowColor: "#7a7979",
@@ -602,6 +609,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
+    paddingHorizontal: 30,
   },
   select: {
     backgroundColor: "red",
@@ -622,11 +630,14 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     textShadowColor: "#7a7979",
   },
+  backImage: {
+    position: "absolute",
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
-    backgroundColor: "rgba(36,184,184,0.10)",
+    backgroundColor: "rgba(36,184,184,0.50)",
     marginTop: 10,
   },
 });

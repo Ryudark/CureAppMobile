@@ -1,4 +1,10 @@
-import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+} from "react-native";
 import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
@@ -19,6 +25,7 @@ export default function Profile() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <Image style={styles.backImage} source={require("../assets/hos.webp")} />
       <View style={styles.userInfo}>
         <View style={styles.avatar}>
           {!info ? (
@@ -85,13 +92,15 @@ export default function Profile() {
           <Title style={styles.titlep}>Premium</Title>
           <Caption style={styles.titlep}>Suscripcion</Caption>
         </TouchableOpacity>
-        {info.professionals.length<1?
-        <TouchableOpacity style={styles.soyMedico} onPress={() => navigation.navigate('profesional')}>
-          <Title style={styles.soyMedicoT}>Soy Medico?</Title>
-          <Caption style={styles.soyMedicoT}>Actualiza tus datos</Caption>
-        </TouchableOpacity>
-        : null
-        }
+        {info.professionals.length < 1 ? (
+          <TouchableOpacity
+            style={styles.soyMedico}
+            onPress={() => navigation.navigate("profesional")}
+          >
+            <Title style={styles.soyMedicoT}>Soy Medico?</Title>
+            <Caption style={styles.soyMedicoT}>Actualiza tus datos</Caption>
+          </TouchableOpacity>
+        ) : null}
       </View>
 
       <View style={styles.menu}>
@@ -128,18 +137,20 @@ const styles = StyleSheet.create({
   container: {},
   userInfo: {
     marginTop: 15,
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(29,52,84,0.6)",
+    borderRadius: 20,
     paddingLeft: 15,
   },
   avatar: { marginTop: 15, flexDirection: "row" },
   nameEmail: { marginTop: 15, marginLeft: 20 },
-  title: {},
+  title: { color: "#fff" },
+  caption: { color: "#fff" },
   userInfoSection: { marginTop: 20, marginBottom: 20 },
   contactContainer: {
     flexDirection: "row",
     marginTop: 10,
   },
-  dato: { marginLeft: 20, color: "#1d3454" },
+  dato: { marginLeft: 20, color: "#fff" },
 
   infoPremium: {
     marginTop: 15,
@@ -147,7 +158,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: "row",
     width: 360,
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(29,52,84,0.6)",
+    borderRadius: 20,
   },
   infoBox: {
     backgroundColor: "#1d3454",
@@ -172,19 +184,23 @@ const styles = StyleSheet.create({
   },
   menu: {
     marginTop: 15,
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(29,52,84,0.6)",
+    borderRadius: 20,
     paddingBottom: 100,
     paddingTop: 40,
   },
   itemMenu: {
-    backgroundColor: "rgba(255,174,0,0.10)",
+    backgroundColor: "rgba(255,174,0,0.50)",
     marginTop: 10,
     padding: 15,
 
     flexDirection: "row",
   },
   contratos: {
-    color: "#1d3454",
+    color: "#fff",
     marginLeft: 30,
+  },
+  backImage: {
+    position: "absolute",
   },
 });

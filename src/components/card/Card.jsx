@@ -14,8 +14,6 @@ export default function Card(props) {
 
     const date = yearB + "-" + monthb + "-" + dayB
 
-    console.log(props)
-
     return (
         <View key={props.id} style={styles.container}>
             <Text>Nombre del paciente: {props.namePatient} </Text>

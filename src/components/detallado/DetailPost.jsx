@@ -16,9 +16,9 @@ export default function DetailPost({ route }) {
     const newPost = filtro.concat(post)
 
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getPost())
-    }, [getPost])
+    // useEffect(() => {
+    //     dispatch(getPost())
+    // }, [getPost])
 
 
     return (

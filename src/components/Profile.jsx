@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, StyleSheet, TouchableOpacity, ScrollView, Alert } from "react-native";
 import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
@@ -6,16 +6,40 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import * as Linking from 'expo-linking';
 import { Avatar, Title, Caption, Text } from "react-native-paper";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { mercadoPagoPayment } from "../Redux/Actions/actions";
 
 export default function Profile() {
   const { userDetail } = useSelector((state) => state);
   const navigation = useNavigation();
+  const dispatch= useDispatch()
   const goToAjustes = () => {
     navigation.navigate("ajustes");
   };
   const info = userDetail[0];
+
+  function executePayment() {
+    const obj = {
+      professionalId: Number(userDetail[0].professionals[0].id),
+    };
+    let redirectTo = "";
+    dispatch(mercadoPagoPayment(obj)).then((resp) => {
+      if (
+        resp.payload.redirectTo === "Existing Auction " &&
+        resp.type === "MERCADOPAGO_PAYMENT"
+      )
+      console.log(resp);
+      redirectTo = resp.payload.redirectTo;
+      // window.location = resp.payload.redirectTo;
+      if(redirectTo){
+        alert('Te redireccionaremos a Mercado Pago')
+        Linking.openURL(redirectTo)
+      }
+    });
+  }
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -81,7 +105,7 @@ export default function Profile() {
       </View>
 
       <View style={styles.infoPremium}>
-        <TouchableOpacity style={styles.infoBox}>
+        <TouchableOpacity style={styles.infoBox} onPress={executePayment}>
           <Title style={styles.titlep}>Premium</Title>
           <Caption style={styles.titlep}>Suscripcion</Caption>
         </TouchableOpacity>

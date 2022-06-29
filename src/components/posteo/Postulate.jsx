@@ -7,24 +7,25 @@ import {
     StyleSheet,
     View,
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import {
     postulate,
-    userToProfessional,
 } from "../../Redux/Actions/actions";
 
 import { useNavigation } from "@react-navigation/native";
 
-export default function Profesional({route}) {
+export default function Postulate({ route }) {
 
 
-    console.log(route)
+    const idPost = route.params
 
     const id = useSelector(state => state.id)
 
     const userID = id
+    const profesional = useSelector(state => state.userDetail)
+    const idProf = profesional[0].professionals[0].id
+
 
     const [fecha, setFecha] = useState(new Date())
 
@@ -38,38 +39,32 @@ export default function Profesional({route}) {
         date: "",
         offer: "",
         comment: "",
-        postId: "",
-        professionalId: "",
+        postId: idPost,
+        professionalId: idProf,
         userId: userID,
     });
 
     function changeDate() {
         const date = new Date()
-        // const actualDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
         let dia = date.getDate()
         let mes = (date.getMonth() + 1)
         const año = date.getFullYear()
 
-        if(dia<10){
-            dia='0'+dia
+        if (dia < 10) {
+            dia = '0' + dia
         }
-        if(mes<10){
-            mes='0'+mes
+        if (mes < 10) {
+            mes = '0' + mes
         }
         const actualDate = año + "-" + mes + "-" + dia
-        setUser({ ...user, date: actualDate})
+        setUser({ ...user, date: actualDate })
     }
-    function changeTrainings(trainings) {
-        setUser({ ...user, trainings })
+    function changeOffer(offer) {
+        setUser({ ...user, offer })
     }
-    function changeCvu(cvu) {
-        setUser({ ...user, cvu })
-    }
-    function changeNivelDeEstudio(nivelDeEstudio) {
-        setUser({ ...user, nivelDeEstudio })
-    }
-    function changeInstitucion(institucion) {
-        setUser({ ...user, institucion })
+
+    function changeComment(comment) {
+        setUser({ ...user, comment })
     }
 
     useEffect(() => {
@@ -80,7 +75,7 @@ export default function Profesional({route}) {
         try {
             await dispatch(postulate(user))
             alert('Postulación enviada')
-            navigation.navigate("Profile")
+            navigation.navigate("Home")
         }
         catch (e) {
             console.log(e)
@@ -89,42 +84,25 @@ export default function Profesional({route}) {
     }
 
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Titulo</Text>
-            <TextInput
-            value={user.tuition}
-            onChangeText={(tuition) => changeTuition(tuition)}
-            style={styles.input}
-            />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Nivel Educativo</Text>
-            <TextInput value={user.nivelDeEstudio} onChangeText={nivelDeEstudio => changeNivelDeEstudio(nivelDeEstudio)} style={styles.input} />
-        </View>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Institución Educativa</Text>
-            <TextInput value={user.institucion} onChangeText={institucion => changeInstitucion(institucion)} style={styles.input} />
-        </View>
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Capacitación</Text>
-            <TextInput value={user.trainings} onChangeText={trainings => changeTrainings(trainings)} style={styles.input} />
-        </View>
+            <View style={styles.containerInput}>
+                <Text style={styles.text}>Oferta $: </Text>
+                <TextInput
+                    value={user.offer}
+                    onChangeText={(offer) => changeOffer(offer)}
+                    keyboardType="numeric"
+                    style={styles.input}
+                />
+            </View>
+            <View>
+                <Text style={styles.text}>Comente su oferta</Text>
+                <TextInput multiline={true} numberOfLines={3} onChangeText={need => changeComment(need)} />
+            </View>
 
-        <View style={styles.containerInput}>
-            <Text style={styles.text}>Tarjeta Profesional</Text>
-            <TextInput
-            value={user.cvu}
-            onChangeText={(cvu) => changeCvu(cvu)}
-            keyboardType="numeric"
-            style={styles.input}
-            />
-        </View>
-
-        <TouchableHighlight onPress={onSubmit} style={styles.butonContainer}>
-            <Text style={styles.textB}>Crear</Text>
-        </TouchableHighlight>
+            <TouchableHighlight onPress={onSubmit} style={styles.butonContainer}>
+                <Text style={styles.textB}>Enviar</Text>
+            </TouchableHighlight>
         </ScrollView>
     );
 }

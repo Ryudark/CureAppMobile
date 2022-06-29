@@ -9,6 +9,7 @@ import { loader } from "../Redux/Actions/actions";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import Profesional from "../components/profesional/Profesional.jsx";
+import Postulate from "../components/posteo/Postulate.jsx";
 
 const Stack = createStackNavigator();
 
@@ -70,7 +71,7 @@ export default function Profilenavigation() {
       />
       <Stack.Screen
         name="postulate"
-        component={Profesional}
+        component={Postulate}
         options={{
           title: "postulate",
           headerTransparent: false,

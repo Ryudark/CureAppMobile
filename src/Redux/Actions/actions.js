@@ -91,12 +91,12 @@ export function userToProfessional(users) {
 }
 export function postulate(users) {
   console.log(users)
-  // return async function (dispatch) {
-  //   await axios.post(
-  //     "https://api-rest-pf-production.up.railway.app/api/Addpostulates",
-  //     users
-  //   );
-  // };
+  return async function (dispatch) {
+    await axios.post(
+      "https://api-rest-pf-production.up.railway.app/api/Addpostulates",
+      users
+    );
+  };
 }
 
 export const getUserDetail = (id) => {
@@ -203,7 +203,7 @@ export const locationFilter = (value) => {
   }
 }
 
-export function getPostPropios(id){
+export function getPostPropios(id) {
   return async function (dispatch) {
     try {
       const post = await axios.get(

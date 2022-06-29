@@ -183,6 +183,7 @@ const rootReducer = (state = initialState, action) => {
     case LIMPIARPOST:
       return {
         ...state,
+        post:[],
         postPropios:[],
         postAuction:[]
       }

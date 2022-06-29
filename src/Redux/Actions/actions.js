@@ -183,7 +183,7 @@ export const getPost = () => {
 }
 
 export const deletePost=(id)=>{
-  console.log(id)
+  console.log(id)//activeFalsePost
 }
 
 export const specialityFilter = (value) => {

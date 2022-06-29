@@ -38,7 +38,7 @@ export default function Profile() {
         alert('Te redireccionaremos a Mercado Pago')
         Linking.openURL(redirectTo)
       }
-    });
+    }); 
   }
 
   return (
@@ -111,7 +111,7 @@ export default function Profile() {
         </TouchableOpacity>
         {info.professionals.length<1?
         <TouchableOpacity style={styles.soyMedico} onPress={() => navigation.navigate('profesional')}>
-          <Title style={styles.soyMedicoT}>Soy Medico?</Title>
+          <Title style={styles.soyMedicoT}>Soy Profesional?</Title>
           <Caption style={styles.soyMedicoT}>Actualiza tus datos</Caption>
         </TouchableOpacity>
         : null

@@ -31,6 +31,8 @@ export default function CardsPropios(props) {
         deletePost(id)
     }
 
+    /////addContracts
+
     return (
         <ScrollView key={props.id} style={styles.container}>
             <Text>Nombre del paciente: {props.namePatient} </Text>

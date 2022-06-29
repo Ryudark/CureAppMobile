@@ -81,11 +81,29 @@ export function postUser(post) {
   };
 }
 
+export function userToProfessional(users) {
+  return async function (dispatch) {
+    await axios.post(
+      "https://api-rest-pf-production.up.railway.app/api/profdbregistration",
+      users
+    );
+  };
+}
+export function postulate(users) {
+  console.log(users)
+  return async function (dispatch) {
+    await axios.post(
+      "https://api-rest-pf-production.up.railway.app/api/Addpostulates",
+      users
+    );
+  };
+}
+
 export const getUserDetail = (id) => {
   return async function (dispatch) {
     try {
       const response = await axios.get(
-        `https://api-rest-pf-production.up.railway.app/api/userDetalleById/${id}`
+        `https://api-rest-pf-production.up.railway.app/api/userProfessionalByID/${id}`
       );
 
       return dispatch({
@@ -185,7 +203,7 @@ export const locationFilter = (value) => {
   }
 }
 
-export function getPostPropios(id){
+export function getPostPropios(id) {
   return async function (dispatch) {
     try {
       const post = await axios.get(

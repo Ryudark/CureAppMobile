@@ -2,15 +2,13 @@ import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 export default function CardOfertas(props){
-    console.log(props)
-    console.log(props.p.professional.user.name)
-//{props.professional.user[0].name}
+
     const fecha = new Date(props.p.date)
     const dia = fecha.getDate()
     const mes = fecha.getMonth()+1
     const año = fecha.getFullYear()
     const fech = año+"-"+mes+"-"+dia
-    console.log(fech)
+
     return(
         <View style={styles.container}>
             <Text>Nombre del Profesional: {props.p.professional.user.name} { props.p.professional.user.surname} </Text>

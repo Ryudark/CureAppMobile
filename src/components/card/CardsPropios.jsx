@@ -23,8 +23,6 @@ export default function CardsPropios(props) {
     const date = yearB + "-" + monthb + "-" + dayB
 
     const post = useSelector(state=>state.postAuction)
-
-    console.log(post)
     useEffect(()=>{
         dispatch(getPostAuction(props.id))
     },[])
@@ -46,15 +44,17 @@ export default function CardsPropios(props) {
                 <Text style={styles.textB}>Eliminar Post</Text>
             </TouchableHighlight>
             <View>
-                {/* <FlatList 
+                {post.length>0? post.map(p=> <CardOfertas key={p.id} p={p}/>): <Text>Aun no hay postulaciones</Text>}
+            </View>
+            {/* <ScrollView>
+                <FlatList 
                     data={post}
                     ItemSeparatorComponent={() => <Text> </Text>}
                     renderItem={({ item: repo }) => (
                         <CardOfertas {...repo} />
                 )}
-                />: */}
-                {post.length>0? post.map(p=> <CardOfertas key={p.id} p={p}/>): <Text>Aun no hay postulaciones</Text>}
-            </View>
+                />:
+            </ScrollView> */}
         </ScrollView>
 
     )

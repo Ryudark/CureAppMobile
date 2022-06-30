@@ -13,10 +13,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar, Title, Caption, Text } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserDetail } from "../Redux/Actions/actions";
 
 export default function Profile() {
-  const { userDetail } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { userDetail, id, imageProfile } = useSelector((state) => state);
+
   const navigation = useNavigation();
   const goToAjustes = () => {
     navigation.navigate("ajustes");
@@ -28,24 +31,16 @@ export default function Profile() {
       <Image style={styles.backImage} source={require("../assets/hos.webp")} />
       <View style={styles.userInfo}>
         <View style={styles.avatar}>
-          {!info ? (
-            <Avatar.Image
-              source={{
-                uri: "https://img2.freepng.es/20190702/tl/kisspng-computer-icons-portable-network-graphics-avatar-tr-clip-directory-professional-transparent-amp-png-5d1bfa95e508d4.2980489715621147099381.jpg",
-              }}
-              size={90}
-            />
-          ) : (
-            <Avatar.Image
-              source={{
-                uri:
-                  info.photo !== ""
-                    ? info.photo
-                    : "https://img2.freepng.es/20190702/tl/kisspng-computer-icons-portable-network-graphics-avatar-tr-clip-directory-professional-transparent-amp-png-5d1bfa95e508d4.2980489715621147099381.jpg",
-              }}
-              size={90}
-            />
-          )}
+          <Avatar.Image
+            source={{
+              uri: imageProfile
+                ? imageProfile
+                : info.photo !== ""
+                ? info.photo
+                : "https://img2.freepng.es/20190702/tl/kisspng-computer-icons-portable-network-graphics-avatar-tr-clip-directory-professional-transparent-amp-png-5d1bfa95e508d4.2980489715621147099381.jpg",
+            }}
+            size={90}
+          />
 
           <View style={styles.nameEmail}>
             <Title style={styles.title}>

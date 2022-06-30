@@ -1,4 +1,15 @@
-import { ALL, CITY, COUNTRY, ERROR, FECHA, LOCATION, POST, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
+import {
+  ALL,
+  CITY,
+  COUNTRY,
+  ERROR,
+  FECHA,
+  LOCATION,
+  POST,
+  POSTPROPIOS,
+  REGION,
+  SPECIALITY,
+} from "../constantes";
 import {
   ERR,
   USER_LOGIN,
@@ -6,6 +17,8 @@ import {
   LOADING,
   USER_DETAIL,
   LOGOUT,
+  SAVE_IMAGE,
+  PHOTO,
 } from "../Actions/actions";
 
 const initialState = {
@@ -13,6 +26,7 @@ const initialState = {
     message: "",
     isError: false,
   },
+  imageProfile: "",
   id: 0,
   dataLog: {},
   islogged: false,
@@ -24,7 +38,7 @@ const initialState = {
   isLoggin: false,
   post: [],
   copyPost: [],
-  postPropios:[],
+  postPropios: [],
 };
 
 // const lastMounth = today.getFullYear() + "-" + (today.getMonth()) + "-" + today.getDate()
@@ -48,13 +62,31 @@ const rootReducer = (state = initialState, action) => {
         isLoggin: false,
         islogged: true,
       };
+    case PHOTO:
+      return {
+        ...state,
+        imageProfile: "",
+      };
+
     case LOGOUT:
-      return { ...state, islogged: false, isLoggin: false, dataLog: {}, id: 0 };
+      return {
+        ...state,
+        islogged: false,
+        isLoggin: false,
+        dataLog: {},
+        id: 0,
+        imageProfile: "",
+      };
 
     case LOADING:
       return {
         ...state,
         isLoggin: action.payload,
+      };
+    case SAVE_IMAGE:
+      return {
+        ...state,
+        imageProfile: action.payload,
       };
     case USER_DETAIL:
       return {
@@ -103,83 +135,107 @@ const rootReducer = (state = initialState, action) => {
         errors: action.payload,
       };
     case SPECIALITY:
-      let copiaSpeciality = state.copyPost
-      const filterSpeciality = action.payload === ALL ? copiaSpeciality :
-        copiaSpeciality.filter(s => s.specialty.specialty.includes(action.payload))
+      let copiaSpeciality = state.copyPost;
+      const filterSpeciality =
+        action.payload === ALL
+          ? copiaSpeciality
+          : copiaSpeciality.filter((s) =>
+              s.specialty.specialty.includes(action.payload)
+            );
       return {
         ...state,
-        post: filterSpeciality
-      }
+        post: filterSpeciality,
+      };
     case FECHA:
-      let copiaDate = state.copyPost
-      const today = new Date()
-      const todayMinimo = today.getFullYear() + "-0" + (today.getMonth() + 1) + "-" + today.getDate() + "T00:00:00.000Z"
-      const diasMinimo = today.getFullYear() + "-0" + (today.getMonth() + 1) + "-" + (today.getDate() - 7) + "T00:00:00.000Z"
-      const mesMinimo = today.getFullYear() + "-0" + today.getMonth() + "-" + today.getDate() + "T00:00:00.000Z"
-      let filterDate = []
+      let copiaDate = state.copyPost;
+      const today = new Date();
+      const todayMinimo =
+        today.getFullYear() +
+        "-0" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate() +
+        "T00:00:00.000Z";
+      const diasMinimo =
+        today.getFullYear() +
+        "-0" +
+        (today.getMonth() + 1) +
+        "-" +
+        (today.getDate() - 7) +
+        "T00:00:00.000Z";
+      const mesMinimo =
+        today.getFullYear() +
+        "-0" +
+        today.getMonth() +
+        "-" +
+        today.getDate() +
+        "T00:00:00.000Z";
+      let filterDate = [];
       if ("Hoy" === action.payload) {
-        filterDate = copiaDate.filter(d => d.date_post == todayMinimo)
+        filterDate = copiaDate.filter((d) => d.date_post == todayMinimo);
         return {
           ...state,
-          post: filterDate
-        }
+          post: filterDate,
+        };
       }
       if ("Esta Semana" === action.payload) {
-        filterDate = copiaDate.filter(d => d.date_post > diasMinimo)
+        filterDate = copiaDate.filter((d) => d.date_post > diasMinimo);
         return {
           ...state,
-          post: filterDate
-        }
+          post: filterDate,
+        };
       }
       if ("Este mes" === action.payload) {
-        filterDate = copiaDate.filter(d => d.date_post > mesMinimo)
+        filterDate = copiaDate.filter((d) => d.date_post > mesMinimo);
         return {
           ...state,
-          post: filterDate
-        }
-      }
-      else {
-        filterDate = copiaDate
+          post: filterDate,
+        };
+      } else {
+        filterDate = copiaDate;
         return {
           ...state,
-          post: filterDate
-        }
+          post: filterDate,
+        };
       }
     case LOCATION:
-      let copyLocation= state.copyPost
-      let filterLocation= []
-      if("Tu País"===action.payload.location){
-        filterLocation= copyLocation.filter(l=>l.country.name===action.payload.country)
+      let copyLocation = state.copyPost;
+      let filterLocation = [];
+      if ("Tu País" === action.payload.location) {
+        filterLocation = copyLocation.filter(
+          (l) => l.country.name === action.payload.country
+        );
         return {
           ...state,
-          post: filterLocation
-        }
+          post: filterLocation,
+        };
       }
-      if("Cerca de ti"===action.payload.location){
-        filterLocation= copyLocation.filter(l=>l.city.name===action.payload.city) ///===action.payload.city
+      if ("Cerca de ti" === action.payload.location) {
+        filterLocation = copyLocation.filter(
+          (l) => l.city.name === action.payload.city
+        ); ///===action.payload.city
         return {
           ...state,
-          post: filterLocation
-        }
-      }
-      else{
-        filterLocation=copyLocation
+          post: filterLocation,
+        };
+      } else {
+        filterLocation = copyLocation;
         return {
           ...state,
-          post: filterLocation
-        }
+          post: filterLocation,
+        };
       }
     case POST:
       return {
         ...state,
         post: action.payload,
-        copyPost: action.payload
-      }
+        copyPost: action.payload,
+      };
     case POSTPROPIOS:
       return {
         ...state,
         postPropios: action.payload,
-      }
+      };
     default:
       return {
         ...state,

@@ -1,4 +1,13 @@
-import { CITY, COUNTRY, FECHA, LOCATION, POST, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
+import {
+  CITY,
+  COUNTRY,
+  FECHA,
+  LOCATION,
+  POST,
+  POSTPROPIOS,
+  REGION,
+  SPECIALITY,
+} from "../constantes";
 import axios from "axios";
 
 // const {API_KEY}= process.env
@@ -11,6 +20,8 @@ export const USER_LOGIN = "USER_LOGIN";
 export const LOADING = "LOADING";
 export const USER_DETAIL = "USER_DETAIL";
 export const LOGOUT = "LOGOUT";
+export const SAVE_IMAGE = "SAVE_IMAGE";
+export const PHOTO = "PHOTO";
 
 export const userLogin = (user) => {
   return async function (dispatch) {
@@ -90,7 +101,7 @@ export function userToProfessional(users) {
   };
 }
 export function postulate(users) {
-  console.log(users)
+  console.log(users);
   return async function (dispatch) {
     await axios.post(
       "https://api-rest-pf-production.up.railway.app/api/Addpostulates",
@@ -171,37 +182,38 @@ export const getCity = (value) => {
 export const getPost = () => {
   return async function (dispatch) {
     try {
-      const post = await axios.get('https://api-rest-pf-production.up.railway.app/api/infoCardPost')
+      const post = await axios.get(
+        "https://api-rest-pf-production.up.railway.app/api/infoCardPost"
+      );
       return dispatch({
         type: POST,
-        payload: post.data
-      })
+        payload: post.data,
+      });
+    } catch (e) {
+      console.log(e);
     }
-    catch (e) {
-      console.log(e)
-    }
-  }
-}
+  };
+};
 
 export const specialityFilter = (value) => {
   return {
     type: SPECIALITY,
-    payload: value
-  }
-}
+    payload: value,
+  };
+};
 export const dateFilter = (value) => {
   return {
     type: FECHA,
-    payload: value
-  }
-}
+    payload: value,
+  };
+};
 
 export const locationFilter = (value) => {
   return {
     type: LOCATION,
-    payload: value
-  }
-}
+    payload: value,
+  };
+};
 
 export function getPostPropios(id) {
   return async function (dispatch) {
@@ -212,7 +224,7 @@ export function getPostPropios(id) {
       );
       return dispatch({
         type: POSTPROPIOS,
-        payload: post.data
+        payload: post.data,
       });
     } catch (e) {
       console.log(e);
@@ -221,6 +233,7 @@ export function getPostPropios(id) {
 }
 
 export const editUser = (userchanges) => {
+  console.log("userchanges", userchanges.photo);
   return async function (dispatch) {
     try {
       const response = await axios.put(
@@ -231,5 +244,18 @@ export const editUser = (userchanges) => {
     } catch (error) {
       console.log(error.response.data);
     }
+  };
+};
+
+export const saveImage = (image) => {
+  console.log(image);
+  return {
+    type: SAVE_IMAGE,
+    payload: image,
+  };
+};
+export const photo = () => {
+  return {
+    type: PHOTO,
   };
 };

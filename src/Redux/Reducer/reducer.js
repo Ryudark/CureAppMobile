@@ -1,4 +1,4 @@
-import { ALL, CITY, COUNTRY, ERROR, FECHA, LOCATION, POST, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
+import { ALL, CITY, COUNTRY, ERROR, FECHA, LIMPIARPOST, LOCATION, POST, POSTAUCTION, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
 import {
   ERR,
   USER_LOGIN,
@@ -25,6 +25,7 @@ const initialState = {
   post: [],
   copyPost: [],
   postPropios:[],
+  postAuction:[],
 };
 
 // const lastMounth = today.getFullYear() + "-" + (today.getMonth()) + "-" + today.getDate()
@@ -180,6 +181,18 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         postPropios: action.payload,
       }
+    case LIMPIARPOST:
+      return {
+        ...state,
+        post:[],
+        postPropios:[],
+        postAuction:[]
+      }
+    case POSTAUCTION:
+      return{
+          ...state,
+          postAuction: action.payload
+    }
     default:
       return {
         ...state,

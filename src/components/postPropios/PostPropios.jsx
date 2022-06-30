@@ -8,9 +8,8 @@ import CardSimple from "../card/CardSimple.jsx";
 
 export default function PostPropios({ navigation }) {
 
-    const usuario = useSelector(state => state.userDetail)
-
-    const userID = usuario[0].id
+    const userID = useSelector(state => state.id)
+    // const userID = usuario[0].id
 
     const post = useSelector(state => state.postPropios)
 
@@ -21,6 +20,8 @@ export default function PostPropios({ navigation }) {
 
     return (
         <View>
+            {
+            post.length>0?
             <FlatList
                 data={post}
                 ItemSeparatorComponent={() => <Text> </Text>}
@@ -29,7 +30,9 @@ export default function PostPropios({ navigation }) {
                     <CardSimple {...repo} />
                 </TouchableHighlight>
                 )}
-            />
+            />:
+            <Text>AUN NO POSEE POSTS</Text>
+            }
         </View>
     );
 }

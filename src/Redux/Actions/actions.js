@@ -1,9 +1,5 @@
-import { CITY, COUNTRY, FECHA, LOCATION, POST, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
+import { CITY, COUNTRY, FECHA, LIMPIARPOST, LOCATION, MERCADOPAGO_PAYMENT, POST, POSTAUCTION, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
 import axios from "axios";
-
-// const {API_KEY}= process.env
-
-const API_KEY = "ec2ab08965699856947080b2bbe0766b";
 
 export const NO_ERR = "NO_ERR";
 export const ERR = "ERR";
@@ -11,6 +7,10 @@ export const USER_LOGIN = "USER_LOGIN";
 export const LOADING = "LOADING";
 export const USER_DETAIL = "USER_DETAIL";
 export const LOGOUT = "LOGOUT";
+
+const axiosConfig = {
+  withCredentials: true,
+};
 
 export const userLogin = (user) => {
   return async function (dispatch) {
@@ -90,7 +90,6 @@ export function userToProfessional(users) {
   };
 }
 export function postulate(users) {
-  console.log(users)
   return async function (dispatch) {
     await axios.post(
       "https://api-rest-pf-production.up.railway.app/api/Addpostulates",
@@ -183,6 +182,17 @@ export const getPost = () => {
   }
 }
 
+export const deletePost=(id)=>{
+  console.log(id)//activeFalsePost
+  return async function (dispatch) {
+    await axios.put(
+      "https://api-rest-pf-production.up.railway.app/api/activeFalsePost",
+      id
+    );
+  };
+
+}
+
 export const specialityFilter = (value) => {
   return {
     type: SPECIALITY,
@@ -203,11 +213,32 @@ export const locationFilter = (value) => {
   }
 }
 
+export function mercadoPagoPayment(values) {
+  return async function (dispatch) {
+    try {
+      console.log("Addpostulates AXIOS OBJ:", values);
+      const resp = await axios.post(`https://api-rest-pf-production.up.railway.app/api/checkoutPayment`, values, axiosConfig);
+
+      const json = await resp.data;
+      console.log(json);
+      return dispatch({
+        type: MERCADOPAGO_PAYMENT,
+        payload: json,
+      });
+    } catch (error) {
+      console.log(error);
+      return dispatch({
+        type: MERCADOPAGO_PAYMENT,
+        payload: error.response.data,
+      });
+    }
+  };
+}
+
 export function getPostPropios(id) {
   return async function (dispatch) {
     try {
       const post = await axios.get(
-        // `http://battuta.medunes.net/api/city/${zona?.country}/search/?region=${zona.region}&key=${API_KEY}`
         `https://api-rest-pf-production.up.railway.app/api/posteosUsersByUserID/${id}`
       );
       return dispatch({
@@ -216,8 +247,39 @@ export function getPostPropios(id) {
       });
     } catch (e) {
       console.log(e);
+      return dispatch({
+        type: POSTPROPIOS,
+        payload: []
+      });
     }
   };
+}
+
+export const getPostAuction=(id)=>{
+  console.log('llegue a actions',id)
+  return async function (dispatch) {
+    try {
+      const post = await axios.get(
+        `https://api-rest-pf-production.up.railway.app/api/traerPostByAuction/${id}`
+      );
+      return dispatch({
+        type: POSTAUCTION,
+        payload: post.data[0].auctions
+      });
+    } catch (e) {
+      console.log(e);
+      return dispatch({
+        type: POSTAUCTION,
+        payload: []
+      });
+    }
+} 
+}
+
+export const limpiarPostPropios=()=>{
+  return {
+    type: LIMPIARPOST,
+  }
 }
 
 export const editUser = (userchanges) => {

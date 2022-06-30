@@ -204,7 +204,10 @@ export default function Actualization() {
                         <Text style={styles.textB}>Camara</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={choosePhoto}
+                        onPress={() => {
+                          setModal(false);
+                          choosePhoto();
+                        }}
                         style={{ ...styles.butonContainer, marginTop: 5 }}
                       >
                         <Text style={styles.textB}>Subir Foto</Text>

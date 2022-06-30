@@ -112,9 +112,6 @@ export default function Actualization() {
     setShow(visible);
   }
 
-  useEffect(() => {
-    dispatch(getCountry());
-  }, [dispatch]);
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Image

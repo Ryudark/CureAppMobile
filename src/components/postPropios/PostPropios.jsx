@@ -1,25 +1,35 @@
 import React from "react";
 import { useEffect } from "react";
-import { Text, StyleSheet, FlatList, TouchableHighlight, View } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableHighlight,
+  View,
+  Image,
+} from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import {getPostPropios} from "../../Redux/Actions/actions";
+import { getPostPropios } from "../../Redux/Actions/actions";
 import CardSimple from "../card/CardSimple.jsx";
 
 export default function PostPropios({ navigation }) {
 
-    const userID = useSelector(state => state.id)
-    // const userID = usuario[0].id
+  const post = useSelector((state) => state.postPropios);
 
-    const post = useSelector(state => state.postPropios)
+  const userID = useSelector(state => state.id)
 
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getPostPropios(userID))
-    }, [getPostPropios])
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPostPropios(userID));
+  }, [getPostPropios]);
 
     return (
         <View>
+            <Image
+              style={styles.imageback}
+              source={require("../../assets/hos.webp")}
+             />
             {
             post.length>0?
             <FlatList
@@ -35,13 +45,17 @@ export default function PostPropios({ navigation }) {
             }
         </View>
     );
+
 }
 
 const styles = StyleSheet.create({
-    containerHome: {
-        height: "100%",
-    },  
-    bodyHome: {
-        marginTop: 90,
-    },
+  imageback: {
+    position: "absolute",
+  },
+  containerHome: {
+    height: "100%",
+  },
+  bodyHome: {
+    marginTop: 90,
+  },
 });

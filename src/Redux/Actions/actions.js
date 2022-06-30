@@ -184,6 +184,13 @@ export const getPost = () => {
 
 export const deletePost=(id)=>{
   console.log(id)//activeFalsePost
+  return async function (dispatch) {
+    await axios.put(
+      "https://api-rest-pf-production.up.railway.app/api/activeFalsePost",
+      id
+    );
+  };
+
 }
 
 export const specialityFilter = (value) => {

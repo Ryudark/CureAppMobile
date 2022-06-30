@@ -25,6 +25,7 @@ const initialState = {
   post: [],
   copyPost: [],
   postPropios:[],
+  postAuction:[],
 };
 
 // const lastMounth = today.getFullYear() + "-" + (today.getMonth()) + "-" + today.getDate()

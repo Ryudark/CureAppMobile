@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Modal,
   Image,
+  SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -20,6 +21,7 @@ import {
   getCountry,
   getRegion,
   loader,
+  saveImage,
 } from "../../Redux/Actions/actions";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -34,12 +36,17 @@ import * as ImagePicker from "expo-image-picker";
 const defaultDate = new Date(1999, 0, 1);
 
 export default function Actualization() {
+  const dispatch = useDispatch();
+
   const navigation = useNavigation();
-  id = useSelector((state) => state.id);
-  const { userDetail, dataLog } = useSelector((state) => state);
+
+  const { userDetail, dataLog, id, imageProfile } = useSelector(
+    (state) => state
+  );
   const info = userDetail[0];
+
   const formik = useFormik({
-    initialValues: initialValues(info, dataLog.password),
+    initialValues: initialValues(info, imageProfile),
     validationSchema: Yup.object(validationSchema()),
     validateOnChange: false,
     onSubmit: (formValue) => {
@@ -53,9 +60,41 @@ export default function Actualization() {
       }
     },
   });
+  console.log("ksksdkdkkd", imageProfile);
   const goToProfile = () => {
     navigation.navigate("Profile");
   };
+
+  const takePhoto = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      dispatch(saveImage(result.uri));
+    }
+  };
+
+  const choosePhoto = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      dispatch(saveImage(result.uri));
+    }
+  };
+
   const [modal, setModal] = useState(false);
   const [visible, setVisible] = useState(false);
   const [fecha, setFecha] = useState(defaultDate);
@@ -69,17 +108,16 @@ export default function Actualization() {
     dispatch(loader(false));
   }, []);
 
-  const dispatch = useDispatch();
-
   function showModeHandler(visible) {
     setShow(visible);
   }
 
-  useEffect(() => {
-    dispatch(getCountry());
-  }, [dispatch]);
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <Image
+        style={styles.backImage}
+        source={require("../../assets/hos.webp")}
+      />
       <View style={styles.containerInfo}>
         <View style={styles.photo}>
           <View style={styles.imagen}>
@@ -91,7 +129,11 @@ export default function Actualization() {
               <View style={styles.photImageBackG}>
                 <ImageBackground
                   source={{
-                    uri: "https://img2.freepng.es/20190702/tl/kisspng-computer-icons-portable-network-graphics-avatar-tr-clip-directory-professional-transparent-amp-png-5d1bfa95e508d4.2980489715621147099381.jpg",
+                    uri: imageProfile
+                      ? imageProfile
+                      : info.photo
+                      ? info.photo
+                      : "https://img2.freepng.es/20190702/tl/kisspng-computer-icons-portable-network-graphics-avatar-tr-clip-directory-professional-transparent-amp-png-5d1bfa95e508d4.2980489715621147099381.jpg",
                   }}
                   style={styles.photoImage}
                   imageStyle={styles.imageP}
@@ -126,25 +168,52 @@ export default function Actualization() {
                         borderTopRightRadius: 50,
                       }}
                     >
+                      <View
+                        style={{
+                          marginTop: 20,
+                          marginBottom: 10,
+                          alignItems: "center",
+                        }}
+                      >
+                        <Image
+                          style={{ width: 50, height: 36 }}
+                          source={require("../../assets/logoClickCareicono.png")}
+                        />
+                        <Text
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: 18,
+                            color: "#1d3454",
+                            marginTop: 10,
+                          }}
+                        >
+                          Cambia tu foto de perfil
+                        </Text>
+                      </View>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          setModal(false);
+                          takePhoto();
+                        }}
+                        style={{ ...styles.butonContainer, marginTop: 5 }}
+                      >
+                        <Text style={styles.textB}>Camara</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setModal(false);
+                          choosePhoto();
+                        }}
+                        style={{ ...styles.butonContainer, marginTop: 5 }}
+                      >
+                        <Text style={styles.textB}>Subir Foto</Text>
+                      </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
                           setModal(false);
                         }}
-                        style={styles.butonContainer}
-                      >
-                        <Text style={styles.textB}>Cancelar</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => {}}
-                        style={styles.butonContainer}
-                      >
-                        <Text style={styles.textB}>Guardar</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => {
-                          setModal(false);
-                        }}
-                        style={{ ...styles.butonContainer }}
+                        style={{ ...styles.butonContainer, marginTop: 5 }}
                       >
                         <Text style={styles.textB}>Cancelar</Text>
                       </TouchableOpacity>
@@ -409,7 +478,12 @@ export default function Actualization() {
                       formik.setFieldValue("password", text)
                     }
                     secureTextEntry={true}
-                    style={{ ...styles.input, marginRight: 40 }}
+                    style={{
+                      ...styles.input,
+                      marginRight: 40,
+                      borderBottomColor: "#1d3454",
+                      color: "#1d3454",
+                    }}
                   />
                 </View>
                 <View
@@ -458,24 +532,27 @@ export default function Actualization() {
     </ScrollView>
   );
 }
-const initialValues = ({
-  id,
-  email = "",
-  name = "",
-  surname = "",
-  phone = "",
-  address = "",
-  age = defaultDate,
-  document = "",
-  phone2 = "",
-  state = "",
-  city = "",
-  country = "",
-  photo = "",
-}) => {
+const initialValues = (
+  {
+    id,
+    email = "",
+    name = "",
+    surname = "",
+    phone = "",
+    address = "",
+    age = defaultDate,
+    document = "",
+    phone2 = "",
+    state = "",
+    city = "",
+    country = "",
+    photo = "",
+  },
+  image
+) => {
   return {
     id: id,
-    photo,
+    photo: image ? image : photo,
     email,
     password: "",
     name,
@@ -501,7 +578,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   containerInfo: {
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(29,52,84,0.6)",
+    borderRadius: 20,
     marginTop: 10,
     paddingHorizontal: 20,
     paddingBottom: 20,
@@ -512,7 +590,7 @@ const styles = StyleSheet.create({
   photImageBackG: {
     height: 100,
     width: 100,
-    borderRadius: 50,
+    borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -527,12 +605,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 20,
     fontWeight: "bold",
+    color: "#fff",
   },
   input: {
     borderBottomWidth: 1,
     padding: 5,
-    borderBottomColor: "#1d3454",
+    borderBottomColor: "#fff",
     width: 220,
+    color: "#fff",
   },
   textArea: {
     height: 60,
@@ -557,12 +637,12 @@ const styles = StyleSheet.create({
   textFecha: {
     fontSize: 20,
     marginBottom: 10,
-    backgroundColor: "rgba(29,52,84,0.30)",
+    backgroundColor: "rgba(255,255,255,0.9)",
     borderRadius: 15,
     paddingHorizontal: 5,
   },
   userAge: {
-    backgroundColor: "rgba(36,184,184,0.20)",
+    backgroundColor: "rgba(36,184,184,0.9)",
     borderRadius: 15,
     paddingHorizontal: 50,
   },
@@ -586,7 +666,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   text: {
-    color: "#1d3454",
+    color: "#fff",
     fontSize: 18,
     marginLeft: 15,
     textShadowColor: "#7a7979",
@@ -602,6 +682,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
+    paddingHorizontal: 30,
   },
   select: {
     backgroundColor: "red",
@@ -622,11 +703,14 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     textShadowColor: "#7a7979",
   },
+  backImage: {
+    position: "absolute",
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
-    backgroundColor: "rgba(36,184,184,0.10)",
+    backgroundColor: "rgba(36,184,184,0.50)",
     marginTop: 10,
   },
 });

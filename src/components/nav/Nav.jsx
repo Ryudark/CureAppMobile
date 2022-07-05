@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { StyleSheet, Pressable, View } from "react-native";
+import { StyleSheet, Pressable, View, TouchableOpacity } from "react-native";
 
 import { getUserDetail, loader } from "../../Redux/Actions/actions";
 import BottonTabs from "../tab/BottonTabs.jsx";
@@ -28,6 +28,7 @@ export default function Nav() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loader(false));
+    dispatch(getUserDetail(id));
   }, []);
   return (
     <Drawer.Navigator

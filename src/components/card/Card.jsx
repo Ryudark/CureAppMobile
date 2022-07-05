@@ -1,7 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 export default function Card(props) {
+
+    const navigation = useNavigation();
+
     const dateIni = props.date_ini
     const dateByirde = dateIni
     const dayB = new Date(dateByirde).getDate()
@@ -19,7 +23,7 @@ export default function Card(props) {
             <Text>Inicio: {date}</Text>
             <Text>Hora Inicio: {props.availableTime_0}</Text>
             <Text>Hora Fin: {props.availableTime_1}</Text>
-            <TouchableHighlight style={styles.butonContainer}>
+            <TouchableHighlight style={styles.butonContainer} onPress={() => navigation.navigate('postulate', props.id)}>
                 <Text style={styles.textB}>Aplicar</Text>
             </TouchableHighlight>
         </View>

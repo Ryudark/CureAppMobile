@@ -1,9 +1,6 @@
-import { CITY, COUNTRY, FECHA, LOCATION, POST, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
+import { CITY, COUNTRY, FECHA, LIMPIARPOST, LOCATION, MERCADOPAGO_PAYMENT, POST, POSTAUCTION, POSTPROPIOS, REGION, SPECIALITY } from "../constantes";
+
 import axios from "axios";
-
-// const {API_KEY}= process.env
-
-const API_KEY = "ec2ab08965699856947080b2bbe0766b";
 
 export const NO_ERR = "NO_ERR";
 export const ERR = "ERR";
@@ -11,6 +8,12 @@ export const USER_LOGIN = "USER_LOGIN";
 export const LOADING = "LOADING";
 export const USER_DETAIL = "USER_DETAIL";
 export const LOGOUT = "LOGOUT";
+export const SAVE_IMAGE = "SAVE_IMAGE";
+export const PHOTO = "PHOTO";
+
+const axiosConfig = {
+  withCredentials: true,
+};
 
 export const userLogin = (user) => {
   return async function (dispatch) {
@@ -81,11 +84,28 @@ export function postUser(post) {
   };
 }
 
+export function userToProfessional(users) {
+  return async function (dispatch) {
+    await axios.post(
+      "https://api-rest-pf-production.up.railway.app/api/profdbregistration",
+      users
+    );
+  };
+}
+export function postulate(users) {
+  return async function (dispatch) {
+    await axios.post(
+      "https://api-rest-pf-production.up.railway.app/api/Addpostulates",
+      users
+    );
+  };
+}
+
 export const getUserDetail = (id) => {
   return async function (dispatch) {
     try {
       const response = await axios.get(
-        `https://api-rest-pf-production.up.railway.app/api/userDetalleById/${id}`
+        `https://api-rest-pf-production.up.railway.app/api/userProfessionalByID/${id}`
       );
 
       return dispatch({
@@ -153,56 +173,121 @@ export const getCity = (value) => {
 export const getPost = () => {
   return async function (dispatch) {
     try {
-      const post = await axios.get('https://api-rest-pf-production.up.railway.app/api/infoCardPost')
-      return dispatch({
-        type: POST,
-        payload: post.data
-      })
-    }
-    catch (e) {
-      console.log(e)
-    }
-  }
-}
-
-export const specialityFilter = (value) => {
-  return {
-    type: SPECIALITY,
-    payload: value
-  }
-}
-export const dateFilter = (value) => {
-  return {
-    type: FECHA,
-    payload: value
-  }
-}
-
-export const locationFilter = (value) => {
-  return {
-    type: LOCATION,
-    payload: value
-  }
-}
-
-export function getPostPropios(id){
-  return async function (dispatch) {
-    try {
       const post = await axios.get(
-        // `http://battuta.medunes.net/api/city/${zona?.country}/search/?region=${zona.region}&key=${API_KEY}`
-        `https://api-rest-pf-production.up.railway.app/api/posteosUsersByUserID/${id}`
+        "https://api-rest-pf-production.up.railway.app/api/infoCardPost"
       );
       return dispatch({
-        type: POSTPROPIOS,
-        payload: post.data
+        type: POST,
+        payload: post.data,
       });
     } catch (e) {
       console.log(e);
     }
   };
+};
+
+export const deletePost=(id)=>{
+  console.log(id)//activeFalsePost
+  return async function (dispatch) {
+    await axios.put(
+      "https://api-rest-pf-production.up.railway.app/api/activeFalsePost",
+      id
+    );
+  };
+
+}
+
+export const specialityFilter = (value) => {
+  return {
+    type: SPECIALITY,
+    payload: value,
+  };
+};
+export const dateFilter = (value) => {
+  return {
+    type: FECHA,
+    payload: value,
+  };
+};
+
+export const locationFilter = (value) => {
+  return {
+    type: LOCATION,
+    payload: value,
+  };
+};
+
+export function mercadoPagoPayment(values) {
+  return async function (dispatch) {
+    try {
+      console.log("Addpostulates AXIOS OBJ:", values);
+      const resp = await axios.post(`https://api-rest-pf-production.up.railway.app/api/checkoutPayment`, values, axiosConfig);
+
+      const json = await resp.data;
+      console.log(json);
+      return dispatch({
+        type: MERCADOPAGO_PAYMENT,
+        payload: json,
+      });
+    } catch (error) {
+      console.log(error);
+      return dispatch({
+        type: MERCADOPAGO_PAYMENT,
+        payload: error.response.data,
+      });
+    }
+  };
+}
+
+export function getPostPropios(id) {
+  return async function (dispatch) {
+    try {
+      const post = await axios.get(
+        `https://api-rest-pf-production.up.railway.app/api/posteosUsersByUserID/${id}`
+      );
+      return dispatch({
+        type: POSTPROPIOS,
+        payload: post.data,
+      });
+    } catch (e) {
+      console.log(e);
+      return dispatch({
+        type: POSTPROPIOS,
+        payload: []
+      });
+    }
+  };
+}
+
+export const getPostAuction=(id)=>{
+  console.log('llegue a actions',id)
+  return async function (dispatch) {
+    try {
+      const post = await axios.get(
+        `https://api-rest-pf-production.up.railway.app/api/traerPostByAuction/${id}`
+      );
+      return dispatch({
+        type: POSTAUCTION,
+        payload: post.data[0].auctions
+      });
+    } catch (e) {
+      console.log(e);
+      return dispatch({
+        type: POSTAUCTION,
+        payload: []
+      });
+    }
+} 
+}
+
+export const limpiarPostPropios=()=>{
+  return {
+    type: LIMPIARPOST,
+  }
 }
 
 export const editUser = (userchanges) => {
+  console.log("userchanges", userchanges.photo);
   return async function (dispatch) {
     try {
       const response = await axios.put(
@@ -213,5 +298,18 @@ export const editUser = (userchanges) => {
     } catch (error) {
       console.log(error.response.data);
     }
+  };
+};
+
+export const saveImage = (image) => {
+  console.log(image);
+  return {
+    type: SAVE_IMAGE,
+    payload: image,
+  };
+};
+export const photo = () => {
+  return {
+    type: PHOTO,
   };
 };

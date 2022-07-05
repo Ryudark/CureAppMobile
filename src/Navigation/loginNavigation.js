@@ -1,11 +1,12 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Settings from "../components/settings/Settings";
-import { Image, StyleSheet} from "react-native";
+import { Image, StyleSheet } from "react-native";
 
 import HomeLogin from "../components/Home";
 import DetailPost from "../components/detallado/DetailPost";
 import CardPropios from "../components/detallado/CardPropios.jsx"
+import Postulate from "../components/posteo/Postulate";
 
 const Stack = createStackNavigator();
 
@@ -64,6 +65,14 @@ const HomeNavigation = () => {
               source={require("../assets/logoClickCareicono.png")}
             />
           ),
+        }}
+      />
+      <Stack.Screen
+        name="postulate"
+        component={Postulate}
+        options={{
+          title: "postulate",
+          headerTransparent: false,
         }}
       />
     </Stack.Navigator>

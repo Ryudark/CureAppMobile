@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Principal from "../principal/Principal.jsx";
@@ -7,7 +7,7 @@ import Actualization from "../actualization/Actualization.jsx";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Post from "../posteo/Post.jsx";
-import PostPropios  from "../postPropios/PostPropios.jsx"
+import PostPropios from "../postPropios/PostPropios.jsx";
 
 const Tab = createBottomTabNavigator();
 

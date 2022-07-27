@@ -1,5 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   Text,
   TextInput,
@@ -193,46 +195,73 @@ export default function Post() {
         source={require("../../assets/hos.webp")}
       />
 
-      <View style={styles.containerInput}>
-        <Text style={styles.text}>Nombre del paciente</Text>
-        <TextInput
-          value={user.namePatient}
-          onChangeText={(name) => changeName(name)}
-          style={styles.input}
-        />
+      <View style={styles.containerInfo}>
+        <View style={styles.containerInput}>
+          <MaterialCommunityIcons
+                name="rename-box"
+                size={24}
+                color="#26b8b8"
+                style={{ marginTop: 18 }}
+          />
+          <TextInput
+            value={user.namePatient}
+            onChangeText={(name) => changeName(name)}
+            style={styles.input}
+            placeholder={"Nombre del Paciente"}
+          />
+        </View>
       </View>
-      <View style={styles.containerInput}>
-        <Text style={styles.text}>Edad del paciente</Text>
-        <TextInput
-          value={user.age}
-          onChangeText={(age) => changeAge(age)}
-          keyboardType="numeric"
-          style={styles.input}
-        />
+
+      <View style={styles.containerInfo}>
+        <View style={styles.containerInput}>
+          <MaterialCommunityIcons
+                name="rename-box"
+                size={24}
+                color="#26b8b8"
+                style={{ marginTop: 18 }}
+          />
+          <TextInput
+            value={user.age}
+            onChangeText={(age) => changeAge(age)}
+            keyboardType="numeric"
+            style={styles.input}
+            placeholder={"Edad del Paciente"}
+          />
+        </View>
       </View>
-      <View style={styles.containerInput}>
-        <Text style={styles.text}>Telefono de Contacto</Text>
-        <TextInput
-          value={user.contact_phone}
-          onChangeText={(contact_phone) => changePhone(contact_phone)}
-          keyboardType="numeric"
-          style={styles.input}
-        />
+
+      <View style={styles.containerInfo}>
+        <View style={styles.containerInput}>
+        <MaterialIcons name="local-phone" size={24} color="#26b8b8" />
+          <TextInput
+            value={user.contact_phone}
+            onChangeText={(contact_phone) => changePhone(contact_phone)}
+            keyboardType="numeric"
+            style={styles.input}
+            placeholder={"Telefono del contacto"}
+          />
+        </View>
       </View>
-      <View>
-        <Text style={styles.text}>Explique la necesidad</Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={3}
-          onChangeText={(need) => changeNeed(need)}
-        />
-      </View>
-      <View>
-        <Text>Fecha inicio: {user.date_ini}</Text>
+
+      <View style={styles.containerInfo}>
         <View>
+        <AntDesign name="areachart" size={24} color="#26b8b8" />
+          <TextInput
+            multiline={true}
+            numberOfLines={3}
+            onChangeText={(need) => changeNeed(need)}
+            placeholder={"Explique la necesidad"}
+          />
+        </View>
+      </View>
+      
+      <View style={styles.containerInfo}>
+        <View style={styles.containerFecha}>
+        <MaterialIcons name="date-range" size={24} color="#26b8b8" />
           <TouchableHighlight onPress={() => showModeI("date")}>
-            <Text style={styles.textB}>Escoja Fecha Inicio</Text>
+            <Text style={styles.textFecha}>Escoja Fecha Inicio</Text>
           </TouchableHighlight>
+          <Text style={styles.userAge}>{user.date_ini}</Text>
         </View>
         {showI && (
           <DateTimePicker
@@ -244,11 +273,12 @@ export default function Post() {
             onChange={changeDateIni}
           />
         )}
-        <Text>Fecha Fin: {user.date_fin}</Text>
-        <View>
+        <View style={styles.containerFecha}>
+        <MaterialIcons name="date-range" size={24} color="#26b8b8" />
           <TouchableHighlight onPress={() => showModeF("date")}>
-            <Text style={styles.textB}>Escoja Fecha Fin</Text>
+            <Text style={styles.textFecha}>Escoja Fecha Fin</Text>
           </TouchableHighlight>
+          <Text style={styles.userAge}>{user.date_fin}</Text>
         </View>
         {showF && (
           <DateTimePicker
@@ -261,12 +291,13 @@ export default function Post() {
           />
         )}
       </View>
-      <View>
-        <View>
-          <Text>Hora inicio: {user.availableTime_0}</Text>
+      <View style={styles.containerInfo}>
+        <View style={styles.containerFecha}>
+        <MaterialIcons name="date-range" size={24} color="#26b8b8" />
           <TouchableHighlight onPress={() => showModeHI("time")}>
-            <Text style={styles.textB}>Escoja Hora inicio</Text>
+            <Text style={styles.textFecha}>Escoja Hora inicio</Text>
           </TouchableHighlight>
+          <Text style={styles.userAge}>{user.availableTime_0}</Text>
         </View>
         {showHI && (
           <DateTimePicker
@@ -278,11 +309,12 @@ export default function Post() {
             onChange={changeHourIni}
           />
         )}
-        <View>
-          <Text>Hora Fin: {user.availableTime_1}</Text>
+        <View style={styles.containerFecha}>
+          <MaterialIcons name="date-range" size={24} color="#26b8b8" />
           <TouchableHighlight onPress={() => showModeHF("time")}>
-            <Text style={styles.textB}>Escoja Hora Fin</Text>
+            <Text style={styles.textFecha}>Escoja Hora Fin</Text>
           </TouchableHighlight>
+          <Text style={styles.userAge}>{user.availableTime_1}</Text>
         </View>
         {showHF && (
           <DateTimePicker
@@ -296,8 +328,8 @@ export default function Post() {
         )}
       </View>
 
-      <View style={styles.containerInfoSelect}>
-        <View style={styles.containerInput}>
+      <View style={styles.containerInfo}>
+        <View style={styles.containerInfoSelect}>
           <Text style={styles.text}>Especialidades Necesitadas</Text>
           <RNPickerSelect
             onValueChange={(value) => {
@@ -310,7 +342,9 @@ export default function Post() {
             }))}
           />
         </View>
-        <View style={styles.containerInput}>
+      </View>
+      <View style={styles.containerInfo}>
+        <View style={styles.containerInfoSelect}>
           <Text style={styles.text}>País</Text>
           <RNPickerSelect
             onValueChange={(value) => {
@@ -324,7 +358,7 @@ export default function Post() {
             }))}
           />
         </View>
-        <View style={styles.containerInput}>
+        <View style={styles.containerInfoSelect}>
           <Text style={styles.text}>Estado</Text>
           <RNPickerSelect
             onValueChange={(value) => {
@@ -338,7 +372,7 @@ export default function Post() {
             }))}
           />
         </View>
-        <View style={styles.containerInput}>
+        <View style={styles.containerInfoSelect}>
           <Text style={styles.text}>ciudad</Text>
           <RNPickerSelect
             onValueChange={(value) => {
@@ -352,25 +386,43 @@ export default function Post() {
           />
         </View>
       </View>
-      <View style={styles.containerInput}>
-        <Text style={styles.text}>Dirección del paciente</Text>
-        <TextInput
-          value={user.addressPatient}
-          onChangeText={(addressPatient) => changeAddressP(addressPatient)}
-          style={styles.input}
-        />
+
+      <View style={styles.containerInfo}>
+        <View style={styles.containerInput}>
+          <Entypo 
+            name="address"
+            size={24}
+            color="#26b8b8"
+            style={{ marginTop: 18 }}
+          />
+          <TextInput
+            value={user.addressPatient}
+            onChangeText={(addressPatient) => changeAddressP(addressPatient)}
+            style={styles.input}
+            placeholder={"Dirección del paciente"}
+          />
+        </View>
       </View>
-      <View style={styles.containerInput}>
-        <Text style={styles.text}>Referencia de Localización</Text>
-        <TextInput
-          value={user.locationReference}
-          onChangeText={(locationReference) => changeAddress(locationReference)}
-          style={styles.input}
-        />
+
+      <View style={styles.containerInfo}>
+        <View style={styles.containerInput}>
+          <Entypo 
+            name="address"
+            size={24}
+            color="#26b8b8"
+            style={{ marginTop: 18 }}
+          />
+          <TextInput
+            value={user.locationReference}
+            onChangeText={(locationReference) => changeAddress(locationReference)}
+            style={styles.input}
+            placeholder={"Referencia de la dirección"}
+          />
+        </View>
       </View>
 
       <TouchableHighlight onPress={onSubmit} style={styles.butonContainer}>
-        <Text style={styles.textB}>Crear</Text>
+        <Text style={styles.textB}>Crear Post</Text>
       </TouchableHighlight>
     </ScrollView>
   );
@@ -381,18 +433,64 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   container: {},
+  containerInfo: {
+    backgroundColor: "rgba(29,52,84,0.6)",
+    borderRadius: 20,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+
+  name: {
+    marginTop: 10,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+  },
   input: {
-    marginHorizontal: 20,
     borderBottomWidth: 1,
-    padding: 10,
-    borderBottomColor: "#24b8b8",
-    width: 300,
+    padding: 5,
+    borderBottomColor: "#fff",
+    width: 220,
+    color: "#fff",
   },
   textArea: {
     height: 60,
   },
   containerInput: {
+    width: "80%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    marginLeft: 25,
+    marginTop: 5,
+  },
+  containerFecha: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "80%",
+    marginLeft: 25,
     marginTop: 20,
+    marginBottom: 10,
+  },
+  textFecha: {
+    fontSize: 20,
+    marginBottom: 10,
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderRadius: 15,
+    paddingHorizontal: 5,
+  },
+  userAge: {
+    backgroundColor: "rgba(36,184,184,0.9)",
+    borderRadius: 15,
+    paddingHorizontal: 50,
+  },
+  date: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "90%",
+    flexDirection: "column",
   },
 
   butonContainer: {
@@ -408,7 +506,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   text: {
-    color: "#1d3454",
+    color: "#fff",
     fontSize: 18,
     marginLeft: 15,
     textShadowColor: "#7a7979",
@@ -418,5 +516,34 @@ const styles = StyleSheet.create({
     fontSize: 18,
 
     textShadowColor: "#7a7979",
+  },
+  containerInfoSelect: {
+    marginTop: 20,
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "column",
+    paddingHorizontal: 30,
+  },
+  select: {
+    backgroundColor: "red",
+  },
+
+  contentLogo: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  logo: { width: 50, height: 36 },
+  logotxt: { width: 60, height: 10 },
+  error: {
+    textAlign: "center",
+    color: "#1d3454",
+    marginBottom: 10,
+    textShadowRadius: 1,
+    textShadowColor: "#7a7979",
+  },
+  backImage: {
+    position: "absolute",
   },
 });

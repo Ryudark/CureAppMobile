@@ -21,7 +21,6 @@ import { mercadoPagoPayment } from "../Redux/Actions/actions";
 
 
 export default function Profile() {
-  const dispatch = useDispatch();
   const { userDetail, id, imageProfile } = useSelector((state) => state);
 
   const navigation = useNavigation();

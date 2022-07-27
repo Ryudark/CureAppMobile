@@ -22,11 +22,12 @@ import RNPickerSelect from "react-native-picker-select";
 export default function Home({ navigation }) {
   const usuario = useSelector((state) => state.userDetail);
 
+  console.log(usuario)
   const [mostrar, setMostrar] = useState(false);
 
-  const city = usuario[0].city.name;
+  const city = usuario[0]?.city.name;
 
-  const country = usuario[0].country.name;
+  const country = usuario[0]?.country.name;
 
   const speciality = [
     "ALL",
@@ -121,7 +122,7 @@ export default function Home({ navigation }) {
             </View>
           </View>
         </View>
-        {usuario[0].professionals.length < 1 ? (
+        {usuario[0]?.professionals.length < 1 ? (
           <FlatList
             showsVerticalScrollIndicator={false}
             style={styles.containerHome}
@@ -159,7 +160,7 @@ export default function Home({ navigation }) {
           <Text style={styles.filtrar}>FILTRAR</Text>
         </TouchableOpacity>
         <View style={styles.bodyHome}>
-          {usuario[0].professionals.length < 1 ? (
+          {usuario[0]?.professionals.length < 1 ? (
             <View style={styles.containerHome}>
               <FlatList
                 showsVerticalScrollIndicator={false}

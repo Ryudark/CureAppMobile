@@ -77,7 +77,7 @@ const Login = () => {
           style={{ ...styles.btnL, marginTop: 20 }}
           onPress={goToSingUp}
         >
-          <Text style={styles.log}>Sing Up</Text>
+          <Text style={styles.log}>Sign Up</Text>
         </TouchableOpacity>
       </View>
 

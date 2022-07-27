@@ -18,10 +18,7 @@ export default function CardOfertas(props){
             <View style={styles.centraBotones}>
                 <TouchableHighlight style={styles.butonContainer}>
                     <Text style={styles.textB}>Aceptar</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.butonContainer}>
-                    <Text style={styles.textB}>Declinar</Text>
-                </TouchableHighlight>            
+                </TouchableHighlight>          
             </View>
         </View>
     )//professional    trainings date

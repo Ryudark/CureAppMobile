@@ -102,6 +102,7 @@ export function postulate(users) {
 }
 
 export const getUserDetail = (id) => {
+  console.log('llego user')
   return async function (dispatch) {
     try {
       const response = await axios.get(
